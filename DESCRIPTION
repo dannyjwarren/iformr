@@ -1,0 +1,17 @@
+Package: iformr
+Type: Package
+Title: Tools to leverage the iFormBuilder API
+Version: 0.1.0.9000
+Author: Are Strom
+Maintainer: <are.strom@gmail.com>
+Description: A collection of user-friendly functions to connect R to the iFormBuilder API 
+License: MIT + file LICENSE
+Depends: R (>= 3.4.1)
+Imports:
+    curl (>= 2.7),
+    httr (>= 1.2.1),
+    jsonlite (>= 1.5),
+    lubridate (>=1.6.0),
+    openssl (>=0.9.6)
+Encoding: UTF-8
+LazyData: true
