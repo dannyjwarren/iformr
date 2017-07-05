@@ -11,7 +11,7 @@ Imports:
     curl (>= 2.7),
     httr (>= 1.2.1),
     jsonlite (>= 1.5),
-    lubridate (>=1.6.0),
-    openssl (>=0.9.6)
+    lubridate (>= 1.6.0),
+    openssl (>= 0.9.6)
 Encoding: UTF-8
 LazyData: true
