@@ -54,6 +54,7 @@ get_option_lists <- function(server_name,
 #' @rdname get_option_list_id
 #' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
 #' @param profile_id The ID number of your profile
+#' @param option_list_name The name of the option list
 #' @param limit The maximum number of option lists to return
 #' @param offset Skips the offset number of options before beginning to return
 #' @param access_token The access_token required to establish communication with the API
@@ -134,7 +135,6 @@ add_options_to_list <- function(server_name,
                                 optionlist_id,
                                 option_values,
                                 access_token) {
-  # Check for duplicate values in option_values
   dup_chk <- jsonlite::fromJSON(option_values)
   if(!all(names(dup_chk) %in% c("sort_order", "label", "key_value", "condition_value"))) {
     stop(cat("\nUnrecognized option list names.\nNames can only consist of:\n",

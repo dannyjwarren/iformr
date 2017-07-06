@@ -12,6 +12,8 @@ get_option_list_id(server_name, profile_id, option_list_name, limit = 1000,
 
 \item{profile_id}{The ID number of your profile}
 
+\item{option_list_name}{The name of the option list}
+
 \item{limit}{The maximum number of option lists to return}
 
 \item{offset}{Skips the offset number of options before beginning to return}
