@@ -31,7 +31,7 @@ get_option_lists <- function(server_name,
                           function(i) optx[i] <- opts[[i]]$id))
   opt_name <- unlist(lapply(seq_along(optx),
                             function(i) optx[i] <- opts[[i]]$name))
-  data_frame(id = opt_id, name = opt_name)
+  dplyr::data_frame(id = opt_id, name = opt_name)
 }
 
 #' Get the ID of a single option list given an option list name
@@ -68,7 +68,7 @@ get_option_list_id <- function(server_name,
                           function(i) optx[i] <- opts[[i]]$id))
   opt_name <- unlist(lapply(seq_along(optx),
                             function(i) optx[i] <- opts[[i]]$name))
-  opt <- data_frame(id = opt_id, name = opt_name)
+  opt <- dplyr::data_frame(id = opt_id, name = opt_name)
   opt$id[opt$name == option_list_name]
 }
 
@@ -128,11 +128,11 @@ add_options_to_list <- function(server_name,
     stop(cat("\nUnrecognized option list names.\nNames can only consist of:\n",
              "'sort_order', 'label', 'key_value', or 'condition_value'.\n"))
   }
-  dup_chk <- dup_chk %>% select(-sort_order)
+  dup_chk <- dup_chk %>% dplyr::select(-sort_order)
   if(any(duplicated(dup_chk))) {
     stop(cat("\nThere are duplicated items in the option list\n"))
   }
-  dup_chk <- dup_chk %>% select()
+  dup_chk <- dup_chk %>% dplyr::select()
   options_uri <- paste0(api_v60_url(server_name = server_name),
                         profile_id,
                         "/optionlists/", optionlist_id,
@@ -225,7 +225,7 @@ get_option_list_element_ids <- function(server_name,
   optx <- integer(length(opts))
   opt_id <- unlist(lapply(seq_along(optx), function(i) optx[i] <- opts[[i]]$id))
   opt_element <- unlist(lapply(seq_along(optx), function(i) optx[i] <- opts[[i]][element]))
-  dat = data_frame(id = opt_id, element_name = opt_element)
+  dat = dplyr::data_frame(id = opt_id, element_name = opt_element)
   names(dat) <- c("id", element)
   dat
 }
@@ -250,7 +250,7 @@ get_core_option_list_elements <- function(server_name,
                                           limit = 1000,
                                           offset = 0,
                                           access_token) {
-  optionlists_uri <- paste0(api_v60_url(company = company_name),
+  optionlists_uri <- paste0(api_v60_url(server_name = server_name),
                             profile_id,
                             "/optionlists/", optionlist_id,
                             "/options?fields=sort_order,label,condition_value",
@@ -268,7 +268,7 @@ get_core_option_list_elements <- function(server_name,
   opt_label <- unlist(lapply(seq_along(optx), function(i) optx[i] <- opts[[i]]$label))
   opt_key <- unlist(lapply(seq_along(optx), function(i) optx[i] <- opts[[i]]$key_value))
   opt_cond <- unlist(lapply(seq_along(optx), function(i) optx[i] <- opts[[i]]$condition_value))
-  dat = data_frame(id = opt_id, sort_order = opt_sort_order, label = opt_label,
+  dat = dplyr::data_frame(id = opt_id, sort_order = opt_sort_order, label = opt_label,
                    key_value = opt_key, condition_value = opt_cond)
   dat
 }
@@ -298,7 +298,7 @@ update_options_in_list <- function(server_name,
                                    limit = 1000,
                                    offset = 0,
                                    access_token = access_token) {
-  options_uri <- paste0(api_v60_url(company = company_name),
+  options_uri <- paste0(api_v60_url(server_name = server_name),
                         profile_id,
                         "/optionlists/", optionlist_id,
                         "/options?fields=", fields,
