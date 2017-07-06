@@ -5,7 +5,7 @@
 \title{Update values in an existing option list}
 \usage{
 update_options_in_list(server_name, profile_id, optionlist_id, option_values,
-  fields = fields, limit = 1000, offset = 0,
+  fields = "fields", limit = 1000, offset = 0,
   access_token = access_token)
 }
 \arguments{
@@ -17,7 +17,7 @@ update_options_in_list(server_name, profile_id, optionlist_id, option_values,
 
 \item{option_values}{A json object containing new option list values}
 
-\item{fields}{A list of the specific fields to update}
+\item{fields}{Placeholder for fields to update, not yet implemented}
 
 \item{limit}{The maximum number of option list items to return}
 
@@ -29,7 +29,8 @@ update_options_in_list(server_name, profile_id, optionlist_id, option_values,
 A vector of option IDs for elements that were updated
 }
 \description{
-Sends a request to the iFormBuilder API to update an option list. Option values
-for the specified fields will be updated to the new values supplied in the
-json object `option_values`.
+Sends a request to the iFormBuilder API to update existing values in an 
+option list. Option values for the specified fields will be updated to the 
+new values supplied in the json object `option_values`. Do not use the
+fields parameter. It has not been implemented yet.
 }

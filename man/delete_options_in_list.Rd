@@ -5,7 +5,7 @@
 \title{Delete all or some options in an option list}
 \usage{
 delete_options_in_list(server_name, profile_id, optionlist_id,
-  fields = fields, limit = 1000, offset = 0, access_token)
+  fields = "fields", id_values, limit = 1000, offset = 0, access_token)
 }
 \arguments{
 \item{server_name}{The server name as encoded in the url: `https//server_name.iformbuilder.com`}
@@ -14,7 +14,9 @@ delete_options_in_list(server_name, profile_id, optionlist_id,
 
 \item{optionlist_id}{The ID number for the option list}
 
-\item{fields}{A list of the specific fields to delete}
+\item{fields}{Placeholder for fields to delete, not yet implemented}
+
+\item{id_values}{A .json list of ids for elements to delete}
 
 \item{limit}{The maximum number of option elements to delete}
 
@@ -26,6 +28,7 @@ delete_options_in_list(server_name, profile_id, optionlist_id,
 A vector of option list element IDs, one for each option in the list
 }
 \description{
-Sends a request to the iFormBuilder API to delete a list of options
-Allows specifying specific fields to delete
+Sends a request to the iFormBuilder API to delete a list of option elements.
+The elements to delete are specified by a .json list of element ids. Sort
+order will automatically be reassigned after deleting specified elements.
 }

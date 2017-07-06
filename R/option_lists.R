@@ -159,14 +159,16 @@ add_options_to_list <- function(server_name,
 
 #' Delete all or some options in an option list
 #'
-#' Sends a request to the iFormBuilder API to delete a list of options
-#' Allows specifying specific fields to delete
+#' Sends a request to the iFormBuilder API to delete a list of option elements.
+#' The elements to delete are specified by a .json list of element ids. Sort
+#' order will automatically be reassigned after deleting specified elements.
 #'
 #' @rdname delete_options_in_list
 #' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
 #' @param profile_id The ID number of your profile
 #' @param optionlist_id The ID number for the option list
-#' @param fields A list of the specific fields to delete
+#' @param fields Placeholder for fields to delete, not yet implemented
+#' @param id_values A .json list of ids for elements to delete
 #' @param limit The maximum number of option elements to delete
 #' @param offset Skips the offset number of options before beginning to delete
 #' @param access_token The access_token required to establish communication with the API
@@ -175,7 +177,8 @@ add_options_to_list <- function(server_name,
 delete_options_in_list <- function(server_name,
                                    profile_id,
                                    optionlist_id,
-                                   fields = fields,
+                                   fields = "fields",
+                                   id_values,
                                    limit = 1000,
                                    offset = 0,
                                    access_token) {
@@ -188,6 +191,7 @@ delete_options_in_list <- function(server_name,
   bearer <- paste0("Bearer ", access_token)
   r <- httr::DELETE(url = options_uri,
                     httr::add_headers('Authorization' = bearer),
+                    body = id_values,
                     encode = "json")
   httr::stop_for_status(r)
   as.vector(unlist(httr::content(r, type = "application/json")))
@@ -286,9 +290,10 @@ get_core_option_list_elements <- function(server_name,
 
 #' Update values in an existing option list
 #'
-#' Sends a request to the iFormBuilder API to update an option list. Option values
-#' for the specified fields will be updated to the new values supplied in the
-#' json object `option_values`.
+#' Sends a request to the iFormBuilder API to update existing values in an 
+#' option list. Option values for the specified fields will be updated to the 
+#' new values supplied in the json object `option_values`. Do not use the
+#' fields parameter. It has not been implemented yet. 
 #'
 #' @rdname update_options_in_list
 #' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
@@ -296,7 +301,7 @@ get_core_option_list_elements <- function(server_name,
 #' @param optionlist_id The ID number for the option list
 #' @param option_values A json object containing new option list values
 #' @param limit The maximum number of option list items to return
-#' @param fields A list of the specific fields to update
+#' @param fields Placeholder for fields to update, not yet implemented
 #' @param offset Skips the offset number of options before beginning to update
 #' @param access_token The access_token required to establish communication with the API
 #' @return A vector of option IDs for elements that were updated
@@ -305,7 +310,7 @@ update_options_in_list <- function(server_name,
                                    profile_id,
                                    optionlist_id,
                                    option_values,
-                                   fields = fields,
+                                   fields = "fields",
                                    limit = 1000,
                                    offset = 0,
                                    access_token = access_token) {
