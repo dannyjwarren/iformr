@@ -140,7 +140,7 @@ add_options_to_list <- function(server_name,
     stop(cat("\nUnrecognized option list names.\nNames can only consist of:\n",
              "'sort_order', 'label', 'key_value', or 'condition_value'.\n"))
   }
-  dup_chk <- dup_chk %>% dplyr::select(-sort_order)
+  dup_chk <- dup_chk[, names(dup_chk)[!names(dup_chk) %in% "sort_order"]]
   if(any(duplicated(dup_chk))) {
     stop(cat("\nThere are duplicated items in the option list\n"))
   }
