@@ -46,7 +46,7 @@ base_url <- function(company) {
 #' Define token_url
 #' @rdname token_url
 #' @param company The company name as encoded in the url
-#' @return A url for requesting an access_token with \code(company) encoded
+#' @return A url for requesting an access_token with \code{company} encoded
 #' @export
 token_url <- function(company) {
   paste0(base_url(company), "/exzact/api/oauth/token")
@@ -176,7 +176,7 @@ getIformAccessToken <- function(company_name, app_key_name, app_secret_name) {
                assertion = encoded)
   r <- httr::POST(url = token_uri,
                   body = body,
-                  add_headers('Content-Type' = 'application/x-www-form-urlencoded'),
+                  httr::add_headers('Content-Type' = 'application/x-www-form-urlencoded'),
                   encode = "form")
   httr::stop_for_status(r)
   acc_token = httr::content(r, type = "application/json")$access_token
