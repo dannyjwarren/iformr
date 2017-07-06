@@ -2,7 +2,7 @@
 
 export(base64url)
 export(base_url)
-export(getIformAccessToken)
+export(get_iform_access_token)
 export(has_key)
 export(has_secret)
 export(hex_to_raw)

@@ -145,13 +145,13 @@ jencode <- function(jheader, jpayload, client_secret) {
 #' If you do not have a dedicated server your company_name will be `app`.
 #' For the Washington Dept of Fish and Wildlife, company_name is `wdfw`.
 #'
-#' @rdname getIformAccessToken
+#' @rdname get_iform_access_token
 #' @param company_name The company name as encoded in the url
 #' @param app_key_name The name given to the client_key in the .Renviron file
 #' @param app_secret_name The name given to the client_secret in the .Renviron file
 #' @return An access_token that expires after ten minutes
 #' @export
-getIformAccessToken <- function(company_name, app_key_name, app_secret_name) {
+get_iform_access_token <- function(company_name, app_key_name, app_secret_name) {
   jheader <- jsonlite::toJSON(jwt_header(), auto_unbox = TRUE)
   client_key <- iform_secret(app_key_name)
   client_secret <- iform_secret(app_secret_name)

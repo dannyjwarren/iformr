@@ -1,10 +1,11 @@
 Package: iformr
 Type: Package
-Title: Tools to leverage the iFormBuilder API
+Title: A set of tools to leverage the iFormBuilder API
 Version: 0.1.0.9000
 Author: Are Strom
 Maintainer: <are.strom@gmail.com>
-Description: A collection of user-friendly functions to connect R to the iFormBuilder API 
+Description: A collection of user-friendly functions to connect R to the iFormBuilder API. Currently 
+    only the access_token function is included. Additional functions will be added as time allows.
 License: MIT + file LICENSE
 Depends: R (>= 3.4.1)
 Imports:
