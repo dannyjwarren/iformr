@@ -137,11 +137,10 @@ jencode <- function(jheader, jpayload, client_secret) {
   request_token
 }
 
-# Get an access token from iFormBuilder
+# Get access token from iFormBuilder
 #'
 #' Sends a request to iFormBuilder for an access_token. This is needed
-#' in order to authorize communication with the iFormBuilder API
-#'
+#' in order to authorize communication with the iFormBuilder API.
 #' If you do not have a dedicated server your company_name will be `app`.
 #' For the Washington Dept of Fish and Wildlife, company_name is `wdfw`.
 #'
