@@ -4,13 +4,13 @@
 \alias{get_iform_access_token}
 \title{Sends a request to iFormBuilder for an access_token. This is needed
 in order to authorize communication with the iFormBuilder API.
-If you do not have a dedicated server your company_name will be `app`.
-For the Washington Dept of Fish and Wildlife, company_name is `wdfw`.}
+If you do not have a dedicated server your server_name will be `app`.
+For the Washington Dept of Fish and Wildlife, server_name is `wdfw`.}
 \usage{
-get_iform_access_token(company_name, app_key_name, app_secret_name)
+get_iform_access_token(server_name, app_key_name, app_secret_name)
 }
 \arguments{
-\item{company_name}{The company name as encoded in the url}
+\item{server_name}{The server name as encoded in the url: `https//server_name.iformbuilder.com`}
 
 \item{app_key_name}{The name given to the client_key in the .Renviron file}
 
@@ -22,6 +22,6 @@ An access_token that expires after ten minutes
 \description{
 Sends a request to iFormBuilder for an access_token. This is needed
 in order to authorize communication with the iFormBuilder API.
-If you do not have a dedicated server your company_name will be `app`.
-For the Washington Dept of Fish and Wildlife, company_name is `wdfw`.
+If you do not have a dedicated server your server_name will be `app`.
+For the Washington Dept of Fish and Wildlife, server_name is `wdfw`.
 }

@@ -4,15 +4,15 @@
 \alias{base_url}
 \title{Define base_url}
 \usage{
-base_url(company)
+base_url(server_name)
 }
 \arguments{
-\item{company}{The company name as encoded in the url}
+\item{server_name}{The server name as encoded in the url: `https//server_name.iformbuilder.com`}
 }
 \value{
-The base iFormBuilder url with \code{company} encoded
+The base iFormBuilder url with \code{server_name} encoded
 }
 \description{
 Use `base_url()` to define the base section of the request url.
-For example: `https://app.iformbuilder.com`.
+If you do not have a dedicated server the server_name will be `app`
 }
