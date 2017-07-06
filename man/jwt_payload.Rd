@@ -2,7 +2,7 @@
 % Please edit documentation in R/access_token.R
 \name{jwt_payload}
 \alias{jwt_payload}
-\title{Define the jwt payload. From httr}
+\title{Define the jwt payload}
 \usage{
 jwt_payload(client_key, iat = NULL, exp = NULL, token_uri,
   duration = 600L)
@@ -22,5 +22,5 @@ jwt_payload(client_key, iat = NULL, exp = NULL, token_uri,
 The json web token payload as a list
 }
 \description{
-Define the jwt payload. From httr
+Define the jwt payload
 }

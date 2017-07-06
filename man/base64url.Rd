@@ -2,7 +2,7 @@
 % Please edit documentation in R/access_token.R
 \name{base64url}
 \alias{base64url}
-\title{Encode to base64 using url-safe function. From httr}
+\title{Encode to url-safe base64}
 \usage{
 base64url(x)
 }
@@ -13,5 +13,6 @@ base64url(x)
 The base64 encoded string
 }
 \description{
-Encode to base64 using url-safe function. From httr
+Taken from the httr package. Will be replaced in
+a future version by importing the base64url package
 }

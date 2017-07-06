@@ -52,7 +52,7 @@ token_url <- function(server_name) {
   paste0(base_url(server_name), "/exzact/api/oauth/token")
 }
 
-#' Define the jwt header. From httr
+#' Define the jwt header
 #' @rdname jwt_header
 #' @return The json web token header as a list
 #' @export
@@ -63,7 +63,7 @@ jwt_header <- function() {
   )
 }
 
-#' Define the jwt payload. From httr
+#' Define the jwt payload
 #' @rdname jwt_payload
 #' @param client_key The client_key assigned to the application
 #' @param iat The issue time
@@ -87,7 +87,11 @@ jwt_payload <- function(client_key, iat = NULL, exp = NULL, token_uri, duration 
   )
 }
 
-#' Encode to base64 using url-safe function. From httr
+#' Encode to url-safe base64 
+#' 
+#' Taken from the httr package. Will be replaced in
+#' a future version by importing the base64url package
+#' 
 #' @rdname base64url
 #' @param x A string to be encoded to base64
 #' @return The base64 encoded string
@@ -100,7 +104,11 @@ base64url <- function(x) {
   gsub("=+$", "", out)
 }
 
-#' Get raw output from sha256() signing. From openssl
+#' Get raw output from sha256() signing
+#' 
+#' Taken from openssl package. Will be replaced in
+#' a future version by importing the jose package.
+#' 
 #' @rdname hex_to_raw
 #' @param str A string to be converted from hex to raw format
 #' @return The raw string
@@ -137,7 +145,7 @@ jencode <- function(jheader, jpayload, client_secret) {
   request_token
 }
 
-# Get access token from iFormBuilder
+#' Request an access_token
 #'
 #' Sends a request to iFormBuilder for an access_token. This is needed
 #' in order to authorize communication with the iFormBuilder API.

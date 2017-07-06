@@ -2,7 +2,7 @@
 % Please edit documentation in R/access_token.R
 \name{hex_to_raw}
 \alias{hex_to_raw}
-\title{Get raw output from sha256() signing. From openssl}
+\title{Get raw output from sha256() signing}
 \usage{
 hex_to_raw(str)
 }
@@ -13,5 +13,6 @@ hex_to_raw(str)
 The raw string
 }
 \description{
-Get raw output from sha256() signing. From openssl
+Taken from openssl package. Will be replaced in
+a future version by importing the jose package.
 }

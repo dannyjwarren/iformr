@@ -2,10 +2,7 @@
 % Please edit documentation in R/access_token.R
 \name{get_iform_access_token}
 \alias{get_iform_access_token}
-\title{Sends a request to iFormBuilder for an access_token. This is needed
-in order to authorize communication with the iFormBuilder API.
-If you do not have a dedicated server your server_name will be `app`.
-For the Washington Dept of Fish and Wildlife, server_name is `wdfw`.}
+\title{Request an access_token}
 \usage{
 get_iform_access_token(server_name, app_key_name, app_secret_name)
 }

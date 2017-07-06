@@ -2,7 +2,7 @@
 % Please edit documentation in R/access_token.R
 \name{jwt_header}
 \alias{jwt_header}
-\title{Define the jwt header. From httr}
+\title{Define the jwt header}
 \usage{
 jwt_header()
 }
@@ -10,5 +10,5 @@ jwt_header()
 The json web token header as a list
 }
 \description{
-Define the jwt header. From httr
+Define the jwt header
 }
