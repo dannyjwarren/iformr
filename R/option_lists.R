@@ -1,3 +1,15 @@
+#' Define API url
+#'
+#' Use `api_v60_url` to define the API section of the request url.
+#' If you do not have a dedicated server the server_name will be `app`
+#' @rdname api_v60_url
+#' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
+#' @return A url for API requests, with \code{server_name} encoded
+#' @export
+api_v60_url <- function(server_name) {
+  paste0(base_url(server_name), "/exzact/api/v60/profiles/")
+}
+
 #' Get a listing of all option lists in a profile
 #'
 #' Sends a request to the iFormBuilder API to get a listing of all
