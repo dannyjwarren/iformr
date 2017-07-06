@@ -10,7 +10,7 @@ token_url(company)
 \item{company}{The company name as encoded in the url}
 }
 \value{
-A url for requesting an access_token with \code(company) encoded
+A url for requesting an access_token with \code{company} encoded
 }
 \description{
 Define token_url
