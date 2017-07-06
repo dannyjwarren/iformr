@@ -3,7 +3,9 @@
 \name{get_iform_access_token}
 \alias{get_iform_access_token}
 \title{Sends a request to iFormBuilder for an access_token. This is needed
-in order to authorize communication with the iFormBuilder API}
+in order to authorize communication with the iFormBuilder API.
+If you do not have a dedicated server your company_name will be `app`.
+For the Washington Dept of Fish and Wildlife, company_name is `wdfw`.}
 \usage{
 get_iform_access_token(company_name, app_key_name, app_secret_name)
 }
@@ -18,6 +20,8 @@ get_iform_access_token(company_name, app_key_name, app_secret_name)
 An access_token that expires after ten minutes
 }
 \description{
+Sends a request to iFormBuilder for an access_token. This is needed
+in order to authorize communication with the iFormBuilder API.
 If you do not have a dedicated server your company_name will be `app`.
 For the Washington Dept of Fish and Wildlife, company_name is `wdfw`.
 }
