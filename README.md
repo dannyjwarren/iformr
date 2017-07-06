@@ -20,7 +20,7 @@ This package was inspired by the Hadley Wickham's httr package. In particular th
 Installation
 ------------
 
-There was a bug in R-3.4.0 that prevented installation of this package. You will need to install R-3.4.1 or higher
+There was a bug in R-3.4.0 that prevented installation of this package. You will need to install R-3.4.1 or higher.
 
 ``` r
 # Install the development version from GitHub:
