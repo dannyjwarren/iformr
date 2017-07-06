@@ -2,14 +2,10 @@
 % Please edit documentation in R/option_lists.R
 \name{add_options_to_list}
 \alias{add_options_to_list}
-\alias{deleteOptionsInList}
 \title{Add option values to new option list}
 \usage{
 add_options_to_list(server_name, profile_id, optionlist_id, option_values,
   access_token)
-
-deleteOptionsInList(server_name, profile_id, optionlist_id, fields = fields,
-  limit = 1000, offset = 0, access_token)
 }
 \arguments{
 \item{server_name}{The server name as encoded in the url: `https//server_name.iformbuilder.com`}
@@ -21,31 +17,12 @@ deleteOptionsInList(server_name, profile_id, optionlist_id, fields = fields,
 \item{option_values}{A list of option values in json format}
 
 \item{access_token}{The access_token required to establish communication with the API}
-
-\item{fields}{A list of the specific fields to delete}
-
-\item{limit}{The maximum number of option elements to delete}
-
-\item{offset}{Skips the offset number of options before beginning to delete}
-
-\item{server_name}{The server name as encoded in the url: `https//server_name.iformbuilder.com`}
-
-\item{profile_id}{The ID number of your profile}
-
-\item{optionlist_id}{The ID number for the option list}
-
-\item{access_token}{The access_token required to establish communication with the API}
 }
 \value{
-A vector of option list element IDs, one for each option in the list
-
 A vector of option list element IDs, one for each option in the list
 }
 \description{
 Sends a request to the iFormBuilder API to append a list of options
 in json format to an existing option list. Make sure that all options
 list key_values are unique or the list will not be posted.
-
-Sends a request to the iFormBuilder API to delete a list of options
-Allows specifying specific fields to delete
 }

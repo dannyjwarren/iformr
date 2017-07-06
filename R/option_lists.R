@@ -162,7 +162,7 @@ add_options_to_list <- function(server_name,
 #' Sends a request to the iFormBuilder API to delete a list of options
 #' Allows specifying specific fields to delete
 #'
-#' @rdname add_options_to_list
+#' @rdname delete_options_in_list
 #' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
 #' @param profile_id The ID number of your profile
 #' @param optionlist_id The ID number for the option list
@@ -172,13 +172,13 @@ add_options_to_list <- function(server_name,
 #' @param access_token The access_token required to establish communication with the API
 #' @return A vector of option list element IDs, one for each option in the list
 #' @export
-deleteOptionsInList <- function(server_name,
-                                profile_id,
-                                optionlist_id,
-                                fields = fields,
-                                limit = 1000,
-                                offset = 0,
-                                access_token) {
+delete_options_in_list <- function(server_name,
+                                   profile_id,
+                                   optionlist_id,
+                                   fields = fields,
+                                   limit = 1000,
+                                   offset = 0,
+                                   access_token) {
   options_uri <- paste0(api_v60_url(server_name = server_name),
                         profile_id,
                         "/optionlists/", optionlist_id,
