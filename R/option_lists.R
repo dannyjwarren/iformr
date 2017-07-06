@@ -120,7 +120,7 @@ create_new_option_list <- function(server_name,
 #'
 #' Sends a request to the iFormBuilder API to append a list of options
 #' in json format to an existing option list. Make sure that all options
-#'  list key_values are unique or the list will not be posted.
+#' list key_values are unique or the list will not be posted.
 #'
 #' @rdname add_options_to_list
 #' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
@@ -144,7 +144,6 @@ add_options_to_list <- function(server_name,
   if(any(duplicated(dup_chk))) {
     stop(cat("\nThere are duplicated items in the option list\n"))
   }
-  dup_chk <- dup_chk %>% dplyr::select()
   options_uri <- paste0(api_v60_url(server_name = server_name),
                         profile_id,
                         "/optionlists/", optionlist_id,

@@ -44,7 +44,7 @@ A vector of option list element IDs, one for each option in the list
 \description{
 Sends a request to the iFormBuilder API to append a list of options
 in json format to an existing option list. Make sure that all options
- list key_values are unique or the list will not be posted.
+list key_values are unique or the list will not be posted.
 
 Sends a request to the iFormBuilder API to delete a list of options
 Allows specifying specific fields to delete
