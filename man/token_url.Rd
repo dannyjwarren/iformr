@@ -4,13 +4,13 @@
 \alias{token_url}
 \title{Define token_url}
 \usage{
-token_url(company)
+token_url(server_name)
 }
 \arguments{
-\item{company}{The company name as encoded in the url}
+\item{server_name}{The server name as encoded in the url: `https//server_name.iformbuilder.com`}
 }
 \value{
-A url for requesting an access_token with \code{company} encoded
+A url for requesting an access_token with \code{server_name} encoded
 }
 \description{
 Define token_url
