@@ -1,7 +1,7 @@
 Package: iformr
 Type: Package
 Title: A set of tools to leverage the iFormBuilder API
-Version: 0.1.0.9000
+Version: 0.1.0.9001
 Author: Are Strom
 Maintainer: <are.strom@gmail.com>
 Description: A collection of user-friendly functions to connect R to the iFormBuilder API. Currently 
