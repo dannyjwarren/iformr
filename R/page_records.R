@@ -17,7 +17,7 @@ get_pages_list <- function(server_name,
                            limit = 1000,
                            offset = 0,
                            access_token) {
-  pages_uri <- paste0(api_v60_url(company = company_name),
+  pages_uri <- paste0(api_v60_url(server_name = server_name),
                       profile_id, "/pages?fields=fields&limit=",
                       limit,
                       "&offset=", offset)
@@ -183,6 +183,32 @@ get_selected_page_records <- function(server_name,
   rcrd <- as_data_frame(rcrd)
   rcrd[] <- lapply(rcrd, unlist)
   rcrd
+}
+
+#' Get username from the .Renviron file
+#'
+#' Only needed to get username when downloading data using the data feed
+#' mechanism. Avoid if possible. It is much safer to use the API.
+#'
+#' @rdname iform_user
+#' @param user_label The name given to the username in the .Renviron file
+#' @return The username for a read-only user in the given profile
+#' @export
+iform_user <- function(user_label) {
+  Sys.getenv(user_label)
+}
+
+#' Get password from the .Renviron file
+#'
+#' Only needed to get password when downloading data using the data feed
+#' mechanism. Avoid if possible. It is much safer to use the API.
+#'
+#' @rdname iform_key
+#' @param pw_label The name given to the password in the .Renviron file
+#' @return The password for a read-only user in the given profile
+#' @export
+iform_pw <- function(pw_label) {
+  Sys.getenv(pw_label)
 }
 
 #' Compose a url to get data via the data feed mechanism
