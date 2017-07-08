@@ -179,6 +179,12 @@ create_new_option_list <- function(server_name,
 #'   the API
 #' @return A vector of option list element IDs, one for each option in the list
 #' @examples
+#' # The locations dataset is an example of a segmented option list
+#' head(locations, 5)
+
+#' # Convert locations dataframe to json
+#' location_json <- toJSON(locations, auto_unbox = TRUE)
+#'
 #' \dontrun{
 #' # Get access_token
 #' access_token <- get_iform_access_token(
@@ -194,15 +200,9 @@ create_new_option_list <- function(server_name,
 #'   access_token = access_token)
 #'
 #' # Inspect new option list id
-#' option_list_id
+#' new_option_list_id
 #'
-#' # The locations dataset is an example structured as a segmented option list
-#' head(locations, 5)
-
-#' # Convert locations dataframe to json
-#' location_json <- toJSON(locations, auto_unbox = TRUE)
-#'
-#' # Add option elements from locations dataset to a new option list
+#' # Add option elements from locations dataset to the new option list
 #' add_options_to_list <- create_new_option_list(
 #'   server_name = "your_server_name",
 #'   profile_id = 123456,
