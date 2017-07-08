@@ -26,9 +26,30 @@ get_option_list_element_ids(server_name, profile_id, optionlist_id, element,
 the API}
 }
 \value{
-A vector of option list element IDs for the element selected.
+A dataframe with id and attributes for the selected element.
 }
 \description{
 Sends a request to the iFormBuilder API to get a list of all element IDs in
-an option list for a specific field. For example: \code{condition_value}.
+an option list for a specific field. For example: \code{key_value}.
+Returns a dataframe with ids and attributes of the specified element.
+}
+\examples{
+\dontrun{
+# Get access_token
+access_token <- get_iform_access_token(
+  server_name = "your_server_name",
+  client_key_name = "your_client_key_name",
+  client_secret_name = "your_client_secret_name")
+
+# Get the element ids
+element_ids <- get_option_list_element_ids(
+  server_name = "your_server_name",
+  profile_id = 123456,
+  optionlist_id = your_option_list_id,
+  element = "key_value",
+  access_token = access_token)
+
+# Inspect the first five element ids
+head(element_ids, 5)
+}
 }

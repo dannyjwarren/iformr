@@ -27,7 +27,7 @@ delete_options_in_list(server_name, profile_id, optionlist_id,
 the API}
 }
 \value{
-A vector of option list element IDs, one for each option in the list
+A vector of option list elements that were deleted
 }
 \description{
 Sends a request to the iFormBuilder API to delete a list of option elements.
@@ -47,7 +47,7 @@ access_token <- get_iform_access_token(
   client_key_name = "your_client_key_name",
   client_secret_name = "your_client_secret_name")
 
-# Add option elements from locations dataset to the new option list
+# Delete specified elements from option list
 deleted_ids <- delete_options_in_list(
   server_name = "your_server_name",
   profile_id = 123456,

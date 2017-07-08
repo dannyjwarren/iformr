@@ -258,7 +258,7 @@ add_options_to_list <- function(server_name,
 #' @param offset Skips the offset number of options before beginning to delete
 #' @param access_token The access_token required to establish communication with
 #'   the API
-#' @return A vector of option list element IDs, one for each option in the list
+#' @return A vector of option list elements that were deleted
 #' @examples
 #' \dontrun{
 #' # Define .json list of ids for elements to delete
@@ -272,7 +272,7 @@ add_options_to_list <- function(server_name,
 #'   client_key_name = "your_client_key_name",
 #'   client_secret_name = "your_client_secret_name")
 #'
-#' # Add option elements from locations dataset to the new option list
+#' # Delete specified elements from option list
 #' deleted_ids <- delete_options_in_list(
 #'   server_name = "your_server_name",
 #'   profile_id = 123456,
@@ -310,7 +310,8 @@ delete_options_in_list <- function(server_name,
 #' Get list of option_ids for a given element
 #'
 #' Sends a request to the iFormBuilder API to get a list of all element IDs in
-#' an option list for a specific field. For example: \code{condition_value}.
+#' an option list for a specific field. For example: \code{key_value}.
+#' Returns a dataframe with ids and attributes of the specified element.
 #'
 #' @rdname get_option_list_element_ids
 #' @param server_name The server name as encoded in the url:
@@ -323,7 +324,26 @@ delete_options_in_list <- function(server_name,
 #' @param offset Skips the offset number of options before beginning to return
 #' @param access_token The access_token required to establish communication with
 #'   the API
-#' @return A vector of option list element IDs for the element selected.
+#' @return A dataframe with id and attributes for the selected element.
+#' @examples
+#' \dontrun{
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Get the element ids
+#' element_ids <- get_option_list_element_ids(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   optionlist_id = your_option_list_id,
+#'   element = "key_value",
+#'   access_token = access_token)
+#'
+#' # Inspect the first five element ids
+#' head(element_ids, 5)
+#' }
 #' @export
 get_option_list_element_ids <- function(server_name,
                                         profile_id,
