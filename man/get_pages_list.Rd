@@ -28,3 +28,21 @@ Sends a request to the iFormBuilder API to get a listing of all forms and
 subforms in the current profile. Returns a dataframe with form id and form
 name.
 }
+\examples{
+\dontrun{
+# Get access_token
+access_token <- get_iform_access_token(
+  server_name = "your_server_name",
+  client_key_name = "your_client_key_name",
+  client_secret_name = "your_client_secret_name")
+
+# Get the id and name of all forms in profile
+forms_list <- get_pages_list(
+  server_name = "your_server_name",
+  profile_id = 123456,
+  access_token = access_token)
+
+# Inspect
+forms_list
+}
+}

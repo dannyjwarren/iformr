@@ -21,14 +21,14 @@
 #'   client_key_name = "your_client_key_name",
 #'   client_secret_name = "your_client_secret_name")
 #'
-#' # Get the id and name of all option lists in profile
-#' option_lists <- get_option_lists(
+#' # Get the id and name of all forms in profile
+#' forms_list <- get_pages_list(
 #'   server_name = "your_server_name",
 #'   profile_id = 123456,
 #'   access_token = access_token)
 #'
 #' # Inspect
-#' option_lists
+#' forms_list
 #' }
 #' @export
 get_pages_list <- function(server_name,
