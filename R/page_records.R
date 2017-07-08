@@ -1,4 +1,4 @@
-#' Get list of all pages (i.e., forms, both parent and subforms) in a profile
+#' Get list of all pages (i.e., form, or subform) in a profile
 #'
 #' Sends a request to the iFormBuilder API to get a listing of all forms and
 #' subforms in the current profile. Returns a dataframe with form id and form
@@ -54,8 +54,7 @@ get_pages_list <- function(server_name,
   dplyr::data_frame(id = pgs_id, name = pgs_name)
 }
 
-#' Get id of a single page (i.e., form, either parent and subform) given a form
-#' name
+#' Get id of a single page (i.e., form, or subform) given a form name
 #'
 #' Sends a request to the iFormBuilder API to get the id number of a single
 #' form. You only need to supply the name of the option list. Returns an integer
@@ -79,7 +78,7 @@ get_pages_list <- function(server_name,
 #'   client_key_name = "your_client_key_name",
 #'   client_secret_name = "your_client_secret_name")
 #'
-#' # Get the id and name of all forms in profile
+#' # Get the id of a single form in the profile given the form name
 #' form_id <- get_page_id(
 #'   server_name = "your_server_name",
 #'   profile_id = 123456,
@@ -115,7 +114,7 @@ get_page_id <- function(server_name,
   pg$id[pg$name == page_name]
 }
 
-#' Get list of all record IDs in a page (form)
+#' Get list of all record IDs in a single page (i.e., form, or subform)
 #'
 #' Sends a request to the iFormBuilder API to get a list of all record ids in a
 #' given form or subform.
@@ -130,6 +129,31 @@ get_page_id <- function(server_name,
 #' @param access_token The access_token required to establish communication with
 #'   the API
 #' @return A vector of record ids from the given form
+#' @examples
+#' \dontrun{
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Get the id of a single form in the profile given the form name
+#' form_id <- get_page_id(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   page_name = "your_form_p",
+#'   access_token = access_token)
+#'
+#' # Get a list of all record IDs in the specified form
+#' record_ids <- get_page_record_list(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   page_id = form_id,
+#'   access_token = access_token)
+#'
+#' # Inspect the top fine record_ids
+#' head(record_ids, 5)
+#' }
 #' @export
 get_page_record_list <- function(server_name,
                                  profile_id,

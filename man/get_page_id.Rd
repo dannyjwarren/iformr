@@ -2,8 +2,7 @@
 % Please edit documentation in R/page_records.R
 \name{get_page_id}
 \alias{get_page_id}
-\title{Get id of a single page (i.e., form, either parent and subform) given a form
-name}
+\title{Get id of a single page (i.e., form, or subform) given a form name}
 \usage{
 get_page_id(server_name, profile_id, page_name, limit = 1000, offset = 0,
   access_token)
@@ -39,7 +38,7 @@ access_token <- get_iform_access_token(
   client_key_name = "your_client_key_name",
   client_secret_name = "your_client_secret_name")
 
-# Get the id and name of all forms in profile
+# Get the id of a single form in the profile given the form name
 form_id <- get_page_id(
   server_name = "your_server_name",
   profile_id = 123456,

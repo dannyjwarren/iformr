@@ -2,7 +2,7 @@
 % Please edit documentation in R/page_records.R
 \name{get_pages_list}
 \alias{get_pages_list}
-\title{Get list of all pages (i.e., forms, both parent and subforms) in a profile}
+\title{Get list of all pages (i.e., form, or subform) in a profile}
 \usage{
 get_pages_list(server_name, profile_id, limit = 1000, offset = 0,
   access_token)
