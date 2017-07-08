@@ -29,8 +29,6 @@ format to an existing option list. Make sure that all options list key_values
 are unique or the list will not be posted.
 }
 \examples{
-library(jsonlite)
-
 # The locations dataset is an example of a segmented option list
 head(locations, 5)
 # Convert locations dataframe to json
