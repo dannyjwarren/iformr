@@ -37,11 +37,6 @@ add_options_to_list <- create_new_option_list(
   option_list_name = "SGS-StreamLocations",
   access_token = access_token)
 
-# Example data from .RData file (locations)
-  localDir <- getwd()
-  file <- paste(localDir, "locations.RData", sep="/")
-  load(file)
-
 # Structure list items as needed. In this toy example the option
 # list items are already structured correctly for a segmented list
 # Convert location list dataframe to json
