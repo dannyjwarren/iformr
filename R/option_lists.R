@@ -183,7 +183,7 @@ create_new_option_list <- function(server_name,
 #' head(locations, 5)
 
 #' # Convert locations dataframe to json
-#' location_json <- toJSON(locations, auto_unbox = TRUE)
+#' location_json <- jsonlite::toJSON(locations, auto_unbox = TRUE)
 #'
 #' \dontrun{
 #' # Get access_token
