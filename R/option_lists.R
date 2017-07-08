@@ -14,9 +14,9 @@
 #' @return A listing of all option lists in the given profile
 #' @examples
 #' \dontrun{
-#' # Get access_token, assuming your dedicated server is "wdfw"
+#' # Get access_token
 #' access_token <- get_iform_access_token(
-#'   server_name = "wdfw",
+#'   server_name = "your_server_name",
 #'   client_key_name = "your_client_key_name",
 #'   client_secret_name = "your_client_secret_name")
 #'
@@ -70,9 +70,9 @@ get_option_lists <- function(server_name,
 #' @return A listing of all option lists in the given profile
 #' @examples
 #' \dontrun{
-#' # Get access_token, assuming your dedicated server is "wdfw"
+#' # Get access_token
 #' access_token <- get_iform_access_token(
-#'   server_name = "wdfw",
+#'   server_name = "your_server_name",
 #'   client_key_name = "your_client_key_name",
 #'   client_secret_name = "your_client_secret_name")
 #'
@@ -124,9 +124,9 @@ get_option_list_id <- function(server_name,
 #' @return The ID of the new option list
 #' @examples
 #' \dontrun{
-#' # Get access_token, assuming your dedicated server is "wdfw"
+#' # Get access_token
 #' access_token <- get_iform_access_token(
-#'   server_name = "wdfw",
+#'   server_name = "your_server_name",
 #'   client_key_name = "your_client_key_name",
 #'   client_secret_name = "your_client_secret_name")
 #'
@@ -134,7 +134,7 @@ get_option_list_id <- function(server_name,
 #' new_option_list_id <- create_new_option_list(
 #'   server_name = "your_server_name",
 #'   profile_id = 123456,
-#'   option_list_name = "SGS-StreamLocations",
+#'   option_list_name = "SGS-Streams",
 #'   access_token = access_token)
 #'
 #' # Inspect new option list id
@@ -180,18 +180,34 @@ create_new_option_list <- function(server_name,
 #' @return A vector of option list element IDs, one for each option in the list
 #' @examples
 #' \dontrun{
-#' # Add option elements to a new option list
-#' add_options_to_list <- create_new_option_list(
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Create a new empty option list
+#' new_option_list_id <- create_new_option_list(
 #'   server_name = "your_server_name",
 #'   profile_id = 123456,
 #'   option_list_name = "SGS-StreamLocations",
 #'   access_token = access_token)
 #'
-#' # Structure list items as needed. In this toy example the option
-#' # list items are already structured correctly for a segmented list
+#' # Inspect new option list id
+#' option_list_id
+#'
+#' # The locations dataset is an example structured as a segmented option list
+#' head(locations, 5)
 
-#' # Convert location list dataframe to json
+#' # Convert locations dataframe to json
 #' location_json <- toJSON(locations, auto_unbox = TRUE)
+#'
+#' # Add option elements from locations dataset to a new option list
+#' add_options_to_list <- create_new_option_list(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   option_list_name = "SGS-StreamLocations",
+#'   access_token = access_token)
 #' }
 #' @export
 add_options_to_list <- function(server_name,
