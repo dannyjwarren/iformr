@@ -251,10 +251,29 @@ get_page_record <- function(server_name,
   as.data.frame(t(rcru), stringsAsFactors = FALSE)
 }
 
-#' Get specific set of fields in a page (form)
+#' @title Get multiple records for a set of fields in a page (i.e., form, or
+#'   subform)
 #'
-#' Sends a request to the iFormBuilder API to get a list of all record ids in a
-#' given form or subform.
+#' @description Sends a request to the iFormBuilder API to get all records in a
+#'   given form or subform for a specific set of fields (columns). Specify how
+#'   many records to retrieve using the \code{limit} parameter. Specify how many
+#'   records to skip before starting to retrieve using the \code{offset}
+#'   parameter.
+#'
+#' @details This will likely be the primary function used to retrieve records
+#'   from the iFormBuilder API. When a set of records is downloaded using this
+#'   function the retrieved data will contain the record id as the first column.
+#'   By archiving these ids, each request for new records can incorporate the
+#'   last downloaded id in the \code{fields} parameter to only pull newly
+#'   submitted records. See example below.
+#'
+#' @section Warning: This function should \strong{only} be used to request
+#'   records from one form or subform at a time. \strong{Do not} assume it will
+#'   work if records from more than one form are incorporated in the
+#'   \code{fields} parameter. If you request multiple fields but the function
+#'   only returns the id value, and does not throw an error, this is a strong
+#'   indication that you did not specify the fields correctly. You may have
+#'   requested a field that does not exist.
 #'
 #' @rdname get_selected_page_records
 #' @param server_name The server name as encoded in the url:
@@ -266,12 +285,50 @@ get_page_record <- function(server_name,
 #' @param offset Skips the offset number of records before beginning to return
 #' @param access_token The access_token required to establish communication with
 #'   the API
-#' @return A dataframe of records from the specified fields
+#' @return A dataframe of records for the specified fields (columns)
+#' @examples
+#' # Specify the fields (columns) to be returned
+#' field_list <- c(
+#'  "surveyors", "survey_start_datetime", "survey_method",
+#'  "stream", "survey_end_time")
+#'
+#' # Collapse vector of column names into a single string
+#' form_fields <- paste(field_list, collapse = ',')
+#'
+#' # Set id to ascending order and pull only records greater than the last_id
+#' since_id = 5
+#' parent_form_fields <- paste0("id:<(>\\"", since_id, "\\"),", form_fields)
+#'
+#' \dontrun{
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Get the id of a single form in the profile given the form name
+#' form_id <- get_page_id(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   page_name = "your_form_p",
+#'   access_token = access_token)
+#'
+#' # Get multiple records for a set of columns from a form or subform
+#' parent_form_records <- get_selected_page_records(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   page_id = form_id,
+#'   fields = parent_form_fields,
+#'   access_token = access_token)
+#'
+#' # Inspect the first five rows and columns of the dataframe
+#' parent_form_records[1:5,1:5]
+#' }
 #' @export
 get_selected_page_records <- function(server_name,
                                       profile_id,
                                       page_id,
-                                      fields = fields,
+                                      fields = "fields",
                                       limit = 100,
                                       offset = 0,
                                       access_token) {
