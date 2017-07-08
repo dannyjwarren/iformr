@@ -203,11 +203,15 @@ create_new_option_list <- function(server_name,
 #' new_option_list_id
 #'
 #' # Add option elements from locations dataset to the new option list
-#' add_options_to_list <- create_new_option_list(
+#' option_ids <- add_options_to_list(
 #'   server_name = "your_server_name",
 #'   profile_id = 123456,
-#'   option_list_name = "SGS-StreamLocations",
+#'   optionlist_id = new_option_list_id,
+#'   option_values = location_json
 #'   access_token = access_token)
+#'
+#' # Inspect the first five new option list element IDs.
+#' head(option_ids, 5)
 #' }
 #' @export
 add_options_to_list <- function(server_name,

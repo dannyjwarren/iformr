@@ -29,9 +29,9 @@ currently posted in the given profile.
 }
 \examples{
 \dontrun{
-# Get access_token, assuming your dedicated server is "wdfw"
+# Get access_token
 access_token <- get_iform_access_token(
-  server_name = "wdfw",
+  server_name = "your_server_name",
   client_key_name = "your_client_key_name",
   client_secret_name = "your_client_secret_name")
 

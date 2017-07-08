@@ -29,17 +29,37 @@ format to an existing option list. Make sure that all options list key_values
 are unique or the list will not be posted.
 }
 \examples{
+# The locations dataset is an example of a segmented option list
+head(locations, 5)
+# Convert locations dataframe to json
+location_json <- toJSON(locations, auto_unbox = TRUE)
+
 \dontrun{
-# Add option elements to a new option list
-add_options_to_list <- create_new_option_list(
+# Get access_token
+access_token <- get_iform_access_token(
+  server_name = "your_server_name",
+  client_key_name = "your_client_key_name",
+  client_secret_name = "your_client_secret_name")
+
+# Create a new empty option list
+new_option_list_id <- create_new_option_list(
   server_name = "your_server_name",
   profile_id = 123456,
   option_list_name = "SGS-StreamLocations",
   access_token = access_token)
 
-# Structure list items as needed. In this toy example the option
-# list items are already structured correctly for a segmented list
-# Convert location list dataframe to json
-location_json <- toJSON(locations, auto_unbox = TRUE)
+# Inspect new option list id
+new_option_list_id
+
+# Add option elements from locations dataset to the new option list
+option_ids <- add_options_to_list(
+  server_name = "your_server_name",
+  profile_id = 123456,
+  optionlist_id = new_option_list_id,
+  option_values = location_json
+  access_token = access_token)
+
+# Inspect the first five new option list element IDs.
+head(option_ids, 5)
 }
 }

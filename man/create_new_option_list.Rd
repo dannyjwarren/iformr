@@ -26,9 +26,9 @@ option list will be created with the name you supply.
 }
 \examples{
 \dontrun{
-# Get access_token, assuming your dedicated server is "wdfw"
+# Get access_token
 access_token <- get_iform_access_token(
-  server_name = "wdfw",
+  server_name = "your_server_name",
   client_key_name = "your_client_key_name",
   client_secret_name = "your_client_secret_name")
 
@@ -36,7 +36,7 @@ access_token <- get_iform_access_token(
 new_option_list_id <- create_new_option_list(
   server_name = "your_server_name",
   profile_id = 123456,
-  option_list_name = "SGS-StreamLocations",
+  option_list_name = "SGS-Streams",
   access_token = access_token)
 
 # Inspect new option list id
