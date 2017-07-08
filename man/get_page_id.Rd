@@ -2,7 +2,8 @@
 % Please edit documentation in R/page_records.R
 \name{get_page_id}
 \alias{get_page_id}
-\title{Get id of a single page (form) given a form name}
+\title{Get id of a single page (i.e., form, either parent and subform) given a form
+name}
 \usage{
 get_page_id(server_name, profile_id, page_name, limit = 1000, offset = 0,
   access_token)
@@ -23,10 +24,29 @@ get_page_id(server_name, profile_id, page_name, limit = 1000, offset = 0,
 the API}
 }
 \value{
-A dataframe listing the id and name of the given form
+An integer id for the given form
 }
 \description{
-Sends a request to the iFormBuilder API to get a table containing the id and
-name of a single form. You only need to supply the name of the option list.
-Returns a dataframe with form id and form name.
+Sends a request to the iFormBuilder API to get the id number of a single
+form. You only need to supply the name of the option list. Returns an integer
+id for the given form.
+}
+\examples{
+\dontrun{
+# Get access_token
+access_token <- get_iform_access_token(
+  server_name = "your_server_name",
+  client_key_name = "your_client_key_name",
+  client_secret_name = "your_client_secret_name")
+
+# Get the id and name of all forms in profile
+form_id <- get_page_id(
+  server_name = "your_server_name",
+  profile_id = 123456,
+  page_name = "spawning_ground_p",
+  access_token = access_token)
+
+# Inspect the form_id
+form_id
+}
 }
