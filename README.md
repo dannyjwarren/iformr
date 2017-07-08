@@ -43,10 +43,8 @@ The path to your .Renviron file will be displayed. Detailed instructions on how 
 
 Briefly, the procedure is as follows. Use RStudio to either create a new .Renviron file if it does not exist (see instructions at link above), or open the existing .Renviron file from the specified location. It will look similar to:
 
-``` r
-MyProfileNameClientKey=eb7411c1525c486ae7a64727965c3e042eab7389
-MyProfileNameClientSecret=471dbbe5061f4c1db9141c48cc1d0d5a96e60cc6
-```
+    MyProfileNameClientKey=eb7411c1525c486ae7a64727965c3e042eab7389
+    MyProfileNameClientSecret=471dbbe5061f4c1db9141c48cc1d0d5a96e60cc6
 
 Simply add your new client\_key and client\_secret as in the example above. The *client\_key\_name* is the section before the equals sign. The *client\_key* is the value following the equals sign. The same pattern is used for the *client secret*. You can enter any convenient name for the name portion. These names are what you will enter as parameters to the `get_iform_access_token()` function to request an `access_token`.
 
