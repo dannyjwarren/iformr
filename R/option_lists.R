@@ -394,6 +394,24 @@ get_option_list_element_ids <- function(server_name,
 #' @param access_token The access_token required to establish communication with
 #'   the API
 #' @return A dataframe of the core option list elements
+#' @examples
+#' \dontrun{
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Get the core elements in an option list
+#' core_elements <- get_core_option_list_elements(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   optionlist_id = your_option_list_id,
+#'   access_token = access_token)
+#'
+#' # Inspect the first five core elements
+#' head(core_elements, 5)
+#' }
 #' @export
 get_core_option_list_elements <- function(server_name,
                                           profile_id,
