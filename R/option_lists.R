@@ -26,8 +26,8 @@
 #'   profile_id = 123456,
 #'   access_token = access_token)
 #'
-#'   # Inspect
-#'   option_lists
+#' # Inspect
+#' option_lists
 #' }
 #' @export
 get_option_lists <- function(server_name,

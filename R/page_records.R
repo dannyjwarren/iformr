@@ -1,4 +1,4 @@
-#' Get list of all pages (forms, parent and subforms) in a profile
+#' Get list of all pages (i.e., forms, both parent and subforms) in a profile
 #'
 #' Sends a request to the iFormBuilder API to get a listing of all forms and
 #' subforms in the current profile. Returns a dataframe with form id and form
