@@ -371,7 +371,7 @@ get_selected_page_records <- function(server_name,
 #' @examples
 #' \dontrun{
 #' # Generate a url to retrieve data via the data feed mechanism
-#' form_data_json <- data_feed_url(
+#' url <- data_feed_url(
 #'   server_name = "your_server_name",
 #'   parent_form_id = 456789,
 #'   profile_id = 123456,
@@ -379,6 +379,9 @@ get_selected_page_records <- function(server_name,
 #'   since_id = 3,
 #'   user_label = "your_user_label",
 #'   pw_label = "your_pw_label")
+#'
+#' # Retrieved the form data into an R list
+#' form_data <- jsonlite::fromJSON(url)
 #' }
 #' @export
 data_feed_url = function(server_name,
