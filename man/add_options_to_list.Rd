@@ -31,6 +31,7 @@ are unique or the list will not be posted.
 \examples{
 # The locations dataset is an example of a segmented option list
 head(locations, 5)
+
 # Convert locations dataframe to json
 location_json <- jsonlite::toJSON(locations, auto_unbox = TRUE)
 

@@ -181,7 +181,7 @@ create_new_option_list <- function(server_name,
 #' @examples
 #' # The locations dataset is an example of a segmented option list
 #' head(locations, 5)
-
+#'
 #' # Convert locations dataframe to json
 #' location_json <- jsonlite::toJSON(locations, auto_unbox = TRUE)
 #'
@@ -497,7 +497,7 @@ get_core_option_list_elements <- function(server_name,
 #'   optionlist_id = your_locations_option_list_id,
 #'   option_values = updated_options_json,
 #'   access_token = access_token)
-
+#'
 #' # Inspect the updated option list item ids.
 #' updated_ids
 #' }
