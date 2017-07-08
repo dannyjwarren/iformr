@@ -30,5 +30,5 @@ A vector of option list element IDs for the element selected.
 }
 \description{
 Sends a request to the iFormBuilder API to get a list of all element IDs in
-an option list for a specific field. For example: condition_value.
+an option list for a specific field. For example: \code{condition_value}.
 }

@@ -34,3 +34,28 @@ Sends a request to the iFormBuilder API to delete a list of option elements.
 The elements to delete are specified by a .json list of element ids. Sort
 order will automatically be reassigned after deleting specified elements.
 }
+\examples{
+\dontrun{
+# Define .json list of ids for elements to delete
+# Replace example values below with your own
+  id_values = data_frame(id = c(663487010, 663487013))
+  id_values_json = jsonlite::toJSON(id_values, auto_unbox = TRUE)
+
+# Get access_token
+access_token <- get_iform_access_token(
+  server_name = "your_server_name",
+  client_key_name = "your_client_key_name",
+  client_secret_name = "your_client_secret_name")
+
+# Add option elements from locations dataset to the new option list
+deleted_ids <- delete_options_in_list(
+  server_name = "your_server_name",
+  profile_id = 123456,
+  optionlist_id = your_option_list_id,
+  id_values = id_values_json,
+  access_token = access_token)
+
+# Inspect the first five deleted ids
+head(deleted_ids, 5)
+}
+}
