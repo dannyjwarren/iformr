@@ -1,15 +1,17 @@
 #' Get list of all pages (forms, parent and subforms) in a profile
 #'
-#' Sends a request to the iFormBuilder API to get a listing of all
-#' forms and subforms in the current profile. Returns a dataframe
-#' with form id and form name.
+#' Sends a request to the iFormBuilder API to get a listing of all forms and
+#' subforms in the current profile. Returns a dataframe with form id and form
+#' name.
 #'
 #' @rdname get_pages_list
-#' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
+#' @param server_name The server name as encoded in the url:
+#'   `https//server_name.iformbuilder.com`
 #' @param profile_id The ID number of your profile
 #' @param limit The maximum number of form ids to return
 #' @param offset Skips the offset number of ids before beginning to return
-#' @param access_token The access_token required to establish communication with the API
+#' @param access_token The access_token required to establish communication with
+#'   the API
 #' @return A dataframe of all forms (pages) in the given profile
 #' @export
 get_pages_list <- function(server_name,
@@ -32,22 +34,24 @@ get_pages_list <- function(server_name,
                           function(i) pgsx[i] <- pgs[[i]]$id))
   pgs_name <- unlist(lapply(seq_along(pgsx),
                             function(i) pgsx[i] <- pgs[[i]]$name))
-  data_frame(id = pgs_id, name = pgs_name)
+  dplyr::data_frame(id = pgs_id, name = pgs_name)
 }
 
 #' Get id of a single page (form) given a form name
 #'
-#' Sends a request to the iFormBuilder API to get a table containing
-#' the id and name of a single form. You only need to supply the name
-#' of the option list. Returns a dataframe with form id and form name.
+#' Sends a request to the iFormBuilder API to get a table containing the id and
+#' name of a single form. You only need to supply the name of the option list.
+#' Returns a dataframe with form id and form name.
 #'
 #' @rdname get_page_id
-#' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
+#' @param server_name The server name as encoded in the url:
+#'   `https//server_name.iformbuilder.com`
 #' @param profile_id The ID number of your profile
 #' @param page_name The name of the form or subform
 #' @param limit The maximum number of form ids to return
 #' @param offset Skips the offset number of ids before beginning to return
-#' @param access_token The access_token required to establish communication with the API
+#' @param access_token The access_token required to establish communication with
+#'   the API
 #' @return A dataframe listing the id and name of the given form
 #' @export
 get_page_id <- function(server_name,
@@ -71,22 +75,24 @@ get_page_id <- function(server_name,
                           function(i) pgsx[i] <- pgs[[i]]$id))
   pgs_name <- unlist(lapply(seq_along(pgsx),
                             function(i) pgsx[i] <- pgs[[i]]$name))
-  pg = data_frame(id = pgs_id, name = pgs_name)
+  pg = dplyr::data_frame(id = pgs_id, name = pgs_name)
   pg$id[pg$name == page_name]
 }
 
 #' Get list of all record IDs in a page (form)
 #'
-#' Sends a request to the iFormBuilder API to get a list of all record
-#' ids in a given form or subform.
+#' Sends a request to the iFormBuilder API to get a list of all record ids in a
+#' given form or subform.
 #'
 #' @rdname get_page_record_list
-#' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
+#' @param server_name The server name as encoded in the url:
+#'   `https//server_name.iformbuilder.com`
 #' @param profile_id The ID number of your profile
-#' @param page_name The name of the form or subform
+#' @param page_id The id number of the form
 #' @param limit The maximum number of form ids to return
 #' @param offset Skips the offset number of ids before beginning to return
-#' @param access_token The access_token required to establish communication with the API
+#' @param access_token The access_token required to establish communication with
+#'   the API
 #' @return A vector of record ids from the given form
 #' @export
 get_page_record_list <- function(server_name,
@@ -113,15 +119,17 @@ get_page_record_list <- function(server_name,
 
 #' Get a single record from a page (form)
 #'
-#' Sends a request to the iFormBuilder API to get a list of all record
-#' ids in a given form or subform.
+#' Sends a request to the iFormBuilder API to get a list of all record ids in a
+#' given form or subform.
 #'
 #' @rdname get_page_record
-#' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
+#' @param server_name The server name as encoded in the url:
+#'   `https//server_name.iformbuilder.com`
 #' @param profile_id The ID number of your profile
 #' @param page_id The id for the form
 #' @param record_id The id for the specific record to return
-#' @param access_token The access_token required to establish communication with the API
+#' @param access_token The access_token required to establish communication with
+#'   the API
 #' @return Dataframe of a single record from the given form
 #' @export
 get_page_record <- function(server_name,
@@ -146,17 +154,19 @@ get_page_record <- function(server_name,
 
 #' Get specific set of fields in a page (form)
 #'
-#' Sends a request to the iFormBuilder API to get a list of all record
-#' ids in a given form or subform.
+#' Sends a request to the iFormBuilder API to get a list of all record ids in a
+#' given form or subform.
 #'
 #' @rdname get_selected_page_records
-#' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
+#' @param server_name The server name as encoded in the url:
+#'   `https//server_name.iformbuilder.com`
 #' @param profile_id The ID number of your profile
 #' @param page_id The id of the form or subform
 #' @param fields A set of data fields (columns) to return
 #' @param limit The maximum number of records to return
 #' @param offset Skips the offset number of records before beginning to return
-#' @param access_token The access_token required to establish communication with the API
+#' @param access_token The access_token required to establish communication with
+#'   the API
 #' @return A dataframe of records from the specified fields
 #' @export
 get_selected_page_records <- function(server_name,
@@ -180,47 +190,21 @@ get_selected_page_records <- function(server_name,
   rcrd <- httr::content(r, type = "application/json")
   rcrd <- lapply(rcrd, rm_nulls)
   rcrd <- as.data.frame(do.call(rbind, lapply(rcrd, rbind)))
-  rcrd <- as_data_frame(rcrd)
+  rcrd <- dplyr::as_data_frame(rcrd)
   rcrd[] <- lapply(rcrd, unlist)
   rcrd
-}
-
-#' Get username from the .Renviron file
-#'
-#' Only needed to get username when downloading data using the data feed
-#' mechanism. Avoid if possible. It is much safer to use the API.
-#'
-#' @rdname iform_user
-#' @param user_label The name given to the username in the .Renviron file
-#' @return The username for a read-only user in the given profile
-#' @export
-iform_user <- function(user_label) {
-  Sys.getenv(user_label)
-}
-
-#' Get password from the .Renviron file
-#'
-#' Only needed to get password when downloading data using the data feed
-#' mechanism. Avoid if possible. It is much safer to use the API.
-#'
-#' @rdname iform_key
-#' @param pw_label The name given to the password in the .Renviron file
-#' @return The password for a read-only user in the given profile
-#' @export
-iform_pw <- function(pw_label) {
-  Sys.getenv(pw_label)
 }
 
 #' Compose a url to get data via the data feed mechanism
 #'
 #' Creates a url with username and password embedded that can be used to
-#' download data using the data-feed mechanism instead of the API. In
-#' general, this should be avoided, as the API mechanisms are much
-#' safer. Returns a json file with all records since the specified
-#' SINCE_ID.
+#' download data using the data-feed mechanism instead of the API. In general,
+#' this should be avoided, as the API mechanisms are much safer. Returns a json
+#' file with all records submitted since the specified SINCE_ID.
 #'
-#' @rdname get_selected_page_records
-#' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
+#' @rdname data_feed_url
+#' @param server_name The server name as encoded in the url:
+#'   `https//server_name.iformbuilder.com`
 #' @param parent_form_id The id of the parent form
 #' @param profile_id The ID number of your profile
 #' @param parent_form_name The name of the parent form
@@ -243,3 +227,22 @@ data_feed_url = function(server_name,
          "USERNAME=", iform_user(user_label), "&",
          "PASSWORD=", iform_pw(pw_label))
 }
+
+# Get username from the .Renviron file
+# Only needed to get username when downloading data using the data feed
+# mechanism. Avoid if possible. It is much safer to use the API.
+iform_user <- function(user_label) {
+  Sys.getenv(user_label)
+}
+
+# Get password from the .Renviron file
+iform_pw <- function(pw_label) {
+  Sys.getenv(pw_label)
+}
+
+# Remove nulls from elements in a list
+rm_nulls <- function(x) {
+  x[sapply(x, is.null)] <- NA
+  return(x)
+}
+

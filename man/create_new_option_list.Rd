@@ -7,18 +7,41 @@
 create_new_option_list(server_name, profile_id, option_list_name, access_token)
 }
 \arguments{
-\item{server_name}{The server name as encoded in the url: `https//server_name.iformbuilder.com`}
+\item{server_name}{The server name as encoded in the url:
+`https//server_name.iformbuilder.com`}
 
 \item{profile_id}{The ID number of your profile}
 
 \item{option_list_name}{A character name for the new option list}
 
-\item{access_token}{The access_token required to establish communication with the API}
+\item{access_token}{The access_token required to establish communication with
+the API}
 }
 \value{
 The ID of the new option list
 }
 \description{
-Sends a request to the iFormBuilder API to create a new option list.
-The new option list will be created with the name you supply.
+Sends a request to the iFormBuilder API to create a new option list. The new
+option list will be created with the name you supply.
+}
+\examples{
+\dontrun{
+# Get access_token, assuming your dedicated server is "wdfw"
+access_token <- get_iform_access_token(
+  server_name = "wdfw",
+  client_key_name = "your_client_key_name",
+  client_secret_name = "your_client_secret_name")
+
+# Create a new empty option list
+new_option_list_id <- create_new_option_list(
+  server_name = "your_server_name",
+  profile_id = 123456,
+  option_list_name = "SGS-StreamLocations",
+  access_token = access_token)
+
+# Inspect new option list id
+option_list_id
+# If successful, result should look something like:
+# [1] 4423966
+}
 }

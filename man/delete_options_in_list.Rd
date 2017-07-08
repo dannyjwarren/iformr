@@ -8,7 +8,8 @@ delete_options_in_list(server_name, profile_id, optionlist_id,
   fields = "fields", id_values, limit = 1000, offset = 0, access_token)
 }
 \arguments{
-\item{server_name}{The server name as encoded in the url: `https//server_name.iformbuilder.com`}
+\item{server_name}{The server name as encoded in the url:
+`https//server_name.iformbuilder.com`}
 
 \item{profile_id}{The ID number of your profile}
 
@@ -22,7 +23,8 @@ delete_options_in_list(server_name, profile_id, optionlist_id,
 
 \item{offset}{Skips the offset number of options before beginning to delete}
 
-\item{access_token}{The access_token required to establish communication with the API}
+\item{access_token}{The access_token required to establish communication with
+the API}
 }
 \value{
 A vector of option list element IDs, one for each option in the list

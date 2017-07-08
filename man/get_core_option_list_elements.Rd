@@ -8,7 +8,8 @@ get_core_option_list_elements(server_name, profile_id, optionlist_id,
   limit = 1000, offset = 0, access_token)
 }
 \arguments{
-\item{server_name}{The server name as encoded in the url: `https//server_name.iformbuilder.com`}
+\item{server_name}{The server name as encoded in the url:
+`https//server_name.iformbuilder.com`}
 
 \item{profile_id}{The ID number of your profile}
 
@@ -18,12 +19,14 @@ get_core_option_list_elements(server_name, profile_id, optionlist_id,
 
 \item{offset}{Skips the offset number of options before beginning to return}
 
-\item{access_token}{The access_token required to establish communication with the API}
+\item{access_token}{The access_token required to establish communication with
+the API}
 }
 \value{
 A dataframe of the core option list elements
 }
 \description{
-Sends a request to the iFormBuilder API to return the core option list elements.
-Function will return the id, sort_order, label, key_value, and condition_value.
+Sends a request to the iFormBuilder API to return the core option list
+elements. Function will return the id, sort_order, label, key_value, and
+condition_value.
 }

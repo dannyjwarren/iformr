@@ -8,7 +8,8 @@ get_page_id(server_name, profile_id, page_name, limit = 1000, offset = 0,
   access_token)
 }
 \arguments{
-\item{server_name}{The server name as encoded in the url: `https//server_name.iformbuilder.com`}
+\item{server_name}{The server name as encoded in the url:
+`https//server_name.iformbuilder.com`}
 
 \item{profile_id}{The ID number of your profile}
 
@@ -18,13 +19,14 @@ get_page_id(server_name, profile_id, page_name, limit = 1000, offset = 0,
 
 \item{offset}{Skips the offset number of ids before beginning to return}
 
-\item{access_token}{The access_token required to establish communication with the API}
+\item{access_token}{The access_token required to establish communication with
+the API}
 }
 \value{
 A dataframe listing the id and name of the given form
 }
 \description{
-Sends a request to the iFormBuilder API to get a table containing
-the id and name of a single form. You only need to supply the name
-of the option list. Returns a dataframe with form id and form name.
+Sends a request to the iFormBuilder API to get a table containing the id and
+name of a single form. You only need to supply the name of the option list.
+Returns a dataframe with form id and form name.
 }

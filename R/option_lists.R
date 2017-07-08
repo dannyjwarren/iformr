@@ -1,27 +1,34 @@
-#' Define API url
-#'
-#' Use `api_v60_url` to define the API section of the request url.
-#' If you do not have a dedicated server the server_name will be `app`
-#' @rdname api_v60_url
-#' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
-#' @return A url for API requests, with \code{server_name} encoded
-#' @export
-api_v60_url <- function(server_name) {
-  paste0(base_url(server_name), "/exzact/api/v60/profiles/")
-}
-
 #' Get a listing of all option lists in a profile
 #'
-#' Sends a request to the iFormBuilder API to get a listing of all
-#' option lists currently posted in the given profile.
+#' Sends a request to the iFormBuilder API to get a listing of all option lists
+#' currently posted in the given profile.
 #'
 #' @rdname get_option_lists
-#' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
+#' @param server_name The server name as encoded in the url:
+#'   `https//server_name.iformbuilder.com`
 #' @param profile_id The ID number of your profile
 #' @param limit The maximum number of option lists to return
 #' @param offset Skips the offset number of options before beginning to return
-#' @param access_token The access_token required to establish communication with the API
+#' @param access_token The access_token required to establish communication with
+#'   the API
 #' @return A listing of all option lists in the given profile
+#' @examples
+#' \dontrun{
+#' # Get access_token, assuming your dedicated server is "wdfw"
+#' access_token <- get_iform_access_token(
+#'   server_name = "wdfw",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Get the id and name of all option lists in profile
+#' option_lists <- get_option_lists(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   access_token = access_token)
+#'
+#'   # Inspect
+#'   option_lists
+#' }
 #' @export
 get_option_lists <- function(server_name,
                              profile_id,
@@ -52,13 +59,30 @@ get_option_lists <- function(server_name,
 #' option list. You only need to supply the name of the option list.
 #'
 #' @rdname get_option_list_id
-#' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
+#' @param server_name The server name as encoded in the url:
+#'   `https//server_name.iformbuilder.com`
 #' @param profile_id The ID number of your profile
 #' @param option_list_name The name of the option list
 #' @param limit The maximum number of option lists to return
 #' @param offset Skips the offset number of options before beginning to return
-#' @param access_token The access_token required to establish communication with the API
+#' @param access_token The access_token required to establish communication with
+#'   the API
 #' @return A listing of all option lists in the given profile
+#' @examples
+#' \dontrun{
+#' # Get access_token, assuming your dedicated server is "wdfw"
+#' access_token <- get_iform_access_token(
+#'   server_name = "wdfw",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Get the id of a single option list given the name
+#' streams_option_list_id <- get_option_list_id(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   option_list_name = "SGS-Streams",
+#'   access_token = access_token)
+#' }
 #' @export
 get_option_list_id <- function(server_name,
                                profile_id,
@@ -87,15 +111,38 @@ get_option_list_id <- function(server_name,
 
 #' Create a new option list
 #'
-#' Sends a request to the iFormBuilder API to create a new option list.
-#' The new option list will be created with the name you supply.
+#' Sends a request to the iFormBuilder API to create a new option list. The new
+#' option list will be created with the name you supply.
 #'
 #' @rdname create_new_option_list
-#' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
+#' @param server_name The server name as encoded in the url:
+#'   `https//server_name.iformbuilder.com`
 #' @param profile_id The ID number of your profile
 #' @param option_list_name A character name for the new option list
-#' @param access_token The access_token required to establish communication with the API
+#' @param access_token The access_token required to establish communication with
+#'   the API
 #' @return The ID of the new option list
+#' @examples
+#' \dontrun{
+#' # Get access_token, assuming your dedicated server is "wdfw"
+#' access_token <- get_iform_access_token(
+#'   server_name = "wdfw",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Create a new empty option list
+#' new_option_list_id <- create_new_option_list(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   option_list_name = "SGS-StreamLocations",
+#'   access_token = access_token)
+#'
+#' # Inspect new option list id
+#' option_list_id
+
+#' # If successful, result should look something like:
+#' # [1] 4423966
+#' }
 #' @export
 create_new_option_list <- function(server_name,
                                    profile_id,
@@ -118,17 +165,39 @@ create_new_option_list <- function(server_name,
 
 #' Add option values to new option list
 #'
-#' Sends a request to the iFormBuilder API to append a list of options
-#' in json format to an existing option list. Make sure that all options
-#' list key_values are unique or the list will not be posted.
+#' Sends a request to the iFormBuilder API to append a list of options in json
+#' format to an existing option list. Make sure that all options list key_values
+#' are unique or the list will not be posted.
 #'
 #' @rdname add_options_to_list
-#' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
+#' @param server_name The server name as encoded in the url:
+#'   `https//server_name.iformbuilder.com`
 #' @param profile_id The ID number of your profile
 #' @param optionlist_id The ID number for the option list
 #' @param option_values A list of option values in json format
-#' @param access_token The access_token required to establish communication with the API
+#' @param access_token The access_token required to establish communication with
+#'   the API
 #' @return A vector of option list element IDs, one for each option in the list
+#' @examples
+#' \dontrun{
+#' # Add option elements to a new option list
+#' add_options_to_list <- create_new_option_list(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   option_list_name = "SGS-StreamLocations",
+#'   access_token = access_token)
+#'
+#' # Example data from .RData file (locations)
+#'   localDir <- getwd()
+#'   file <- paste(localDir, "locations.RData", sep="/")
+#'   load(file)
+#'
+#' # Structure list items as needed. In this toy example the option
+#' # list items are already structured correctly for a segmented list
+
+#' # Convert location list dataframe to json
+#' location_json <- toJSON(locations, auto_unbox = TRUE)
+#' }
 #' @export
 add_options_to_list <- function(server_name,
                                 profile_id,
@@ -164,14 +233,16 @@ add_options_to_list <- function(server_name,
 #' order will automatically be reassigned after deleting specified elements.
 #'
 #' @rdname delete_options_in_list
-#' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
+#' @param server_name The server name as encoded in the url:
+#'   `https//server_name.iformbuilder.com`
 #' @param profile_id The ID number of your profile
 #' @param optionlist_id The ID number for the option list
 #' @param fields Placeholder for fields to delete, not yet implemented
 #' @param id_values A .json list of ids for elements to delete
 #' @param limit The maximum number of option elements to delete
 #' @param offset Skips the offset number of options before beginning to delete
-#' @param access_token The access_token required to establish communication with the API
+#' @param access_token The access_token required to establish communication with
+#'   the API
 #' @return A vector of option list element IDs, one for each option in the list
 #' @export
 delete_options_in_list <- function(server_name,
@@ -199,17 +270,20 @@ delete_options_in_list <- function(server_name,
 
 #' Get list of option_ids for a given element
 #'
-#' Sends a request to the iFormBuilder API to get a list of all element IDs
-#' in an option list for a specific field. For example: condition_value.
+#' Sends a request to the iFormBuilder API to get a list of all element IDs in
+#' an option list for a specific field. For example: condition_value.
 #'
 #' @rdname get_option_list_element_ids
-#' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
+#' @param server_name The server name as encoded in the url:
+#'   `https//server_name.iformbuilder.com`
 #' @param profile_id The ID number of your profile
 #' @param optionlist_id The ID number for the option list
-#' @param element The specific option list element. For example: "condition_value".
+#' @param element The specific option list element. For example:
+#'   "condition_value".
 #' @param limit The maximum number of option element IDs to return
 #' @param offset Skips the offset number of options before beginning to return
-#' @param access_token The access_token required to establish communication with the API
+#' @param access_token The access_token required to establish communication with
+#'   the API
 #' @return A vector of option list element IDs for the element selected.
 #' @export
 get_option_list_element_ids <- function(server_name,
@@ -247,16 +321,19 @@ get_option_list_element_ids <- function(server_name,
 
 #' Get core elements in an option list
 #'
-#' Sends a request to the iFormBuilder API to return the core option list elements.
-#' Function will return the id, sort_order, label, key_value, and condition_value.
+#' Sends a request to the iFormBuilder API to return the core option list
+#' elements. Function will return the id, sort_order, label, key_value, and
+#' condition_value.
 #'
 #' @rdname get_core_option_list_elements
-#' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
+#' @param server_name The server name as encoded in the url:
+#'   `https//server_name.iformbuilder.com`
 #' @param profile_id The ID number of your profile
 #' @param optionlist_id The ID number for the option list
 #' @param limit The maximum number of option list items to return
 #' @param offset Skips the offset number of options before beginning to return
-#' @param access_token The access_token required to establish communication with the API
+#' @param access_token The access_token required to establish communication with
+#'   the API
 #' @return A dataframe of the core option list elements
 #' @export
 get_core_option_list_elements <- function(server_name,
@@ -290,20 +367,22 @@ get_core_option_list_elements <- function(server_name,
 
 #' Update values in an existing option list
 #'
-#' Sends a request to the iFormBuilder API to update existing values in an 
-#' option list. Option values for the specified fields will be updated to the 
-#' new values supplied in the json object `option_values`. Do not use the
-#' fields parameter. It has not been implemented yet. 
+#' Sends a request to the iFormBuilder API to update existing values in an
+#' option list. Option values for the specified fields will be updated to the
+#' new values supplied in the json object `option_values`. Do not use the fields
+#' parameter. It has not been implemented yet.
 #'
 #' @rdname update_options_in_list
-#' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
+#' @param server_name The server name as encoded in the url:
+#'   `https//server_name.iformbuilder.com`
 #' @param profile_id The ID number of your profile
 #' @param optionlist_id The ID number for the option list
 #' @param option_values A json object containing new option list values
 #' @param limit The maximum number of option list items to return
 #' @param fields Placeholder for fields to update, not yet implemented
 #' @param offset Skips the offset number of options before beginning to update
-#' @param access_token The access_token required to establish communication with the API
+#' @param access_token The access_token required to establish communication with
+#'   the API
 #' @return A vector of option IDs for elements that were updated
 #' @export
 update_options_in_list <- function(server_name,
@@ -327,5 +406,10 @@ update_options_in_list <- function(server_name,
                  encode = "json")
   httr::stop_for_status(r)
   as.vector(unlist(httr::content(r, type = "application/json")))
+}
+
+# Define the API url
+api_v60_url <- function(server_name) {
+  paste0(base_url(server_name), "/exzact/api/v60/profiles/")
 }
 

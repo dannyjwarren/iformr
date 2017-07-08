@@ -8,7 +8,8 @@ add_options_to_list(server_name, profile_id, optionlist_id, option_values,
   access_token)
 }
 \arguments{
-\item{server_name}{The server name as encoded in the url: `https//server_name.iformbuilder.com`}
+\item{server_name}{The server name as encoded in the url:
+`https//server_name.iformbuilder.com`}
 
 \item{profile_id}{The ID number of your profile}
 
@@ -16,13 +17,34 @@ add_options_to_list(server_name, profile_id, optionlist_id, option_values,
 
 \item{option_values}{A list of option values in json format}
 
-\item{access_token}{The access_token required to establish communication with the API}
+\item{access_token}{The access_token required to establish communication with
+the API}
 }
 \value{
 A vector of option list element IDs, one for each option in the list
 }
 \description{
-Sends a request to the iFormBuilder API to append a list of options
-in json format to an existing option list. Make sure that all options
-list key_values are unique or the list will not be posted.
+Sends a request to the iFormBuilder API to append a list of options in json
+format to an existing option list. Make sure that all options list key_values
+are unique or the list will not be posted.
+}
+\examples{
+\dontrun{
+# Add option elements to a new option list
+add_options_to_list <- create_new_option_list(
+  server_name = "your_server_name",
+  profile_id = 123456,
+  option_list_name = "SGS-StreamLocations",
+  access_token = access_token)
+
+# Example data from .RData file (locations)
+  localDir <- getwd()
+  file <- paste(localDir, "locations.RData", sep="/")
+  load(file)
+
+# Structure list items as needed. In this toy example the option
+# list items are already structured correctly for a segmented list
+# Convert location list dataframe to json
+location_json <- toJSON(locations, auto_unbox = TRUE)
+}
 }

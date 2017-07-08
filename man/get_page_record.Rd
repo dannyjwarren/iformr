@@ -7,7 +7,8 @@
 get_page_record(server_name, profile_id, page_id, record_id, access_token)
 }
 \arguments{
-\item{server_name}{The server name as encoded in the url: `https//server_name.iformbuilder.com`}
+\item{server_name}{The server name as encoded in the url:
+`https//server_name.iformbuilder.com`}
 
 \item{profile_id}{The ID number of your profile}
 
@@ -15,12 +16,13 @@ get_page_record(server_name, profile_id, page_id, record_id, access_token)
 
 \item{record_id}{The id for the specific record to return}
 
-\item{access_token}{The access_token required to establish communication with the API}
+\item{access_token}{The access_token required to establish communication with
+the API}
 }
 \value{
 Dataframe of a single record from the given form
 }
 \description{
-Sends a request to the iFormBuilder API to get a list of all record
-ids in a given form or subform.
+Sends a request to the iFormBuilder API to get a list of all record ids in a
+given form or subform.
 }

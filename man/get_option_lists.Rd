@@ -8,7 +8,8 @@ get_option_lists(server_name, profile_id, limit = 1000, offset = 0,
   access_token)
 }
 \arguments{
-\item{server_name}{The server name as encoded in the url: `https//server_name.iformbuilder.com`}
+\item{server_name}{The server name as encoded in the url:
+`https//server_name.iformbuilder.com`}
 
 \item{profile_id}{The ID number of your profile}
 
@@ -16,12 +17,31 @@ get_option_lists(server_name, profile_id, limit = 1000, offset = 0,
 
 \item{offset}{Skips the offset number of options before beginning to return}
 
-\item{access_token}{The access_token required to establish communication with the API}
+\item{access_token}{The access_token required to establish communication with
+the API}
 }
 \value{
 A listing of all option lists in the given profile
 }
 \description{
-Sends a request to the iFormBuilder API to get a listing of all
-option lists currently posted in the given profile.
+Sends a request to the iFormBuilder API to get a listing of all option lists
+currently posted in the given profile.
+}
+\examples{
+\dontrun{
+# Get access_token, assuming your dedicated server is "wdfw"
+access_token <- get_iform_access_token(
+  server_name = "wdfw",
+  client_key_name = "your_client_key_name",
+  client_secret_name = "your_client_secret_name")
+
+# Get the id and name of all option lists in profile
+option_lists <- get_option_lists(
+  server_name = "your_server_name",
+  profile_id = 123456,
+  access_token = access_token)
+
+  # Inspect
+  option_lists
+}
 }

@@ -8,22 +8,24 @@ get_page_record_list(server_name, profile_id, page_id, limit = 1000,
   offset = 0, access_token)
 }
 \arguments{
-\item{server_name}{The server name as encoded in the url: `https//server_name.iformbuilder.com`}
+\item{server_name}{The server name as encoded in the url:
+`https//server_name.iformbuilder.com`}
 
 \item{profile_id}{The ID number of your profile}
+
+\item{page_id}{The id number of the form}
 
 \item{limit}{The maximum number of form ids to return}
 
 \item{offset}{Skips the offset number of ids before beginning to return}
 
-\item{access_token}{The access_token required to establish communication with the API}
-
-\item{page_name}{The name of the form or subform}
+\item{access_token}{The access_token required to establish communication with
+the API}
 }
 \value{
 A vector of record ids from the given form
 }
 \description{
-Sends a request to the iFormBuilder API to get a list of all record
-ids in a given form or subform.
+Sends a request to the iFormBuilder API to get a list of all record ids in a
+given form or subform.
 }

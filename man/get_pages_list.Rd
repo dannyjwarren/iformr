@@ -8,7 +8,8 @@ get_pages_list(server_name, profile_id, limit = 1000, offset = 0,
   access_token)
 }
 \arguments{
-\item{server_name}{The server name as encoded in the url: `https//server_name.iformbuilder.com`}
+\item{server_name}{The server name as encoded in the url:
+`https//server_name.iformbuilder.com`}
 
 \item{profile_id}{The ID number of your profile}
 
@@ -16,13 +17,14 @@ get_pages_list(server_name, profile_id, limit = 1000, offset = 0,
 
 \item{offset}{Skips the offset number of ids before beginning to return}
 
-\item{access_token}{The access_token required to establish communication with the API}
+\item{access_token}{The access_token required to establish communication with
+the API}
 }
 \value{
 A dataframe of all forms (pages) in the given profile
 }
 \description{
-Sends a request to the iFormBuilder API to get a listing of all
-forms and subforms in the current profile. Returns a dataframe
-with form id and form name.
+Sends a request to the iFormBuilder API to get a listing of all forms and
+subforms in the current profile. Returns a dataframe with form id and form
+name.
 }
