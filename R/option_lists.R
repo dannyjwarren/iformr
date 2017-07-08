@@ -179,8 +179,6 @@ create_new_option_list <- function(server_name,
 #'   the API
 #' @return A vector of option list element IDs, one for each option in the list
 #' @examples
-#' library(jsonlite)
-#'
 #' # The locations dataset is an example of a segmented option list
 #' head(locations, 5)
 
