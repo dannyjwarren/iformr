@@ -461,6 +461,46 @@ get_core_option_list_elements <- function(server_name,
 #' @param access_token The access_token required to establish communication with
 #'   the API
 #' @return A vector of option IDs for elements that were updated
+#' #' @examples
+#' \dontrun{
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Get the core elements in the locations option list example.
+#' core_elements <- get_core_option_list_elements(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   optionlist_id = your_locations_option_list_id,
+#'   access_token = access_token)
+#'
+#' # Inspect the first five core elements
+#' head(core_elements, 5)
+#'
+#' # Edit two of the core_elements we pulled above.
+#' updated_options = core_elements[3:4,]
+#' updated_options
+#'
+#' # Edit. Assume RMs were incorrect.
+#' updated_options$label[1] = "RM 0.20"
+#' updated_options$label[2] = "RM 1.80"
+#'
+#' # Convert location list dataframe to json
+#' updated_options_json <- jsonlite::toJSON(updated_options, auto_unbox = TRUE)
+#'
+#' # Send request
+#' updated_ids <- update_options_in_list(
+#'   server_name = "wdfw",
+#'   profile_id = 417763,
+#'   optionlist_id = your_locations_option_list_id,
+#'   option_values = updated_options_json,
+#'   access_token = access_token)
+
+#' # Inspect the updated option list item ids.
+#' updated_ids
+#' }
 #' @export
 update_options_in_list <- function(server_name,
                                    profile_id,
