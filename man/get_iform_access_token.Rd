@@ -29,10 +29,10 @@ Sends a request to iFormBuilder for an access_token. This is
 For \code{client_key_name} use the name you assigned to the
   client_key in your .Renviron file. For \code{client_secret_name} use the
   name you assigned to the client_secret in your .Renviron file. The
-  \code{client_key_name} and \code{client_secret_name}, along with
-  their respective values \strong{must} be in your .Renviron file.
-  This function will not work otherwise. Please see the README file
-  at \url{https://github.com/arestrom/iformr} for directions.
+  \code{client_key_name} and \code{client_secret_name}, along with their
+  respective values \strong{must} be in your .Renviron file. This function
+  will not work otherwise. Please see the README file at
+  \url{https://github.com/arestrom/iformr} for additional information.
 }
 \examples{
 \dontrun{

@@ -11,9 +11,9 @@ add_options_to_list(server_name, profile_id, optionlist_id, option_values,
 \item{server_name}{The server name as encoded in the url:
 `https//server_name.iformbuilder.com`}
 
-\item{profile_id}{The ID number of your profile}
+\item{profile_id}{The id number of your profile}
 
-\item{optionlist_id}{The ID number for the option list}
+\item{optionlist_id}{The id number for the option list}
 
 \item{option_values}{A list of option values in json format}
 
@@ -21,7 +21,7 @@ add_options_to_list(server_name, profile_id, optionlist_id, option_values,
 the API}
 }
 \value{
-A vector of option list element IDs, one for each option in the list
+A vector of option list element ids, one for each option in the list
 }
 \description{
 Sends a request to the iFormBuilder API to append a list of options in json
@@ -60,7 +60,7 @@ option_ids <- add_options_to_list(
   option_values = location_json
   access_token = access_token)
 
-# Inspect the first five new option list element IDs.
+# Inspect the first five new option list element ids.
 head(option_ids, 5)
 }
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/page_records.R
 \name{get_page_record_list}
 \alias{get_page_record_list}
-\title{Get list of all record IDs in a single page (i.e., form, or subform)}
+\title{Get list of all record ids in a single page (i.e., form, or subform)}
 \usage{
 get_page_record_list(server_name, profile_id, page_id, limit = 1000,
   offset = 0, access_token)
@@ -11,7 +11,7 @@ get_page_record_list(server_name, profile_id, page_id, limit = 1000,
 \item{server_name}{The server name as encoded in the url:
 `https//server_name.iformbuilder.com`}
 
-\item{profile_id}{The ID number of your profile}
+\item{profile_id}{The id number of your profile}
 
 \item{page_id}{The id number of the form}
 
@@ -44,7 +44,7 @@ form_id <- get_page_id(
   page_name = "your_form_p",
   access_token = access_token)
 
-# Get a list of all record IDs in the specified form
+# Get a list of all record ids in the specified form
 record_ids <- get_page_record_list(
   server_name = "your_server_name",
   profile_id = 123456,

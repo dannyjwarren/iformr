@@ -12,9 +12,9 @@ update_options_in_list(server_name, profile_id, optionlist_id, option_values,
 \item{server_name}{The server name as encoded in the url:
 `https//server_name.iformbuilder.com`}
 
-\item{profile_id}{The ID number of your profile}
+\item{profile_id}{The id number of your profile}
 
-\item{optionlist_id}{The ID number for the option list}
+\item{optionlist_id}{The id number for the option list}
 
 \item{option_values}{A json object containing new option list values}
 
@@ -28,7 +28,7 @@ update_options_in_list(server_name, profile_id, optionlist_id, option_values,
 the API}
 }
 \value{
-A vector of option IDs for elements that were updated
+A vector of option ids for elements that were updated
 }
 \description{
 Sends a request to the iFormBuilder API to update existing values in an

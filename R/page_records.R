@@ -7,7 +7,7 @@
 #' @rdname get_pages_list
 #' @param server_name The server name as encoded in the url:
 #'   `https//server_name.iformbuilder.com`
-#' @param profile_id The ID number of your profile
+#' @param profile_id The id number of your profile
 #' @param limit The maximum number of form ids to return
 #' @param offset Skips the offset number of ids before beginning to return
 #' @param access_token The access_token required to establish communication with
@@ -63,7 +63,7 @@ get_pages_list <- function(server_name,
 #' @rdname get_page_id
 #' @param server_name The server name as encoded in the url:
 #'   `https//server_name.iformbuilder.com`
-#' @param profile_id The ID number of your profile
+#' @param profile_id The id number of your profile
 #' @param page_name The name of the form or subform
 #' @param limit The maximum number of form ids to return
 #' @param offset Skips the offset number of ids before beginning to return
@@ -114,7 +114,7 @@ get_page_id <- function(server_name,
   pg$id[pg$name == page_name]
 }
 
-#' Get list of all record IDs in a single page (i.e., form, or subform)
+#' Get list of all record ids in a single page (i.e., form, or subform)
 #'
 #' Sends a request to the iFormBuilder API to get a list of all record ids in a
 #' given form or subform.
@@ -122,7 +122,7 @@ get_page_id <- function(server_name,
 #' @rdname get_page_record_list
 #' @param server_name The server name as encoded in the url:
 #'   `https//server_name.iformbuilder.com`
-#' @param profile_id The ID number of your profile
+#' @param profile_id The id number of your profile
 #' @param page_id The id number of the form
 #' @param limit The maximum number of form ids to return
 #' @param offset Skips the offset number of ids before beginning to return
@@ -144,7 +144,7 @@ get_page_id <- function(server_name,
 #'   page_name = "your_form_p",
 #'   access_token = access_token)
 #'
-#' # Get a list of all record IDs in the specified form
+#' # Get a list of all record ids in the specified form
 #' record_ids <- get_page_record_list(
 #'   server_name = "your_server_name",
 #'   profile_id = 123456,
@@ -185,7 +185,7 @@ get_page_record_list <- function(server_name,
 #' @rdname get_page_record
 #' @param server_name The server name as encoded in the url:
 #'   `https//server_name.iformbuilder.com`
-#' @param profile_id The ID number of your profile
+#' @param profile_id The id number of your profile
 #' @param page_id The id for the form
 #' @param record_id The id for the specific record to return
 #' @param access_token The access_token required to establish communication with
@@ -206,7 +206,7 @@ get_page_record_list <- function(server_name,
 #'   page_name = "your_form_p",
 #'   access_token = access_token)
 #'
-#' # Get a list of all record IDs in the specified form
+#' # Get a list of all record ids in the specified form
 #' record_ids <- get_page_record_list(
 #'   server_name = "your_server_name",
 #'   profile_id = 123456,
@@ -278,7 +278,7 @@ get_page_record <- function(server_name,
 #' @rdname get_selected_page_records
 #' @param server_name The server name as encoded in the url:
 #'   `https//server_name.iformbuilder.com`
-#' @param profile_id The ID number of your profile
+#' @param profile_id The id number of your profile
 #' @param page_id The id of the form or subform
 #' @param fields A set of data fields (columns) to return
 #' @param limit The maximum number of records to return
@@ -298,7 +298,7 @@ get_page_record <- function(server_name,
 #' \dontrun{
 #' # Set id to ascending order and pull only records greater than the last_id
 #' since_id <- 5
-#' parent_form_fields <- paste0("id:<(>\\"", since_id, "\\"),", form_fields)
+#' parent_form_fields <- paste0("id:<(>\"", since_id, "\"),", form_fields)
 #'
 #' # Get access_token
 #' access_token <- get_iform_access_token(
@@ -356,18 +356,18 @@ get_selected_page_records <- function(server_name,
 #' Creates a url with username and password embedded that can be used to
 #' download data using the data-feed mechanism instead of the API. In general,
 #' this should be avoided, as the API mechanisms are much safer. Returns a json
-#' file with all records submitted since the specified SINCE_ID.
+#' file with all records submitted since the specified \code{since_id}.
 #'
 #' @rdname data_feed_url
 #' @param server_name The server name as encoded in the url:
 #'   `https//server_name.iformbuilder.com`
 #' @param parent_form_id The id of the parent form
-#' @param profile_id The ID number of your profile
+#' @param profile_id The id number of your profile
 #' @param parent_form_name The name of the parent form
 #' @param since_id The record id indicating where to start downloading
 #' @param user_label The name given to the username in the .Renviron file
 #' @param pw_label Skips the offset number of records before beginning to return
-#' @return A file in .json format of all records in the form and subforms
+#' @return A url that can be used to request form data
 #' @examples
 #' \dontrun{
 #' # Generate a url to retrieve data via the data feed mechanism
@@ -380,7 +380,7 @@ get_selected_page_records <- function(server_name,
 #'   user_label = "your_user_label",
 #'   pw_label = "your_pw_label")
 #'
-#' # Retrieved the form data into an R list
+#' # Retrieve the form data into an R list
 #' form_data <- jsonlite::fromJSON(url)
 #' }
 #' @export

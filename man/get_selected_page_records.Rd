@@ -12,7 +12,7 @@ get_selected_page_records(server_name, profile_id, page_id, fields = "fields",
 \item{server_name}{The server name as encoded in the url:
 `https//server_name.iformbuilder.com`}
 
-\item{profile_id}{The ID number of your profile}
+\item{profile_id}{The id number of your profile}
 
 \item{page_id}{The id of the form or subform}
 
@@ -65,7 +65,7 @@ form_fields <- paste(field_list, collapse = ',')
 \dontrun{
 # Set id to ascending order and pull only records greater than the last_id
 since_id <- 5
-parent_form_fields <- paste0("id:<(>\\\\"", since_id, "\\\\"),", form_fields)
+parent_form_fields <- paste0("id:<(>\\"", since_id, "\\"),", form_fields)
 
 # Get access_token
 access_token <- get_iform_access_token(

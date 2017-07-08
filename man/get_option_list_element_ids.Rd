@@ -11,14 +11,13 @@ get_option_list_element_ids(server_name, profile_id, optionlist_id, element,
 \item{server_name}{The server name as encoded in the url:
 `https//server_name.iformbuilder.com`}
 
-\item{profile_id}{The ID number of your profile}
+\item{profile_id}{The id number of your profile}
 
-\item{optionlist_id}{The ID number for the option list}
+\item{optionlist_id}{The id number for the option list}
 
-\item{element}{The specific option list element. For example:
-"condition_value".}
+\item{element}{The specific option list element. For example: "key_value".}
 
-\item{limit}{The maximum number of option element IDs to return}
+\item{limit}{The maximum number of option element ids to return}
 
 \item{offset}{Skips the offset number of options before beginning to return}
 
@@ -29,7 +28,7 @@ the API}
 A dataframe with id and attributes for the selected element.
 }
 \description{
-Sends a request to the iFormBuilder API to get a list of all element IDs in
+Sends a request to the iFormBuilder API to get a list of all element ids in
 an option list for a specific field. For example: \code{key_value}.
 Returns a dataframe with ids and attributes of the specified element.
 }

@@ -10,7 +10,7 @@ create_new_option_list(server_name, profile_id, option_list_name, access_token)
 \item{server_name}{The server name as encoded in the url:
 `https//server_name.iformbuilder.com`}
 
-\item{profile_id}{The ID number of your profile}
+\item{profile_id}{The id number of your profile}
 
 \item{option_list_name}{A character name for the new option list}
 
@@ -18,7 +18,7 @@ create_new_option_list(server_name, profile_id, option_list_name, access_token)
 the API}
 }
 \value{
-The ID of the new option list
+The id of the new option list
 }
 \description{
 Sends a request to the iFormBuilder API to create a new option list. The new

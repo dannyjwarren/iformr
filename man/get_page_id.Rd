@@ -11,7 +11,7 @@ get_page_id(server_name, profile_id, page_name, limit = 1000, offset = 0,
 \item{server_name}{The server name as encoded in the url:
 `https//server_name.iformbuilder.com`}
 
-\item{profile_id}{The ID number of your profile}
+\item{profile_id}{The id number of your profile}
 
 \item{page_name}{The name of the form or subform}
 

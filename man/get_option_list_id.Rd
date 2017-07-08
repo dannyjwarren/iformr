@@ -2,7 +2,7 @@
 % Please edit documentation in R/option_lists.R
 \name{get_option_list_id}
 \alias{get_option_list_id}
-\title{Get the ID of a single option list given an option list name}
+\title{Get the id of a single option list given an option list name}
 \usage{
 get_option_list_id(server_name, profile_id, option_list_name, limit = 1000,
   offset = 0, access_token)
@@ -11,7 +11,7 @@ get_option_list_id(server_name, profile_id, option_list_name, limit = 1000,
 \item{server_name}{The server name as encoded in the url:
 `https//server_name.iformbuilder.com`}
 
-\item{profile_id}{The ID number of your profile}
+\item{profile_id}{The id number of your profile}
 
 \item{option_list_name}{The name of the option list}
 
@@ -26,7 +26,7 @@ the API}
 A listing of all option lists in the given profile
 }
 \description{
-Sends a request to the iFormBuilder API to get the ID number for a single
+Sends a request to the iFormBuilder API to get the id number for a single
 option list. You only need to supply the name of the option list.
 }
 \examples{

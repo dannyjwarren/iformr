@@ -13,7 +13,7 @@ data_feed_url(server_name, parent_form_id, profile_id, parent_form_name,
 
 \item{parent_form_id}{The id of the parent form}
 
-\item{profile_id}{The ID number of your profile}
+\item{profile_id}{The id number of your profile}
 
 \item{parent_form_name}{The name of the parent form}
 
@@ -24,13 +24,13 @@ data_feed_url(server_name, parent_form_id, profile_id, parent_form_name,
 \item{pw_label}{Skips the offset number of records before beginning to return}
 }
 \value{
-A file in .json format of all records in the form and subforms
+A url that can be used to request form data
 }
 \description{
 Creates a url with username and password embedded that can be used to
 download data using the data-feed mechanism instead of the API. In general,
 this should be avoided, as the API mechanisms are much safer. Returns a json
-file with all records submitted since the specified SINCE_ID.
+file with all records submitted since the specified \code{since_id}.
 }
 \examples{
 \dontrun{
@@ -44,7 +44,7 @@ url <- data_feed_url(
   user_label = "your_user_label",
   pw_label = "your_pw_label")
 
-# Retrieved the form data into an R list
+# Retrieve the form data into an R list
 form_data <- jsonlite::fromJSON(url)
 }
 }

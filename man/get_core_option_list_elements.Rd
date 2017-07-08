@@ -11,9 +11,9 @@ get_core_option_list_elements(server_name, profile_id, optionlist_id,
 \item{server_name}{The server name as encoded in the url:
 `https//server_name.iformbuilder.com`}
 
-\item{profile_id}{The ID number of your profile}
+\item{profile_id}{The id number of your profile}
 
-\item{optionlist_id}{The ID number for the option list}
+\item{optionlist_id}{The id number for the option list}
 
 \item{limit}{The maximum number of option list items to return}
 

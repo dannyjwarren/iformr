@@ -6,7 +6,7 @@
 #' @rdname get_option_lists
 #' @param server_name The server name as encoded in the url:
 #'   `https//server_name.iformbuilder.com`
-#' @param profile_id The ID number of your profile
+#' @param profile_id The id number of your profile
 #' @param limit The maximum number of option lists to return
 #' @param offset Skips the offset number of options before beginning to return
 #' @param access_token The access_token required to establish communication with
@@ -53,15 +53,15 @@ get_option_lists <- function(server_name,
   dplyr::data_frame(id = opt_id, name = opt_name)
 }
 
-#' Get the ID of a single option list given an option list name
+#' Get the id of a single option list given an option list name
 #'
-#' Sends a request to the iFormBuilder API to get the ID number for a single
+#' Sends a request to the iFormBuilder API to get the id number for a single
 #' option list. You only need to supply the name of the option list.
 #'
 #' @rdname get_option_list_id
 #' @param server_name The server name as encoded in the url:
 #'   `https//server_name.iformbuilder.com`
-#' @param profile_id The ID number of your profile
+#' @param profile_id The id number of your profile
 #' @param option_list_name The name of the option list
 #' @param limit The maximum number of option lists to return
 #' @param offset Skips the offset number of options before beginning to return
@@ -117,11 +117,11 @@ get_option_list_id <- function(server_name,
 #' @rdname create_new_option_list
 #' @param server_name The server name as encoded in the url:
 #'   `https//server_name.iformbuilder.com`
-#' @param profile_id The ID number of your profile
+#' @param profile_id The id number of your profile
 #' @param option_list_name A character name for the new option list
 #' @param access_token The access_token required to establish communication with
 #'   the API
-#' @return The ID of the new option list
+#' @return The id of the new option list
 #' @examples
 #' \dontrun{
 #' # Get access_token
@@ -172,12 +172,12 @@ create_new_option_list <- function(server_name,
 #' @rdname add_options_to_list
 #' @param server_name The server name as encoded in the url:
 #'   `https//server_name.iformbuilder.com`
-#' @param profile_id The ID number of your profile
-#' @param optionlist_id The ID number for the option list
+#' @param profile_id The id number of your profile
+#' @param optionlist_id The id number for the option list
 #' @param option_values A list of option values in json format
 #' @param access_token The access_token required to establish communication with
 #'   the API
-#' @return A vector of option list element IDs, one for each option in the list
+#' @return A vector of option list element ids, one for each option in the list
 #' @examples
 #' # The locations dataset is an example of a segmented option list
 #' head(locations, 5)
@@ -210,7 +210,7 @@ create_new_option_list <- function(server_name,
 #'   option_values = location_json
 #'   access_token = access_token)
 #'
-#' # Inspect the first five new option list element IDs.
+#' # Inspect the first five new option list element ids.
 #' head(option_ids, 5)
 #' }
 #' @export
@@ -250,8 +250,8 @@ add_options_to_list <- function(server_name,
 #' @rdname delete_options_in_list
 #' @param server_name The server name as encoded in the url:
 #'   `https//server_name.iformbuilder.com`
-#' @param profile_id The ID number of your profile
-#' @param optionlist_id The ID number for the option list
+#' @param profile_id The id number of your profile
+#' @param optionlist_id The id number for the option list
 #' @param fields Placeholder for fields to delete, not yet implemented
 #' @param id_values A .json list of ids for elements to delete
 #' @param limit The maximum number of option elements to delete
@@ -309,18 +309,17 @@ delete_options_in_list <- function(server_name,
 
 #' Get list of option_ids for a given element
 #'
-#' Sends a request to the iFormBuilder API to get a list of all element IDs in
+#' Sends a request to the iFormBuilder API to get a list of all element ids in
 #' an option list for a specific field. For example: \code{key_value}.
 #' Returns a dataframe with ids and attributes of the specified element.
 #'
 #' @rdname get_option_list_element_ids
 #' @param server_name The server name as encoded in the url:
 #'   `https//server_name.iformbuilder.com`
-#' @param profile_id The ID number of your profile
-#' @param optionlist_id The ID number for the option list
-#' @param element The specific option list element. For example:
-#'   "condition_value".
-#' @param limit The maximum number of option element IDs to return
+#' @param profile_id The id number of your profile
+#' @param optionlist_id The id number for the option list
+#' @param element The specific option list element. For example: "key_value".
+#' @param limit The maximum number of option element ids to return
 #' @param offset Skips the offset number of options before beginning to return
 #' @param access_token The access_token required to establish communication with
 #'   the API
@@ -387,8 +386,8 @@ get_option_list_element_ids <- function(server_name,
 #' @rdname get_core_option_list_elements
 #' @param server_name The server name as encoded in the url:
 #'   `https//server_name.iformbuilder.com`
-#' @param profile_id The ID number of your profile
-#' @param optionlist_id The ID number for the option list
+#' @param profile_id The id number of your profile
+#' @param optionlist_id The id number for the option list
 #' @param limit The maximum number of option list items to return
 #' @param offset Skips the offset number of options before beginning to return
 #' @param access_token The access_token required to establish communication with
@@ -452,15 +451,15 @@ get_core_option_list_elements <- function(server_name,
 #' @rdname update_options_in_list
 #' @param server_name The server name as encoded in the url:
 #'   `https//server_name.iformbuilder.com`
-#' @param profile_id The ID number of your profile
-#' @param optionlist_id The ID number for the option list
+#' @param profile_id The id number of your profile
+#' @param optionlist_id The id number for the option list
 #' @param option_values A json object containing new option list values
 #' @param limit The maximum number of option list items to return
 #' @param fields Placeholder for fields to update, not yet implemented
 #' @param offset Skips the offset number of options before beginning to update
 #' @param access_token The access_token required to establish communication with
 #'   the API
-#' @return A vector of option IDs for elements that were updated
+#' @return A vector of option ids for elements that were updated
 #' @examples
 #' \dontrun{
 #' # Get access_token
