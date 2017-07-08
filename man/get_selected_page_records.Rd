@@ -88,7 +88,7 @@ parent_form_records <- get_selected_page_records(
   fields = parent_form_fields,
   access_token = access_token)
 
-# Inspect the first five rows and columns of the dataframe
-parent_form_records[1:5,1:5]
+# Inspect the first three rows and first five columns of the dataframe
+parent_form_records[1:3,1:5]
 }
 }

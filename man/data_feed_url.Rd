@@ -24,11 +24,24 @@ data_feed_url(server_name, parent_form_id, profile_id, parent_form_name,
 \item{pw_label}{Skips the offset number of records before beginning to return}
 }
 \value{
-A .json file of records from the specified fields
+A file in .json format of all records in the form and subforms
 }
 \description{
 Creates a url with username and password embedded that can be used to
 download data using the data-feed mechanism instead of the API. In general,
 this should be avoided, as the API mechanisms are much safer. Returns a json
 file with all records submitted since the specified SINCE_ID.
+}
+\examples{
+\dontrun{
+# Generate a url to retrieve data via the data feed mechanism
+form_data_json <- data_feed_url(
+  server_name = "your_server_name",
+  parent_form_id = 456789,
+  profile_id = 123456,
+  parent_form_name = "spawning_ground_p",
+  since_id = 3,
+  user_label = "your_user_label",
+  pw_label = "your_pw_label")
+}
 }

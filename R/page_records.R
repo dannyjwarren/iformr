@@ -321,8 +321,8 @@ get_page_record <- function(server_name,
 #'   fields = parent_form_fields,
 #'   access_token = access_token)
 #'
-#' # Inspect the first five rows and columns of the dataframe
-#' parent_form_records[1:5,1:5]
+#' # Inspect the first three rows and first five columns of the dataframe
+#' parent_form_records[1:3,1:5]
 #' }
 #' @export
 get_selected_page_records <- function(server_name,
@@ -367,7 +367,19 @@ get_selected_page_records <- function(server_name,
 #' @param since_id The record id indicating where to start downloading
 #' @param user_label The name given to the username in the .Renviron file
 #' @param pw_label Skips the offset number of records before beginning to return
-#' @return A .json file of records from the specified fields
+#' @return A file in .json format of all records in the form and subforms
+#' @examples
+#' \dontrun{
+#' # Generate a url to retrieve data via the data feed mechanism
+#' form_data_json <- data_feed_url(
+#'   server_name = "your_server_name",
+#'   parent_form_id = 456789,
+#'   profile_id = 123456,
+#'   parent_form_name = "spawning_ground_p",
+#'   since_id = 3,
+#'   user_label = "your_user_label",
+#'   pw_label = "your_pw_label")
+#' }
 #' @export
 data_feed_url = function(server_name,
                          parent_form_id,
