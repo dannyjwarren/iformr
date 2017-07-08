@@ -1,68 +1,3 @@
-
-#' Get application client_key from .Renviron file
-#' @rdname iform_key
-#' @param app_key_name The name given to the client_key in the .Renviron file
-#' @return The API client_key for the application
-#' @export
-iform_key <- function(app_key_name) {
-  Sys.getenv(app_key_name)
-}
-
-#' Get application client_secret from .Renviron file
-#' @rdname iform_secret
-#' @param app_secret_name The name given to the client_secret in the .Renviron file
-#' @return The API client_secret for the application
-#' @export
-iform_secret <- function(app_secret_name) {
-  Sys.getenv(app_secret_name)
-}
-
-#' Check if the application client_key was obtained
-#' @rdname has_key
-#' @param client_key The string value of the client_key
-#' @return TRUE if client_key was returned, else FALSE
-#' @export
-has_key <- function(client_key) !identical(client_key, "")
-
-#' Check if application client_secret was obtained
-#' @rdname has_secret
-#' @param client_secret The string value of the client_secret
-#' @return TRUE if client_secret was returned, else FALSE
-#' @export
-has_secret <- function(client_secret) !identical(client_secret, "")
-
-#' Define base_url
-#'
-#' Use `base_url()` to define the base section of the request url.
-#' If you do not have a dedicated server the server_name will be `app`
-#' @rdname base_url
-#' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
-#' @return The base iFormBuilder url with \code{server_name} encoded
-#' @export
-base_url <- function(server_name) {
-  paste0("https://", server_name, ".iformbuilder.com")
-}
-
-#' Define token_url
-#' @rdname token_url
-#' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
-#' @return A url for requesting an access_token with \code{server_name} encoded
-#' @export
-token_url <- function(server_name) {
-  paste0(base_url(server_name), "/exzact/api/oauth/token")
-}
-
-#' Define the jwt header
-#' @rdname jwt_header
-#' @return The json web token header as a list
-#' @export
-jwt_header <- function() {
-  list(
-    alg = 'HS256',
-    typ = 'JWT'
-  )
-}
-
 #' Define the jwt payload
 #' @rdname jwt_payload
 #' @param client_key The client_key assigned to the application
@@ -87,43 +22,6 @@ jwt_payload <- function(client_key, iat = NULL, exp = NULL, token_uri, duration 
   )
 }
 
-#' Encode to url-safe base64 
-#' 
-#' Taken from the httr package. Will be replaced in
-#' a future version by importing the base64url package
-#' 
-#' @rdname base64url
-#' @param x A string to be encoded to base64
-#' @return The base64 encoded string
-#' @export
-base64url <- function(x) {
-  if (is.character(x)) {
-    x <- charToRaw(x)
-  }
-  out <- chartr('+/', '-_', openssl::base64_encode(x))
-  gsub("=+$", "", out)
-}
-
-#' Get raw output from sha256() signing
-#' 
-#' Taken from openssl package. Will be replaced in
-#' a future version by importing the jose package.
-#' 
-#' @rdname hex_to_raw
-#' @param str A string to be converted from hex to raw format
-#' @return The raw string
-#' @export
-hex_to_raw <- function(str){
-  stopifnot(length(str) == 1)
-  str <- gsub("[ :]", "", str)
-  len <- nchar(str)/2
-  out <- raw(len)
-  for(i in 1:len){
-    out[i] <- as.raw(as.hexmode(substr(str, 2*i-1, 2*i)))
-  }
-  out
-}
-
 #' Generate encoded request token
 #' @rdname jencode
 #' @param jheader The jwt_header in json format
@@ -145,23 +43,52 @@ jencode <- function(jheader, jpayload, client_secret) {
   request_token
 }
 
-#' Request an access_token
+#' @title Request an access_token
 #'
-#' Sends a request to iFormBuilder for an access_token. This is needed
-#' in order to authorize communication with the iFormBuilder API.
-#' If you do not have a dedicated server your server_name will be `app`.
-#' For the Washington Dept of Fish and Wildlife, server_name is `wdfw`.
+#' @description Sends a request to iFormBuilder for an access_token. This is
+#'   needed in order to authorize communication with the iFormBuilder API. If
+#'   you do not have a dedicated server then replace \code{server_name} with
+#'   \code{app}.
+#'
+#' @details For \code{client_key_name} use the name you assigned to the
+#'   client_key in your .Renviron file. For \code{client_secret_name} use the
+#'   name you assigned to the client_secret in your .Renviron file. The
+#'   \code{client_key_name} and \code{client_secret_name}, along with their
+#'   respective values \strong{must} be in your .Renviron file. This function
+#'   will not work otherwise. Please see the README file at
+#'   \url{https://github.com/arestrom/iformr} for additional information.
 #'
 #' @rdname get_iform_access_token
-#' @param server_name The server name as encoded in the url: `https//server_name.iformbuilder.com`
-#' @param app_key_name The name given to the client_key in the .Renviron file
-#' @param app_secret_name The name given to the client_secret in the .Renviron file
+#' @param server_name The server name as encoded in the url:
+#'   `https//server_name.iformbuilder.com`
+#' @param client_key_name The name given to the client_key in your .Renviron
+#'   file
+#' @param client_secret_name The name given to the client_secret in your
+#'   .Renviron file
 #' @return An access_token that expires after ten minutes
+#' @examples
+#' \dontrun{
+#' # Get access_token, assuming you do not have a dedicated server
+#' # Edit client_key and client_secret arguments as needed.
+#' access_token <- get_iform_access_token(
+#'   server_name = "app",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#' }
+#'
+#' \dontrun{
+#' # Get access_token, assuming your dedicated server is "wdfw"
+#' access_token <- get_iform_access_token(
+#'   server_name = "wdfw",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#' }
+#'
 #' @export
-get_iform_access_token <- function(server_name, app_key_name, app_secret_name) {
+get_iform_access_token <- function(server_name, client_key_name, client_secret_name) {
   jheader <- jsonlite::toJSON(jwt_header(), auto_unbox = TRUE)
-  client_key <- iform_secret(app_key_name)
-  client_secret <- iform_secret(app_secret_name)
+  client_key <- iform_secret(client_key_name)
+  client_secret <- iform_secret(client_secret_name)
   token_uri <- token_url(server_name = server_name)
   if (has_key(client_key)) {
     payload <- jsonlite::toJSON(jwt_payload(client_key = client_key,
@@ -191,4 +118,64 @@ get_iform_access_token <- function(server_name, app_key_name, app_secret_name) {
   return(acc_token)
 }
 
+# Un-exported functions ============================================
+
+# Get application client_key from .Renviron file
+iform_key <- function(app_key_name) {
+  Sys.getenv(app_key_name)
+}
+
+# Get application client_secret from .Renviron file
+iform_secret <- function(app_secret_name) {
+  Sys.getenv(app_secret_name)
+}
+
+# Check if the application client_key was obtained
+has_key <- function(client_key) !identical(client_key, "")
+
+# Check if application client_secret was obtained
+has_secret <- function(client_secret) !identical(client_secret, "")
+
+# Define base_url
+base_url <- function(server_name) {
+  paste0("https://", server_name, ".iformbuilder.com")
+}
+
+# Define token_url
+token_url <- function(server_name) {
+  paste0(base_url(server_name), "/exzact/api/oauth/token")
+}
+
+# Define the jwt header
+jwt_header <- function() {
+  list(
+    alg = 'HS256',
+    typ = 'JWT'
+  )
+}
+
+# Encode to url-safe base64
+# Taken from the httr package. Will be replaced in
+# a future version by importing the base64url package
+base64url <- function(x) {
+  if (is.character(x)) {
+    x <- charToRaw(x)
+  }
+  out <- chartr('+/', '-_', openssl::base64_encode(x))
+  gsub("=+$", "", out)
+}
+
+# Get raw output from sha256() signing
+# Taken from openssl package. Will be replaced in
+# a future version by importing the jose package.
+hex_to_raw <- function(str){
+  stopifnot(length(str) == 1)
+  str <- gsub("[ :]", "", str)
+  len <- nchar(str)/2
+  out <- raw(len)
+  for(i in 1:len){
+    out[i] <- as.raw(as.hexmode(substr(str, 2*i-1, 2*i)))
+  }
+  out
+}
 

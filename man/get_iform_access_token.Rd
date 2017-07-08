@@ -4,21 +4,52 @@
 \alias{get_iform_access_token}
 \title{Request an access_token}
 \usage{
-get_iform_access_token(server_name, app_key_name, app_secret_name)
+get_iform_access_token(server_name, client_key_name, client_secret_name)
 }
 \arguments{
-\item{server_name}{The server name as encoded in the url: `https//server_name.iformbuilder.com`}
+\item{server_name}{The server name as encoded in the url:
+`https//server_name.iformbuilder.com`}
 
-\item{app_key_name}{The name given to the client_key in the .Renviron file}
+\item{client_key_name}{The name given to the client_key in your .Renviron
+file}
 
-\item{app_secret_name}{The name given to the client_secret in the .Renviron file}
+\item{client_secret_name}{The name given to the client_secret in your
+.Renviron file}
 }
 \value{
 An access_token that expires after ten minutes
 }
 \description{
-Sends a request to iFormBuilder for an access_token. This is needed
-in order to authorize communication with the iFormBuilder API.
-If you do not have a dedicated server your server_name will be `app`.
-For the Washington Dept of Fish and Wildlife, server_name is `wdfw`.
+Sends a request to iFormBuilder for an access_token. This is
+  needed in order to authorize communication with the iFormBuilder API. If
+  you do not have a dedicated server then replace \code{server_name} with
+  \code{app}.
+}
+\details{
+For \code{client_key_name} use the name you assigned to the
+  client_key in your .Renviron file. For \code{client_secret_name} use the
+  name you assigned to the client_secret in your .Renviron file. The
+  \code{client_key_name} and \code{client_secret_name}, along with their
+  respective values \strong{must} be in your .Renviron file. This function
+  will not work otherwise. Please see the README file at
+  \url{https://github.com/arestrom/iformr} for additional information.
+}
+\examples{
+\dontrun{
+# Get access_token, assuming you do not have a dedicated server
+# Edit client_key and client_secret arguments as needed.
+access_token <- get_iform_access_token(
+  server_name = "app",
+  client_key_name = "your_client_key_name",
+  client_secret_name = "your_client_secret_name")
+}
+
+\dontrun{
+# Get access_token, assuming your dedicated server is "wdfw"
+access_token <- get_iform_access_token(
+  server_name = "wdfw",
+  client_key_name = "your_client_key_name",
+  client_secret_name = "your_client_secret_name")
+}
+
 }

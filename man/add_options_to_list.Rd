@@ -8,21 +8,59 @@ add_options_to_list(server_name, profile_id, optionlist_id, option_values,
   access_token)
 }
 \arguments{
-\item{server_name}{The server name as encoded in the url: `https//server_name.iformbuilder.com`}
+\item{server_name}{The server name as encoded in the url:
+`https//server_name.iformbuilder.com`}
 
-\item{profile_id}{The ID number of your profile}
+\item{profile_id}{The id number of your profile}
 
-\item{optionlist_id}{The ID number for the option list}
+\item{optionlist_id}{The id number for the option list}
 
 \item{option_values}{A list of option values in json format}
 
-\item{access_token}{The access_token required to establish communication with the API}
+\item{access_token}{The access_token required to establish communication with
+the API}
 }
 \value{
-A vector of option list element IDs, one for each option in the list
+A vector of option list element ids, one for each option in the list
 }
 \description{
-Sends a request to the iFormBuilder API to append a list of options
-in json format to an existing option list. Make sure that all options
-list key_values are unique or the list will not be posted.
+Sends a request to the iFormBuilder API to append a list of options in json
+format to an existing option list. Make sure that all options list key_values
+are unique or the list will not be posted.
+}
+\examples{
+# The locations dataset is an example of a segmented option list
+head(locations, 5)
+
+# Convert locations dataframe to json
+location_json <- jsonlite::toJSON(locations, auto_unbox = TRUE)
+
+\dontrun{
+# Get access_token
+access_token <- get_iform_access_token(
+  server_name = "your_server_name",
+  client_key_name = "your_client_key_name",
+  client_secret_name = "your_client_secret_name")
+
+# Create a new empty option list
+new_option_list_id <- create_new_option_list(
+  server_name = "your_server_name",
+  profile_id = 123456,
+  option_list_name = "SGS-StreamLocations",
+  access_token = access_token)
+
+# Inspect new option list id
+new_option_list_id
+
+# Add option elements from locations dataset to the new option list
+option_ids <- add_options_to_list(
+  server_name = "your_server_name",
+  profile_id = 123456,
+  optionlist_id = new_option_list_id,
+  option_values = location_json
+  access_token = access_token)
+
+# Inspect the first five new option list element ids.
+head(option_ids, 5)
+}
 }
