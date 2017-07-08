@@ -13,6 +13,23 @@
 #' @param access_token The access_token required to establish communication with
 #'   the API
 #' @return A dataframe of all forms (pages) in the given profile
+#' @examples
+#' \dontrun{
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Get the id and name of all option lists in profile
+#' option_lists <- get_option_lists(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   access_token = access_token)
+#'
+#' # Inspect
+#' option_lists
+#' }
 #' @export
 get_pages_list <- function(server_name,
                            profile_id,
