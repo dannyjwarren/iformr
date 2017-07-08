@@ -51,7 +51,7 @@ record_ids <- get_page_record_list(
   page_id = form_id,
   access_token = access_token)
 
-# Inspect the top fine record_ids
+# Inspect the top five record_ids
 head(record_ids, 5)
 }
 }

@@ -151,7 +151,7 @@ get_page_id <- function(server_name,
 #'   page_id = form_id,
 #'   access_token = access_token)
 #'
-#' # Inspect the top fine record_ids
+#' # Inspect the top five record_ids
 #' head(record_ids, 5)
 #' }
 #' @export
@@ -177,10 +177,10 @@ get_page_record_list <- function(server_name,
                 function(i) rcrdx[i] <- rcrd[[i]]$id))
 }
 
-#' Get a single record from a page (form)
+#' Get a single record from a page (i.e., form, or subform)
 #'
-#' Sends a request to the iFormBuilder API to get a list of all record ids in a
-#' given form or subform.
+#' Sends a request to the iFormBuilder API to get a single record from a form or
+#' subform given a record id.
 #'
 #' @rdname get_page_record
 #' @param server_name The server name as encoded in the url:
@@ -191,6 +191,45 @@ get_page_record_list <- function(server_name,
 #' @param access_token The access_token required to establish communication with
 #'   the API
 #' @return Dataframe of a single record from the given form
+#' @examples
+#' \dontrun{
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Get the id of a single form in the profile given the form name
+#' form_id <- get_page_id(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   page_name = "your_form_p",
+#'   access_token = access_token)
+#'
+#' # Get a list of all record IDs in the specified form
+#' record_ids <- get_page_record_list(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   page_id = form_id,
+#'   access_token = access_token)
+#'
+#' # Inspect the top five record_ids
+#' head(record_ids, 5)
+#'
+#' # Get the first record in the list
+#' single_record_id = record_ids[1]
+#'
+#' # Get a single record from a form or subform
+#' single_form_record <- get_page_record(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   page_id = form_id,
+#'   record_id = single_record_id,
+#'   access_token = access_token)
+#'
+#' # Inspect the first five columns of the single record dataframe
+#' single_form_record[,1:5]
+#' }
 #' @export
 get_page_record <- function(server_name,
                             profile_id,
