@@ -29,7 +29,14 @@ the API}
 }
 \value{
 A vector of option IDs for elements that were updated
-#' @examples
+}
+\description{
+Sends a request to the iFormBuilder API to update existing values in an
+option list. Option values for the specified fields will be updated to the
+new values supplied in the json object `option_values`. Do not use the fields
+parameter. It has not been implemented yet.
+}
+\examples{
 \dontrun{
 # Get access_token
 access_token <- get_iform_access_token(
@@ -68,10 +75,4 @@ updated_ids <- update_options_in_list(
 # Inspect the updated option list item ids.
 updated_ids
 }
-}
-\description{
-Sends a request to the iFormBuilder API to update existing values in an
-option list. Option values for the specified fields will be updated to the
-new values supplied in the json object `option_values`. Do not use the fields
-parameter. It has not been implemented yet.
 }

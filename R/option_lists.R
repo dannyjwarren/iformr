@@ -461,7 +461,7 @@ get_core_option_list_elements <- function(server_name,
 #' @param access_token The access_token required to establish communication with
 #'   the API
 #' @return A vector of option IDs for elements that were updated
-#' #' @examples
+#' @examples
 #' \dontrun{
 #' # Get access_token
 #' access_token <- get_iform_access_token(
