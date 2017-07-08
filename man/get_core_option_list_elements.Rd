@@ -8,22 +8,44 @@ get_core_option_list_elements(server_name, profile_id, optionlist_id,
   limit = 1000, offset = 0, access_token)
 }
 \arguments{
-\item{server_name}{The server name as encoded in the url: `https//server_name.iformbuilder.com`}
+\item{server_name}{The server name as encoded in the url:
+`https//server_name.iformbuilder.com`}
 
-\item{profile_id}{The ID number of your profile}
+\item{profile_id}{The id number of your profile}
 
-\item{optionlist_id}{The ID number for the option list}
+\item{optionlist_id}{The id number for the option list}
 
 \item{limit}{The maximum number of option list items to return}
 
 \item{offset}{Skips the offset number of options before beginning to return}
 
-\item{access_token}{The access_token required to establish communication with the API}
+\item{access_token}{The access_token required to establish communication with
+the API}
 }
 \value{
 A dataframe of the core option list elements
 }
 \description{
-Sends a request to the iFormBuilder API to return the core option list elements.
-Function will return the id, sort_order, label, key_value, and condition_value.
+Sends a request to the iFormBuilder API to return the core option list
+elements. Function will return the id, sort_order, label, key_value, and
+condition_value.
+}
+\examples{
+\dontrun{
+# Get access_token
+access_token <- get_iform_access_token(
+  server_name = "your_server_name",
+  client_key_name = "your_client_key_name",
+  client_secret_name = "your_client_secret_name")
+
+# Get the core elements in an option list
+core_elements <- get_core_option_list_elements(
+  server_name = "your_server_name",
+  profile_id = 123456,
+  optionlist_id = your_option_list_id,
+  access_token = access_token)
+
+# Inspect the first five core elements
+head(core_elements, 5)
+}
 }

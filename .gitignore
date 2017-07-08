@@ -2,5 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
+<<<<<<< HEAD
 iFormTestExamples.R
 locations.RData
+=======
+locations.RData
+iFormTestExamples.R
+>>>>>>> 3c029b57d2466e14aee6e2816e7a3c08c565feff
