@@ -29,5 +29,5 @@ dts = c("2014-10-13T15:04:03+00:00", "", NA, "2014-11-13T15:04:03+00:00")
 idate_time(dts)
 }
 \seealso{
-\code{\link[base]{Sys.timezone()}}
+\code{\link{Sys.timezone()}}
 }
