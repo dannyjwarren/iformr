@@ -30,7 +30,7 @@ idate_time <- function (dts, timezone = "America/Los_Angeles") {
       # Create gmt time value
       gmt[i] <- paste0(substr(dts[i], 1, 10), " ", substr(dts[i], 12, 19))
       pmt <-  as.POSIXct(gmt[i], tz = "GMT")
-      pmt <-  with_tz(pmt, timezone)
+      pmt <-  lubridate::with_tz(pmt, timezone)
       gmt[i] <-  format(pmt, format = "%Y-%m-%d %H:%M:%S")
     } else {
       stop("Date or time values are in an unexpected format")
@@ -67,12 +67,12 @@ itext_time <- function (dts, create_tz = "America/Los_Angeles", timezone = "Amer
   for( i in 1:length(dts)) {
     if (is.na(dts[i]) | dts[i] == "") {
       gmt[i] = as.character(NA)
-    } else if (nchar(dts[i]) > 25 & stri_detect_fixed(dts[i], "GMT") == TRUE) {
+    } else if (nchar(dts[i]) > 25 & stringi::stri_detect_fixed(dts[i], "GMT") == TRUE) {
       # Create gmt time value
       gdt <-  format(as.Date(substr(dts[i], 5, 15), format = "%b %d %Y"))
       gmt[i] <- paste0(gdt, " ", substr(dts[i], 17, 24))
       pmt <-  as.POSIXct(gmt[i], tz = create_tz)
-      pmt <-  with_tz(pmt, timezone)
+      pmt <-  lubridate::with_tz(pmt, timezone)
       gmt[i] <-  format(pmt, format = "%Y-%m-%d %H:%M:%S")
     } else {
       stop("Date or time values are in an unexpected format")
