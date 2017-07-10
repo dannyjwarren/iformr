@@ -33,5 +33,5 @@ dts = c("", NA, "Fri Apr 08 2016 08:20:02 GMT-0700 (PDT)",
 itext_time(dts)
 }
 \seealso{
-[timezones()]
+\code{\link[base]{Sys.timezone()}}
 }
