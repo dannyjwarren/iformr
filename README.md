@@ -31,7 +31,7 @@ Storing API connection credentials
 
 In order to use the functions in this package you **must** first get a `client_key` and `client_secret` for your profile from iFormBuilder. If you have a dedicated server this can be done by logging in to your iFormBuilder server as a *server admin* and clicking on the *Server Admin* tab. Select *Manage Profiles*, highlight the row for the desired profile then click *Manage*. Next select *Server Admin* &gt; *API Apps* &gt; *New Client* and follow the directions to create a new client. You will be asked to assign the API application to an existing *Username*. It is good practice to create a separate, dedicated *user* for any API requests. After creating the new client, a new *Client Key* and *Client Secret* will be posted to the *API Applications* table.
 
-If you do not have dedicated server you will need to contact iFormBuilder, or check their webpage, for directions on how to obtain a client\_key and client\_secret.
+If you do not have dedicated server you will need to contact iFormBuilder, or check their webpage, for directions on how to obtain a `client_key` and `client_secret`.
 
 To add the `client_key` and `client_secret` to your `.Renviron` file you will first need to create, or locate, your `.Renviron` file. In your R console, enter:
 
