@@ -13,21 +13,20 @@ idate_time(dts, timezone = "America/Los_Angeles")
 Use \code{OlsonNames()} for a list of standard time zone character strings.}
 }
 \description{
-Date and time values output from iFormBuilder using either the
-  API functions or the data feed function can be difficult to work with. The
-  output may look like: \code{"2014-11-13T15:04:00+00.00"} or: \code{Fri Apr
-  08 2016 08:20:02 GMT-0700 (PDT)}, depending on which function is used. The
-  \code{idate_time(), and itext_time()} functions convert these datetime
-  outputs to standard format \code{"2014-10-13 08:04:03"}, taking timezone
-  into consideration.
+Date and time values output from iFormBuilder can be difficult
+  to work with. The output will typically look like:
+  \code{"2014-11-13T15:04:00+00.00"}. The \code{idate_time()} function
+  converts datetime outputs to standard format \code{"2014-10-13 08:04:03"}
+  taking timezone into consideration.
 }
 \examples{
 # Create vector that straddles change in daylight savings time
-dts = c("2014-10-13T15:04:03+00:00", "", NA, "2014-11-13T15:04:03+00:00")
+# Daylight savings time occurred: 2017-03-12 02:00:00
+dts = c("2017-03-12T01:10:00+00:00", "", NA, "2017-03-12T02:10:00+00:00")
 
 # Convert to standard format
 idate_time(dts)
 }
 \seealso{
-\code{\link{Sys.timezone}}
+\code{\link{Sys.timezone}} for timezones
 }

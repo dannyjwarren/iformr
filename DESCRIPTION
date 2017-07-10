@@ -1,14 +1,14 @@
 Package: iformr
 Type: Package
 Title: A set of tools to leverage the iFormBuilder API
-Version: 0.1.0.9006
+Version: 0.1.0.9007
 Authors@R: as.person(c(
     "Are Strom <Are.Strom@dfw.wa.gov> [aut, cre]",
-    "Ty Garber <Tyler.Garber@dfw.wa.gov> [ctb]"
+    "Tyler Garber [ctb]"
     ))
-Description: A collection of user-friendly functions to connect R to the 
-    iFormBuilder API. For now, these functions allow the most basic operations 
-    such as creating new option lists and downloading data. Additional functions
+Description: A collection of tools to connect R to the iFormBuilder API. 
+    For now, these functions allow the most basic operations such as 
+    creating new option lists and downloading data. Additional functions
     will be added as time allows.
 License: MIT + file LICENSE
 Depends: R (>= 3.4.1)
