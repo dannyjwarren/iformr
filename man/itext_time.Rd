@@ -10,6 +10,8 @@ itext_time(dts, create_tz = "America/Los_Angeles",
 \arguments{
 \item{dts}{A vector of datetimes as string values}
 
+\item{create_tz}{A character string in standard format specifying timezone.}
+
 \item{timezone}{A character string in standard format specifying timezone.
 Use \code{OlsonNames()} for a list of standard time zone character strings.}
 }
