@@ -53,6 +53,7 @@ idate_time <- function (dts, timezone = "America/Los_Angeles") {
 #' @param dts A vector of datetimes as string values
 #' @param timezone A character string in standard format specifying timezone.
 #'   Use \code{OlsonNames()} for a list of standard time zone character strings.
+#' @param create_tz A character string in standard format specifying timezone.
 #' @seealso [timezones()]
 #' @examples
 #' # Create vector that straddles change in daylight savings time
