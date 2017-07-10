@@ -43,7 +43,7 @@ In order to use the functions in this package you **must** first get a `client_k
 
 If you do not have dedicated server you will need to contact iFormBuilder, or check their webpage, for directions on how to obtain a client_key and client_secret. 
 
-To add the client_key and client_secret to your `.Renviron` file you will first need to create, or locate, your `.Renviron` file. In your R console, enter: 
+To add the `client_key` and `client_secret` to your `.Renviron` file you will first need to create, or locate, your `.Renviron` file. In your R console, enter: 
 
 ```{r, eval = FALSE}
 normalizePath("~/")
