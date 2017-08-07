@@ -39,7 +39,7 @@ To add the `client_key` and `client_secret` to your `.Renviron` file you will fi
 normalizePath("~/")
 ```
 
-The path to your `.Renviron` file will be displayed. Use RStudio to either create a new `.Renviron` file if it does not exist or open the existing `.Renviron` file from the specified location. The `.Renviron` is a simple text file and will look similar to:
+The path to your `.Renviron` file will be displayed. Use RStudio to either create a new `.Renviron` file if it does not exist, or open your existing `.Renviron` file from the specified location. The `.Renviron` is a simple text file and will look similar to:
 
     MyProfileNameClientKey=eb7411c1525c486ae7a64727965c3e042eab7389
     MyProfileNameClientSecret=471dbbe5061f4c1db9141c48cc1d0d5a96e60cc6
@@ -51,3 +51,12 @@ Make sure there is an extra space at the bottom of the last entry in the `.Renvi
 Detailed instructions on how to add credentials to your `.Renviron` file can be found in the Appendix section of: <https://cran.r-project.org/web/packages/httr/vignettes/api-packages.html>
 
 Obtaining an `access_token` is a prerequisite for any requests made to the iFormBuilder API.
+
+Request limits and usage notes
+------------------------------
+
+Please see the introduction section of the iFormBuilder [API](http://docs.iformbuilder.apiary.io/#reference/user-resource/user) for general notes on API usage and limits.
+
+There are limits to the number of items you can retrieve per request. You can typically request up to `1000` records of data from individual forms or subforms. The same `1000` record limit applies to requests for items in option lists. Other request are limited to `100` items. For example, if you need to retrieve a list of the names of all option lists in your profile, you can only retrieve `100` in each request. This is more fully explained in the link above. If you hit these limits you can simply make additional requests and set the `offset` parameter to skip previously returned records.
+
+The introduction section provides examples of how to specify the *fields* you need to return from any given request, and how to set request *parameters*. **Please read** the [API introduction](http://docs.iformbuilder.apiary.io/#reference/user-resource/user) before proceeding.
