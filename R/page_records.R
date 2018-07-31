@@ -585,3 +585,58 @@ rm_nulls <- function(x) {
 }
 
 
+#' Create form from dataframe
+#'
+#' Creates a form based on a dataframe. Dataframe classes are cast as element types in the form.
+#'
+#' @rdname data2form
+#' @param server_name String of the iFormBuilder server name.
+#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param name String of new page name; coerced to iFormBuilder table name conventions.
+#' @param label String of the label for the new page.
+#' @param data A dataframe whose structure will be used to create the new form.
+#' @return The page ID of the created form.
+#' @examples
+#' \dontrun{
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Create new form from dataframe
+#' new_form <- data2form(
+#'   server_name = "your_server_name",
+#'   profile_id = "your_profile_id",
+#'   access_token = access_token,
+#'   name = "new_form_to_create",
+#'   label = "New form based on an R dataframe",
+#'   data = dataframe
+#'   }
+#' @export
+data2form = function(server_name, profile_id, access_token, name, label, data) {
+  #remove whitespace, punctuation, etc from name
+  name <- tolower(gsub('([[:punct:]])|\\s+','_',name))
+  #create empty form
+  page_id <- create_page(server_name, profile_id, access_token, name, label)
+  #get field classes of input data
+  field_classes <- sapply(data, class)
+  #list mapping data classes to IFB element types
+  ifb_types <- list("character" = 1, "numeric" = 2, "integer" = 2, "double" = 2, "POSIXct" = 5, "logical" = 6)
+  #for each field in input data
+  for (field in names(field_classes)) {
+    #class of field
+    class <- field_classes[[field]][1]
+    #ifb element type for field
+    data_type <- ifb_types[[class]]
+    #label as proper case
+    label <- gsub('_',' ', field)
+    label <- stringr::str_to_title(label)
+    #add element to page
+    create_element(server_name, profile_id, access_token, page_id, name=field, label, description="", data_type)
+  }
+  return(page_id)
+}
+
+
