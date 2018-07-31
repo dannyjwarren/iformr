@@ -36,5 +36,4 @@ new_page_id <- copy_page(
   access_token = access_token,
   page_id = "existing_page_id"
   }
-
 }

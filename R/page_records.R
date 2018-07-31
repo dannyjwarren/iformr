@@ -59,11 +59,12 @@ get_pages_list <- function(server_name,
 #'
 #' Retrives a list of ALL pages in a profile, in chunks of 100 (limit). Returns a tibble with form id and form
 #' name.
-#'
+#' @rdname get_all_pages_list
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
 #' @return Tibble of two columns containing the page ID and page name: id <int>, name <chr>
+#' @export
 get_all_pages_list <- function(server_name, profile_id, access_token){
   #blank tibble
   page_list = dplyr::tibble(id=integer(), name=character())
@@ -391,6 +392,7 @@ get_selected_page_records <- function(server_name,
 #' Creates a new page in the given profile with the name and label specified. The name provided will be
 #' converted to iFormBuilder standards; punctuation and white spaced replaced with _ and all text to lowercase.
 #'
+#' @rdname create_page
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
@@ -413,7 +415,7 @@ get_selected_page_records <- function(server_name,
 #'   name = "new_form_name",
 #'   label = "New Form Label")
 #'   }
-#'
+#' @export
 create_page = function(server_name, profile_id, access_token, name, label) {
   #remove whitespace, punctuation, etc from name
   name <- tolower(gsub('([[:punct:]])|\\s+','_',name))
@@ -434,7 +436,7 @@ create_page = function(server_name, profile_id, access_token, name, label) {
 #' Copy page
 #'
 #' Copies a page to a new page in the profile.
-#'
+#' @rdname copy_page
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
@@ -455,7 +457,7 @@ create_page = function(server_name, profile_id, access_token, name, label) {
 #'   access_token = access_token,
 #'   page_id = "existing_page_id"
 #'   }
-#'
+#' @export
 copy_page = function(server_name, profile_id, access_token, page_id) {
   copy_page_url <- paste0(api_v60_url(server_name = server_name),
                           profile_id, "/pages/", page_id)
@@ -472,6 +474,8 @@ copy_page = function(server_name, profile_id, access_token, page_id) {
 #'
 #' Renames a page given a page_id and new name and label. The name provided will be
 #' converted to iFormBuilder standards; punctuation and white spaced replaced with _ and all text to lowercase.
+#'
+#' @rdname rename_page
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
@@ -496,7 +500,7 @@ copy_page = function(server_name, profile_id, access_token, page_id) {
 #'   name = "new_page_name",
 #'   label = "new_page_label"
 #'   }
-#'
+#' @export
 rename_page = function(server_name, profile_id, access_token, page_id, name, label) {
   #remove whitespace, punctuation, etc from name
   name <- tolower(gsub('([[:punct:]])|\\s+','_',name))

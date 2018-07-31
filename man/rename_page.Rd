@@ -43,5 +43,4 @@ rename_page_id <- rename_page(
   name = "new_page_name",
   label = "new_page_label"
   }
-
 }

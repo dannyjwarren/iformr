@@ -40,5 +40,4 @@ new_page_id <- create_page(
   name = "new_form_name",
   label = "New Form Label")
   }
-
 }
