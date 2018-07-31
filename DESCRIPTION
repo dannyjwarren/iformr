@@ -4,7 +4,8 @@ Title: A set of tools to leverage the iFormBuilder API
 Version: 0.1.0.9007
 Authors@R: as.person(c(
     "Are Strom <Are.Strom@dfw.wa.gov> [aut, cre]",
-    "Tyler Garber [ctb]"
+    "Tyler Garber [ctb]",
+    "Bill DeVoe <William.DeVoe@maine.gov> [ctb]"
     ))
 Description: A collection of tools to connect R to the iFormBuilder API. 
     For now, these functions allow the most basic operations such as 
@@ -19,7 +20,8 @@ Imports:
     lubridate (>= 1.6.0),
     openssl (>= 0.9.6),
     dplyr (>= 0.7.1),
-    stringi (>= 1.1.5)
+    stringi (>= 1.1.5),
+    tibble (>= 1.4.2)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
