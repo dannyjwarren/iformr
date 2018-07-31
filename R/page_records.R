@@ -2,7 +2,7 @@
 #'
 #' Sends a request to the iFormBuilder API to get a listing of all forms and
 #' subforms in the current profile. Returns a dataframe with form id and form
-#' name.
+#' name. Limited to 100 records per API call.
 #'
 #' @rdname get_pages_list
 #' @param server_name The server name as encoded in the url:
@@ -53,6 +53,40 @@ get_pages_list <- function(server_name,
                             function(i) pgsx[i] <- pgs[[i]]$name))
   dplyr::data_frame(id = pgs_id, name = pgs_name)
 }
+
+
+#' Get list of all pages (i.e., form, or subform) in a profile
+#'
+#' Retrives a list of ALL pages in a profile, in chunks of 100 (limit). Returns a tibble with form id and form
+#' name.
+#'
+#' @param server_name String of the iFormBuilder server name.
+#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @return Tibble of two columns containing the page ID and page name: id <int>, name <chr>
+get_all_pages_list <- function(server_name, profile_id, access_token){
+  #blank tibble
+  page_list = dplyr::tibble(id=integer(), name=character())
+  #start looping at list 0, in chunks of 100 (limit per api call)
+  offset = 0
+  while (T) {
+    #get chunk of 100
+    chunk = get_pages_list(server_name, profile_id,
+                           limit = 100, offset = offset, access_token)
+    #append to option list tibble
+    for (row in 1:nrow(chunk)) {
+      newid = chunk$id[row]
+      newname = chunk$name[row]
+      page_list = dplyr::add_row(page_list, id=newid, name=newname)
+    }
+    #if the chunk is less than 100 escape the loop
+    if (length(chunk$id) < 100) {break}
+    #increment offset by 100
+    offset = offset + 100
+  }
+  return(page_list)
+}
+
 
 #' Get id of a single page (i.e., form, or subform) given a form name
 #'
@@ -351,6 +385,135 @@ get_selected_page_records <- function(server_name,
   rcrd
 }
 
+
+#' Create page
+#'
+#' Creates a new page in the given profile with the name and label specified. The name provided will be
+#' converted to iFormBuilder standards; punctuation and white spaced replaced with _ and all text to lowercase.
+#'
+#' @param server_name String of the iFormBuilder server name.
+#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param name String of new page name; coerced to iFormBuilder table name conventions.
+#' @param label String of the label for the new page.
+#' @return Integer of the new page ID.
+#' @examples
+#' \dontrun{
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Create new page
+#' new_page_id <- create_page(
+#'   server_name = "your_server_name",
+#'   profile_id = "your_profile_id",
+#'   access_token = access_token,
+#'   name = "new_form_name",
+#'   label = "New Form Label")
+#'   }
+#'
+create_page = function(server_name, profile_id, access_token, name, label) {
+  #remove whitespace, punctuation, etc from name
+  name <- tolower(gsub('([[:punct:]])|\\s+','_',name))
+  message(paste0("Creating page: ", name))
+  create_page_url <- paste0(api_v60_url(server_name = server_name),
+                            profile_id, "/pages")
+  bearer <- paste0("Bearer ", access_token)
+  page_attributes = paste0('{"name": "',name,'", "label": "',label,'"}')
+  r <- httr::POST(url = create_page_url,
+                  httr::add_headers('Authorization' = bearer),
+                  body = page_attributes,
+                  encode = "json")
+  httr::stop_for_status(r)
+  page_id <- httr::content(r, type = "application/json")
+  return(page_id$id)
+}
+
+#' Copy page
+#'
+#' Copies a page to a new page in the profile.
+#'
+#' @param server_name String of the iFormBuilder server name.
+#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param page_id Integer of the page ID to copy.
+#' @return Integer of the new page ID.
+#' @examples
+#' \dontrun{
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Copy page
+#' new_page_id <- copy_page(
+#'   server_name = "your_server_name",
+#'   profile_id = "your_profile_id",
+#'   access_token = access_token,
+#'   page_id = "existing_page_id"
+#'   }
+#'
+copy_page = function(server_name, profile_id, access_token, page_id) {
+  copy_page_url <- paste0(api_v60_url(server_name = server_name),
+                          profile_id, "/pages/", page_id)
+  bearer <- paste0("Bearer ", access_token)
+  r <- httr::VERB(verb="COPY", url = copy_page_url,
+                  httr::add_headers('Authorization' = bearer),
+                  encode = "json")
+  httr::stop_for_status(r)
+  new_page_id <- httr::content(r, type = "application/json")
+  return(new_page_id$id)
+}
+
+#' Rename page
+#'
+#' Renames a page given a page_id and new name and label. The name provided will be
+#' converted to iFormBuilder standards; punctuation and white spaced replaced with _ and all text to lowercase.
+#' @param server_name String of the iFormBuilder server name.
+#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param page_id Integer of the page ID to rename.
+#' @param name String of renamed page name; coerced to iFormBuilder table name conventions.
+#' @param label String of the renamed page label.
+#' @return Integer of the page ID.
+#' @examples
+#' \dontrun{
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Rename page
+#' rename_page_id <- rename_page(
+#'   server_name = "your_server_name",
+#'   profile_id = "your_profile_id",
+#'   access_token = access_token,
+#'   page_id = "existing_page_id",
+#'   name = "new_page_name",
+#'   label = "new_page_label"
+#'   }
+#'
+rename_page = function(server_name, profile_id, access_token, page_id, name, label) {
+  #remove whitespace, punctuation, etc from name
+  name <- tolower(gsub('([[:punct:]])|\\s+','_',name))
+  rename_page_url <- paste0(api_v60_url(server_name = server_name),
+                            profile_id, "/pages/", page_id)
+  bearer <- paste0("Bearer ", access_token)
+  page_attributes = paste0('{"name": "',name,'", "label": "',label,'"}')
+  r <- httr::PUT(url = rename_page_url,
+                 httr::add_headers('Authorization' = bearer),
+                 body = page_attributes,
+                 encode = "json")
+  httr::stop_for_status(r)
+  returned_page_id <- httr::content(r, type = "application/json")
+  return(returned_page_id$id)
+}
+
+
 #' Compose a url to get data via the data feed mechanism
 #'
 #' Creates a url with username and password embedded that can be used to
@@ -416,4 +579,5 @@ rm_nulls <- function(x) {
   x[sapply(x, is.null)] <- NA
   return(x)
 }
+
 
