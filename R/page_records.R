@@ -57,32 +57,33 @@ get_pages_list <- function(server_name,
 
 #' Get list of all pages (i.e., form, or subform) in a profile
 #'
-#' Retrives a list of ALL pages in a profile, in chunks of 100 (limit). Returns a tibble with form id and form
-#' name.
+#' Retrieves a list of ALL pages in a profile, in chunks of 100 (limit).
+#' Returns a tibble with form id and form name.
 #' @rdname get_all_pages_list
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
-#' @return Tibble of two columns containing the page ID and page name: id <int>, name <chr>
+#' @return Tibble of two columns containing the page ID and page name:
+#'   id <int>, name <chr>
 #' @export
-get_all_pages_list <- function(server_name, profile_id, access_token){
-  #blank tibble
-  page_list = dplyr::tibble(id=integer(), name=character())
-  #start looping at list 0, in chunks of 100 (limit per api call)
+get_all_pages_list <- function(server_name, profile_id, access_token) {
+  # Blank tibble
+  page_list = dplyr::tibble(id = integer(), name = character())
+  # Start looping at list 0, in chunks of 100 (limit per api call)
   offset = 0
   while (T) {
-    #get chunk of 100
+    # Get chunk of 100
     chunk = get_pages_list(server_name, profile_id,
                            limit = 100, offset = offset, access_token)
     #append to option list tibble
     for (row in 1:nrow(chunk)) {
       newid = chunk$id[row]
       newname = chunk$name[row]
-      page_list = dplyr::add_row(page_list, id=newid, name=newname)
+      page_list = dplyr::add_row(page_list, id = newid, name = newname)
     }
-    #if the chunk is less than 100 escape the loop
+    # If the chunk is less than 100 escape the loop
     if (length(chunk$id) < 100) {break}
-    #increment offset by 100
+    # Increment offset by 100
     offset = offset + 100
   }
   return(page_list)
@@ -389,14 +390,16 @@ get_selected_page_records <- function(server_name,
 
 #' Create page
 #'
-#' Creates a new page in the given profile with the name and label specified. The name provided will be
-#' converted to iFormBuilder standards; punctuation and white spaced replaced with _ and all text to lowercase.
+#' Creates a new page in the given profile with the name and label specified.
+#' The name provided will be converted to iFormBuilder standards; punctuation
+#' and whitespace replaced with _ and all text to lowercase.
 #'
 #' @rdname create_page
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
-#' @param name String of new page name; coerced to iFormBuilder table name conventions.
+#' @param name String of new page name; coerced to iFormBuilder table
+#'   name conventions.
 #' @param label String of the label for the new page.
 #' @return Integer of the new page ID.
 #' @examples
@@ -417,7 +420,7 @@ get_selected_page_records <- function(server_name,
 #'   }
 #' @export
 create_page = function(server_name, profile_id, access_token, name, label) {
-  #remove whitespace, punctuation, etc from name
+  # Remove whitespace, punctuation, etc from name
   name <- tolower(gsub('([[:punct:]])|\\s+','_',name))
   message(paste0("Creating page: ", name))
   create_page_url <- paste0(api_v60_url(server_name = server_name),
@@ -472,15 +475,17 @@ copy_page = function(server_name, profile_id, access_token, page_id) {
 
 #' Rename page
 #'
-#' Renames a page given a page_id and new name and label. The name provided will be
-#' converted to iFormBuilder standards; punctuation and white spaced replaced with _ and all text to lowercase.
+#' Renames a page given a page_id and new name and label. The name provided
+#' will be converted to iFormBuilder standards; punctuation and whitespace
+#' replaced with _ and all text to lowercase.
 #'
 #' @rdname rename_page
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
 #' @param page_id Integer of the page ID to rename.
-#' @param name String of renamed page name; coerced to iFormBuilder table name conventions.
+#' @param name String of renamed page name; coerced to iFormBuilder
+#'   table name conventions.
 #' @param label String of the renamed page label.
 #' @return Integer of the page ID.
 #' @examples
@@ -501,8 +506,9 @@ copy_page = function(server_name, profile_id, access_token, page_id) {
 #'   label = "new_page_label"
 #'   }
 #' @export
-rename_page = function(server_name, profile_id, access_token, page_id, name, label) {
-  #remove whitespace, punctuation, etc from name
+rename_page = function(server_name, profile_id, access_token,
+                       page_id, name, label) {
+  # Remove whitespace, punctuation, etc from name
   name <- tolower(gsub('([[:punct:]])|\\s+','_',name))
   rename_page_url <- paste0(api_v60_url(server_name = server_name),
                             profile_id, "/pages/", page_id)
@@ -533,7 +539,8 @@ rename_page = function(server_name, profile_id, access_token, page_id, name, lab
 #' @param parent_form_name The name of the parent form
 #' @param since_id The record id indicating where to start downloading
 #' @param user_label The name given to the username in the .Renviron file
-#' @param pw_label Skips the offset number of records before beginning to return
+#' @param pw_label Skips the offset number of records before beginning
+#'   to return records
 #' @return A url that can be used to request form data
 #' @examples
 #' \dontrun{
@@ -587,15 +594,18 @@ rm_nulls <- function(x) {
 
 #' Create form from dataframe
 #'
-#' Creates a form based on a dataframe. Dataframe classes are cast as element types in the form.
+#' Creates a form based on a dataframe. Dataframe classes are cast as
+#' element types in the form.
 #'
 #' @rdname data2form
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
-#' @param name String of new page name; coerced to iFormBuilder table name conventions.
+#' @param name String of new page name; coerced to iFormBuilder
+#'   table name conventions.
 #' @param label String of the label for the new page.
-#' @param data A dataframe whose structure will be used to create the new form.
+#' @param data A dataframe whose structure will be used to
+#'   create the new form.
 #' @return The page ID of the created form.
 #' @examples
 #' \dontrun{
@@ -615,26 +625,29 @@ rm_nulls <- function(x) {
 #'   data = dataframe
 #'   }
 #' @export
-data2form = function(server_name, profile_id, access_token, name, label, data) {
-  #remove whitespace, punctuation, etc from name
-  name <- tolower(gsub('([[:punct:]])|\\s+','_',name))
-  #create empty form
+data2form = function(server_name, profile_id, access_token,
+                     name, label, data) {
+  # Remove whitespace, punctuation, etc from name
+  name <- tolower(gsub('([[:punct:]])|\\s+','_', name))
+  # Create empty form
   page_id <- create_page(server_name, profile_id, access_token, name, label)
-  #get field classes of input data
+  # Get field classes of input data
   field_classes <- sapply(data, class)
-  #list mapping data classes to IFB element types
-  ifb_types <- list("character" = 1, "numeric" = 2, "integer" = 2, "double" = 2, "POSIXct" = 5, "logical" = 6)
-  #for each field in input data
+  # List mapping data classes to IFB element types
+  ifb_types <- list("character" = 1, "numeric" = 2, "integer" = 2,
+                    "double" = 2, "POSIXct" = 5, "logical" = 6)
+  # For each field in input data
   for (field in names(field_classes)) {
-    #class of field
+    # Class of field
     class <- field_classes[[field]][1]
-    #ifb element type for field
+    # ifb element type for field
     data_type <- ifb_types[[class]]
-    #label as proper case
+    # Label as proper case
     label <- gsub('_',' ', field)
     label <- stringr::str_to_title(label)
-    #add element to page
-    create_element(server_name, profile_id, access_token, page_id, name=field, label, description="", data_type)
+    # Add element to page
+    create_element(server_name, profile_id, access_token, page_id,
+                   name=field, label, description="", data_type)
   }
   return(page_id)
 }
