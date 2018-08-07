@@ -13,17 +13,20 @@ data2form(server_name, profile_id, access_token, name, label, data)
 
 \item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
 
-\item{name}{String of new page name; coerced to iFormBuilder table name conventions.}
+\item{name}{String of new page name; coerced to iFormBuilder
+table name conventions.}
 
 \item{label}{String of the label for the new page.}
 
-\item{data}{A dataframe whose structure will be used to create the new form.}
+\item{data}{A dataframe whose structure will be used to
+create the new form.}
 }
 \value{
 The page ID of the created form.
 }
 \description{
-Creates a form based on a dataframe. Dataframe classes are cast as element types in the form.
+Creates a form based on a dataframe. Dataframe classes are cast as
+element types in the form.
 }
 \examples{
 \dontrun{
@@ -42,4 +45,7 @@ new_form <- data2form(
   label = "New form based on an R dataframe",
   data = dataframe
   }
+}
+\author{
+Bill Devoe
 }

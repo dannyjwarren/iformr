@@ -5,7 +5,8 @@
 \title{Delete all or some options in an option list}
 \usage{
 delete_options_in_list(server_name, profile_id, optionlist_id,
-  fields = "fields", id_values, limit = 1000, offset = 0, access_token)
+  fields = "fields", id_values, limit = 1000, offset = 0,
+  access_token)
 }
 \arguments{
 \item{server_name}{The server name as encoded in the url:

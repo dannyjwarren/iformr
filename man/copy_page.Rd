@@ -37,3 +37,6 @@ new_page_id <- copy_page(
   page_id = "existing_page_id"
   }
 }
+\author{
+Bill Devoe
+}

@@ -21,7 +21,8 @@ data_feed_url(server_name, parent_form_id, profile_id, parent_form_name,
 
 \item{user_label}{The name given to the username in the .Renviron file}
 
-\item{pw_label}{Skips the offset number of records before beginning to return}
+\item{pw_label}{Skips the offset number of records before beginning
+to return records}
 }
 \value{
 A url that can be used to request form data

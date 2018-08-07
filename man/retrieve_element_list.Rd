@@ -16,10 +16,12 @@ retrieve_element_list(server_name, profile_id, access_token, page_id,
 
 \item{page_id}{Page ID where the new element will be created.}
 
-\item{fields}{*Optional* - Defaults to 'all', which returns all fields for each element. Optionally, a character vector of fields to return can be provided.}
+\item{fields}{*Optional* - Defaults to 'all', which returns all fields for each
+element. Optionally, a character vector of fields to return can be provided.}
 }
 \value{
-Dataframe containing a row for each element and a column for each element field.
+Dataframe containing a row for each element and a column for each
+  element field.
 }
 \description{
 Retrieves a list of all the elements contained in a page.
@@ -40,4 +42,7 @@ elements <- retrieve_element_list(
   page_id = "existing_page_id",
   fields = 'all'
   }
+}
+\author{
+Bill Devoe
 }

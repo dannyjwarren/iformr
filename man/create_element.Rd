@@ -16,17 +16,21 @@ create_element(server_name, profile_id, access_token, page_id, name, label,
 
 \item{page_id}{Page ID where the new element will be created.}
 
-\item{name}{String of the element DCN. The provided name will be converted to be IFB database compliant (no special characters, all lowercase, spaces replaced with underscores.)}
+\item{name}{String of the element DCN. The provided name will be converted to be
+IFB database compliant (no special characters, all lowercase, spaces replaced
+with underscores.)}
 
 \item{label}{Label for the element.}
 
 \item{description}{Text description of the element.}
 
-\item{data_type}{Integer indicating data type of the element. List of iFormBuilder data types: [https://iformbuilder.zendesk.com/hc/en-us/articles/201702880-Data-Types-and-Related-Details](https://iformbuilder.zendesk.com/hc/en-us/articles/201702880-Data-Types-and-Related-Details)}
+\item{data_type}{Integer indicating data type of the element. List of iFormBuilder
+data types: [https://iformbuilder.zendesk.com/hc/en-us/articles/201702880-Data-Types-and-Related-Details](https://iformbuilder.zendesk.com/hc/en-us/articles/201702880-Data-Types-and-Related-Details)}
 
 \item{data_size}{*Optional* - length of the element; defaults to 100.}
 
-\item{optionlist_id}{*Optional* - id of the option list to assign if a Select, Picklist, or Multi Picklist element is created.}
+\item{optionlist_id}{*Optional* - id of the option list to assign if a Select,
+Picklist, or Multi Picklist element is created.}
 }
 \value{
 ID of the new element.
@@ -53,4 +57,7 @@ new_element <- create_element(
   description = "This is a new element.",
   data_type = 1
   }
+}
+\author{
+Bill Devoe
 }
