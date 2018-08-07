@@ -38,6 +38,7 @@
 #'   description = "This is a new element.",
 #'   data_type = 1
 #'   }
+#' @importFrom methods missingArg
 #' @export
 create_element = function(server_name, profile_id, access_token, page_id, name, label,
                           description = "", data_type, data_size = 100, optionlist_id) {
