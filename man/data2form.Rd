@@ -47,5 +47,5 @@ new_form <- data2form(
   }
 }
 \author{
-Bill Devoe
+Bill Devoe, \email{William.DeVoe@maine.gov}
 }

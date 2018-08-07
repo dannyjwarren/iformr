@@ -44,5 +44,5 @@ new_page_id <- create_page(
   }
 }
 \author{
-Bill Devoe
+Bill Devoe, \email{William.DeVoe@maine.gov}
 }

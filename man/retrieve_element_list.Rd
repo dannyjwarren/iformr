@@ -44,5 +44,5 @@ elements <- retrieve_element_list(
   }
 }
 \author{
-Bill Devoe
+Bill Devoe, \email{William.DeVoe@maine.gov}
 }

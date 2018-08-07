@@ -47,5 +47,5 @@ rename_page_id <- rename_page(
   }
 }
 \author{
-Bill Devoe
+Bill Devoe, \email{William.DeVoe@maine.gov}
 }

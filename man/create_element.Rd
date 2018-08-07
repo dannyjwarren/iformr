@@ -24,8 +24,7 @@ with underscores.)}
 
 \item{description}{Text description of the element.}
 
-\item{data_type}{Integer indicating data type of the element. List of iFormBuilder
-data types: [https://iformbuilder.zendesk.com/hc/en-us/articles/201702880-Data-Types-and-Related-Details](https://iformbuilder.zendesk.com/hc/en-us/articles/201702880-Data-Types-and-Related-Details)}
+\item{data_type}{Integer indicating data type of the element.}
 
 \item{data_size}{*Optional* - length of the element; defaults to 100.}
 
@@ -58,6 +57,10 @@ new_element <- create_element(
   data_type = 1
   }
 }
+\seealso{
+List of iFormBuilder data types:
+  \url{https://iformbuilder.zendesk.com/hc/en-us/articles/201702880-Data-Types-and-Related-Details}
+}
 \author{
-Bill Devoe
+Bill Devoe, \email{William.DeVoe@maine.gov}
 }

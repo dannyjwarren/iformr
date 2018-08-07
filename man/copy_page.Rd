@@ -38,5 +38,5 @@ new_page_id <- copy_page(
   }
 }
 \author{
-Bill Devoe
+Bill Devoe, \email{William.DeVoe@maine.gov}
 }

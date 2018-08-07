@@ -3,7 +3,7 @@
 #' Adds a new element to a page.
 #'
 #' @rdname create_element
-#' @author Bill Devoe
+#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
@@ -13,8 +13,9 @@
 #'   with underscores.)
 #' @param label Label for the element.
 #' @param description Text description of the element.
-#' @param data_type Integer indicating data type of the element. List of iFormBuilder
-#'   data types: [https://iformbuilder.zendesk.com/hc/en-us/articles/201702880-Data-Types-and-Related-Details](https://iformbuilder.zendesk.com/hc/en-us/articles/201702880-Data-Types-and-Related-Details)
+#' @param data_type Integer indicating data type of the element.
+#' @seealso  List of iFormBuilder data types:
+#'   \url{https://iformbuilder.zendesk.com/hc/en-us/articles/201702880-Data-Types-and-Related-Details}
 #' @param data_size *Optional* - length of the element; defaults to 100.
 #' @param optionlist_id *Optional* - id of the option list to assign if a Select,
 #'   Picklist, or Multi Picklist element is created.
@@ -69,7 +70,7 @@ create_element = function(server_name, profile_id, access_token, page_id, name, 
 #' Retrieves a list of all the elements contained in a page.
 #'
 #' @rdname retrieve_element_list
-#' @author Bill Devoe
+#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}

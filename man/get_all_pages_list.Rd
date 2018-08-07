@@ -22,5 +22,5 @@ Retrieves a list of ALL pages in a profile, in chunks of 100 (limit).
 Returns a tibble with form id and form name.
 }
 \author{
-Bill Devoe
+Bill Devoe, \email{William.DeVoe@maine.gov}
 }
