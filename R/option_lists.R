@@ -1,7 +1,7 @@
-#' Get a listing of all option lists in a profile
+#' Get a listing of all option lists within the API call limit of 100 records
 #'
 #' Sends a request to the iFormBuilder API to get a listing of all option lists
-#' currently posted in the given profile.
+#' currently posted in the given profile, clipped to 100 records.
 #'
 #' @rdname get_option_lists
 #' @param server_name The server name as encoded in the url:
@@ -52,6 +52,57 @@ get_option_lists <- function(server_name,
                             function(i) optx[i] <- opts[[i]]$name))
   dplyr::data_frame(id = opt_id, name = opt_name)
 }
+
+
+#' Retrieve all option lists.
+#'
+#' Retrieves all option lists in a profile in chunks of 100 (API call limit).
+#'
+#' @rdname get_all_option_lists
+#' @param server_name String of the iFormBuilder server name.
+#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @return Tibble of two columns containing the option list IDs and option list names: id <int>, name <chr>
+#' @examples
+#' \dontrun{
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Get the id and name of all option lists in profile
+#' option_lists <- get_all_option_lists(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   access_token = access_token)
+#'
+#' # Inspect
+#' option_lists
+#' }
+#' @export
+get_all_option_lists = function(server_name, profile_id, access_token){
+  #blank tibble
+  option_lists = dplyr::tibble(id=integer(), name=character())
+  #start looping at list 0, in chunks of 100 (limit per api call)
+  offset = 0
+  while (T) {
+    #get chunk of 100
+    chunk = get_option_lists(server_name, profile_id, limit = 100, offset = offset, access_token)
+    #append to option list tibble
+    for (row in 1:nrow(chunk)) {
+      newid = chunk$id[row]
+      newname = chunk$name[row]
+      option_lists = dplyr::add_row(option_lists, id=newid, name=newname)
+    }
+    #if the chunk is less than 100 escape the loop
+    if (length(chunk$id) < 100) {break}
+    #increment offset by 100
+    offset = offset + 100
+  }
+  return(option_lists)
+}
+
 
 #' Get the id of a single option list given an option list name
 #'

@@ -26,7 +26,7 @@ A dataframe of all forms (pages) in the given profile
 \description{
 Sends a request to the iFormBuilder API to get a listing of all forms and
 subforms in the current profile. Returns a dataframe with form id and form
-name.
+name. Limited to 100 records per API call.
 }
 \examples{
 \dontrun{
