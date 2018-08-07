@@ -3,6 +3,7 @@
 #' Adds a new element to a page.
 #'
 #' @rdname create_element
+#' @author Bill Devoe
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
@@ -67,6 +68,7 @@ create_element = function(server_name, profile_id, access_token, page_id, name, 
 #' Retrieves a list of all the elements contained in a page.
 #'
 #' @rdname retrieve_element_list
+#' @author Bill Devoe
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}

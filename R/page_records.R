@@ -60,6 +60,7 @@ get_pages_list <- function(server_name,
 #' Retrieves a list of ALL pages in a profile, in chunks of 100 (limit).
 #' Returns a tibble with form id and form name.
 #' @rdname get_all_pages_list
+#' @author Bill Devoe
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
@@ -509,6 +510,7 @@ get_all_records = function(server_name,
 #' and whitespace replaced with _ and all text to lowercase.
 #'
 #' @rdname create_page
+#' @author Bill Devoe
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
@@ -554,6 +556,7 @@ create_page = function(server_name, profile_id, access_token, name, label) {
 #'
 #' Copies a page to a new page in the profile.
 #' @rdname copy_page
+#' @author Bill Devoe
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
@@ -594,6 +597,7 @@ copy_page = function(server_name, profile_id, access_token, page_id) {
 #' replaced with _ and all text to lowercase.
 #'
 #' @rdname rename_page
+#' @author Bill Devoe
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
@@ -712,6 +716,7 @@ rm_nulls <- function(x) {
 #' element types in the form.
 #'
 #' @rdname data2form
+#' @author Bill Devoe
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
