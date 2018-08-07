@@ -45,7 +45,7 @@ create_element = function(server_name, profile_id, access_token, page_id, name, 
   else {
     page_attributes <- list(name=name,label=label,description=description,data_type=data_type,data_size=data_size)
   }
-  page_attributes <- jsonlite::toJSON(page_attributes)
+  page_attributes <- jsonlite::toJSON(page_attributes, auto_unbox=T)
   r <- httr::POST(url = create_element_url,
                   httr::add_headers('Authorization' = bearer),
                   body = page_attributes,
