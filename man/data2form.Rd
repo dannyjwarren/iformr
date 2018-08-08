@@ -29,6 +29,17 @@ Creates a form based on a dataframe. Dataframe classes are cast as
 element types in the form.
 }
 \examples{
+# Create a dataframe with some basic form fields
+dat = tibble::tibble(survey_id = NA_integer_,
+                     survey_datetime = as.POSIXct(NA, tz = "UTC"),
+                     surveyor = NA_character_,
+                     start_point = NA_real_,
+                     fish_species = NA_integer_,
+                     fish_count = NA_integer_,
+                     end_point = NA_real_,
+                     comment_text = NA_character_,
+                     survey_completed = TRUE)
+
 \dontrun{
 # Get access_token
 access_token <- get_iform_access_token(
@@ -43,8 +54,8 @@ new_form <- data2form(
   access_token = access_token,
   name = "new_form_to_create",
   label = "New form based on an R dataframe",
-  data = dataframe
-  }
+  data = dat)
+}
 }
 \author{
 Bill Devoe, \email{William.DeVoe@maine.gov}

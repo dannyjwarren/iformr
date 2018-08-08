@@ -38,10 +38,11 @@ A dataframe of records for the specified fields (columns)
 \description{
 Sends a request to the iFormBuilder API to get all records in a
   given form or subform for a specific set of fields (columns). This function
-  can be used to exceed the API limit of 1000 records per request. Specify how
-  many records to retrieve  (< 1000) using the \code{limit} parameter. Specify
-  how many records to skip before starting to retrieve using the \code{offset}
-  parameter.
+  can be used to exceed the API limit of 1000 records per request. It will loop
+  through chunks of 1000 records at a time until all records have been retrieved.
+  You can also specify chunk size (< 1000) using the \code{limit} parameter.
+  Specify how many records to skip before starting to retrieve records using
+  the \code{offset} parameter.
 }
 \details{
 This function should be used with caution. It should only be used in
@@ -60,13 +61,13 @@ This function should be used with caution. It should only be used in
 }
 
 \examples{
-#' # Specify the fields (columns) to be returned
-field_list <- c(
- "surveyors", "survey_start_datetime", "survey_method",
- "stream", "survey_end_time")
+# Specify the fields (columns) to be returned
+field_list <- c("surveyors", "survey_start_datetime", "survey_method",
+                "stream", "survey_end_time")
 
 # Collapse vector of column names into a single string
 form_fields <- paste(field_list, collapse = ',')
+
 \dontrun{
 # Set id to ascending order and pull only records greater than the last_id
 since_id <- 5

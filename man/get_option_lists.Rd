@@ -2,9 +2,9 @@
 % Please edit documentation in R/option_lists.R
 \name{get_option_lists}
 \alias{get_option_lists}
-\title{Get a listing of all option lists within the API call limit of 100 records}
+\title{Get a listing of the first 100 option lists in a given profile}
 \usage{
-get_option_lists(server_name, profile_id, limit = 1000, offset = 0,
+get_option_lists(server_name, profile_id, limit = 100, offset = 0,
   access_token)
 }
 \arguments{
@@ -24,8 +24,9 @@ the API}
 A listing of all option lists in the given profile
 }
 \description{
-Sends a request to the iFormBuilder API to get a listing of all option lists
-currently posted in the given profile, clipped to 100 records.
+Sends a request to the iFormBuilder API to get a listing of the first 100
+option lists currently posted in the given profile. The API call limit is
+currently set at 100 records.
 }
 \examples{
 \dontrun{

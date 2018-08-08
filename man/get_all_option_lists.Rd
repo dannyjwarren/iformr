@@ -38,3 +38,6 @@ option_lists <- get_all_option_lists(
 option_lists
 }
 }
+\author{
+Bill Devoe, \email{William.DeVoe@maine.gov}
+}

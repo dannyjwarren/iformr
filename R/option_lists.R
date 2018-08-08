@@ -1,7 +1,8 @@
-#' Get a listing of all option lists within the API call limit of 100 records
+#' Get a listing of the first 100 option lists in a given profile
 #'
-#' Sends a request to the iFormBuilder API to get a listing of all option lists
-#' currently posted in the given profile, clipped to 100 records.
+#' Sends a request to the iFormBuilder API to get a listing of the first 100
+#' option lists currently posted in the given profile. The API call limit is
+#' currently set at 100 records.
 #'
 #' @rdname get_option_lists
 #' @param server_name The server name as encoded in the url:
@@ -32,7 +33,7 @@
 #' @export
 get_option_lists <- function(server_name,
                              profile_id,
-                             limit = 1000,
+                             limit = 100,
                              offset = 0,
                              access_token) {
   optionlists_uri <- paste0(api_v60_url(server_name = server_name),
@@ -59,6 +60,7 @@ get_option_lists <- function(server_name,
 #' Retrieves all option lists in a profile in chunks of 100 (API call limit).
 #'
 #' @rdname get_all_option_lists
+#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}

@@ -1,6 +1,6 @@
-#' Get list of all pages (i.e., form, or subform) in a profile
+#' Get list of the first 100 pages (i.e., forms, or subforms) in a profile
 #'
-#' Sends a request to the iFormBuilder API to get a listing of all forms and
+#' Sends a request to the iFormBuilder API to get a listing of forms and
 #' subforms in the current profile. Returns a dataframe with form id and form
 #' name. Limited to 100 records per API call.
 #'
@@ -292,10 +292,10 @@ get_page_record <- function(server_name,
 #'   subform)
 #'
 #' @description Sends a request to the iFormBuilder API to get the first 1000
-#'   records in a given form or subform for a specific set of fields (columns).
-#'   Specify how many records to retrieve using the \code{limit} parameter.
-#'   Specify how many records to skip before starting to retrieve using the
-#'   \code{offset} parameter.
+#'   records or less in a given form or subform for a specific set of fields
+#'   (columns). Specify how many records to retrieve using the \code{limit}
+#'   parameter. Specify how many records to skip before starting to retrieve
+#'   records using the \code{offset} parameter.
 #'
 #' @details This will likely be the primary function used to retrieve records
 #'   from the iFormBuilder API. When a set of records is downloaded using this
@@ -394,10 +394,11 @@ get_selected_page_records <- function(server_name,
 #'
 #' @description Sends a request to the iFormBuilder API to get all records in a
 #'   given form or subform for a specific set of fields (columns). This function
-#'   can be used to exceed the API limit of 1000 records per request. Specify how
-#'   many records to retrieve  (< 1000) using the \code{limit} parameter. Specify
-#'   how many records to skip before starting to retrieve using the \code{offset}
-#'   parameter.
+#'   can be used to exceed the API limit of 1000 records per request. It will loop
+#'   through chunks of 1000 records at a time until all records have been retrieved.
+#'   You can also specify chunk size (< 1000) using the \code{limit} parameter.
+#'   Specify how many records to skip before starting to retrieve records using
+#'   the \code{offset} parameter.
 #'
 #' @details This function should be used with caution. It should only be used in
 #'   those rare cases when you know that there are more than 1000 records that
@@ -429,14 +430,13 @@ get_selected_page_records <- function(server_name,
 #' @param since_id The id value defining the first record to retrieve.
 #' @return A dataframe of records for the specified fields (columns)
 #' @examples
-#' #' # Specify the fields (columns) to be returned
-#' field_list <- c(
-#'  "surveyors", "survey_start_datetime", "survey_method",
-#'  "stream", "survey_end_time")
+#' # Specify the fields (columns) to be returned
+#' field_list <- c("surveyors", "survey_start_datetime", "survey_method",
+#'                 "stream", "survey_end_time")
 #'
 #' # Collapse vector of column names into a single string
 #' form_fields <- paste(field_list, collapse = ',')
-
+#'
 #' \dontrun{
 #' # Set id to ascending order and pull only records greater than the last_id
 #' since_id <- 5
@@ -727,6 +727,17 @@ rm_nulls <- function(x) {
 #'   create the new form.
 #' @return The page ID of the created form.
 #' @examples
+#' # Create a dataframe with some basic form fields
+#' dat = tibble::tibble(survey_id = NA_integer_,
+#'                      survey_datetime = as.POSIXct(NA, tz = "UTC"),
+#'                      surveyor = NA_character_,
+#'                      start_point = NA_real_,
+#'                      fish_species = NA_integer_,
+#'                      fish_count = NA_integer_,
+#'                      end_point = NA_real_,
+#'                      comment_text = NA_character_,
+#'                      survey_completed = TRUE)
+#'
 #' \dontrun{
 #' # Get access_token
 #' access_token <- get_iform_access_token(
@@ -741,8 +752,8 @@ rm_nulls <- function(x) {
 #'   access_token = access_token,
 #'   name = "new_form_to_create",
 #'   label = "New form based on an R dataframe",
-#'   data = dataframe
-#'   }
+#'   data = dat)
+#' }
 #' @export
 data2form = function(server_name, profile_id, access_token,
                      name, label, data) {

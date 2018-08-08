@@ -30,10 +30,10 @@ A dataframe of records for the specified fields (columns)
 }
 \description{
 Sends a request to the iFormBuilder API to get the first 1000
-  records in a given form or subform for a specific set of fields (columns).
-  Specify how many records to retrieve using the \code{limit} parameter.
-  Specify how many records to skip before starting to retrieve using the
-  \code{offset} parameter.
+  records or less in a given form or subform for a specific set of fields
+  (columns). Specify how many records to retrieve using the \code{limit}
+  parameter. Specify how many records to skip before starting to retrieve
+  records using the \code{offset} parameter.
 }
 \details{
 This will likely be the primary function used to retrieve records
