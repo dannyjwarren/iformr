@@ -219,6 +219,47 @@ create_new_option_list <- function(server_name,
   return(list_id)
 }
 
+
+#' Delete option list.
+#'
+#' Deletes an option list from a profile.
+#'
+#' @rdname delete_option_list
+#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @param server_name String of the iFormBuilder server name.
+#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param option_list_id ID of the option list to be deleted.
+#' @return ID of the option list to be deleted.
+#' @examples
+#' \dontrun{
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Delete option list
+#' deleted_id <- delete_option_list(
+#'   server_name = "your_server_name",
+#'   profile_id = "your_profile_id",
+#'   access_token = access_token,
+#'   option_list_id
+#'   }
+#' @export
+delete_option_list <- function(server_name, profile_id,
+                               access_token, option_list_id){
+  delete_option_list_url <- paste0(api_v60_url(server_name = server_name),
+                                  profile_id, "/optionlists/", option_list_id)
+  bearer <- paste0("Bearer ", access_token)
+  # No body, DELETE HTTP method
+  r <- httr::DELETE(url = delete_option_list_url,
+                    httr::add_headers('Authorization' = bearer),
+                    encode = "json")
+  httr::stop_for_status(r)
+  response <- httr::content(r, type = "application/json")
+}
+
 #' Add option values to new option list
 #'
 #' Sends a request to the iFormBuilder API to append a list of options in json
