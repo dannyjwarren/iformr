@@ -4,8 +4,8 @@
 \alias{get_option_list_id}
 \title{Get the id of a single option list given an option list name}
 \usage{
-get_option_list_id(server_name, profile_id, option_list_name, limit = 1000,
-  offset = 0, access_token)
+get_option_list_id(server_name, profile_id, option_list_name,
+  limit = 1000, offset = 0, access_token)
 }
 \arguments{
 \item{server_name}{The server name as encoded in the url:

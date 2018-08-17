@@ -2,7 +2,7 @@
 % Please edit documentation in R/page_records.R
 \name{get_pages_list}
 \alias{get_pages_list}
-\title{Get list of all pages (i.e., form, or subform) in a profile}
+\title{Get list of the first 100 pages (i.e., forms, or subforms) in a profile}
 \usage{
 get_pages_list(server_name, profile_id, limit = 1000, offset = 0,
   access_token)
@@ -24,7 +24,7 @@ the API}
 A dataframe of all forms (pages) in the given profile
 }
 \description{
-Sends a request to the iFormBuilder API to get a listing of all forms and
+Sends a request to the iFormBuilder API to get a listing of forms and
 subforms in the current profile. Returns a dataframe with form id and form
 name. Limited to 100 records per API call.
 }

@@ -14,9 +14,13 @@ get_all_pages_list(server_name, profile_id, access_token)
 \item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
 }
 \value{
-Tibble of two columns containing the page ID and page name: id <int>, name <chr>
+Tibble of two columns containing the page ID and page name:
+  id <int>, name <chr>
 }
 \description{
-Retrives a list of ALL pages in a profile, in chunks of 100 (limit). Returns a tibble with form id and form
-name.
+Retrieves a list of ALL pages in a profile, in chunks of 100 (limit).
+Returns a tibble with form id and form name.
+}
+\author{
+Bill Devoe, \email{William.DeVoe@maine.gov}
 }

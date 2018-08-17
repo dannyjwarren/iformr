@@ -15,7 +15,8 @@ rename_page(server_name, profile_id, access_token, page_id, name, label)
 
 \item{page_id}{Integer of the page ID to rename.}
 
-\item{name}{String of renamed page name; coerced to iFormBuilder table name conventions.}
+\item{name}{String of renamed page name; coerced to iFormBuilder
+table name conventions.}
 
 \item{label}{String of the renamed page label.}
 }
@@ -23,8 +24,9 @@ rename_page(server_name, profile_id, access_token, page_id, name, label)
 Integer of the page ID.
 }
 \description{
-Renames a page given a page_id and new name and label. The name provided will be
-converted to iFormBuilder standards; punctuation and white spaced replaced with _ and all text to lowercase.
+Renames a page given a page_id and new name and label. The name provided
+will be converted to iFormBuilder standards; punctuation and whitespace
+replaced with _ and all text to lowercase.
 }
 \examples{
 \dontrun{
@@ -43,4 +45,7 @@ rename_page_id <- rename_page(
   name = "new_page_name",
   label = "new_page_label"
   }
+}
+\author{
+Bill Devoe, \email{William.DeVoe@maine.gov}
 }

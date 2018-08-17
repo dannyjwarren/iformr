@@ -4,8 +4,8 @@
 \alias{update_options_in_list}
 \title{Update values in an existing option list}
 \usage{
-update_options_in_list(server_name, profile_id, optionlist_id, option_values,
-  fields = "fields", limit = 1000, offset = 0,
+update_options_in_list(server_name, profile_id, optionlist_id,
+  option_values, fields = "fields", limit = 1000, offset = 0,
   access_token = access_token)
 }
 \arguments{

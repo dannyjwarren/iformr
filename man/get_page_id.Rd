@@ -4,8 +4,8 @@
 \alias{get_page_id}
 \title{Get id of a single page (i.e., form, or subform) given a form name}
 \usage{
-get_page_id(server_name, profile_id, page_name, limit = 1000, offset = 0,
-  access_token)
+get_page_id(server_name, profile_id, page_name, limit = 1000,
+  offset = 0, access_token)
 }
 \arguments{
 \item{server_name}{The server name as encoded in the url:

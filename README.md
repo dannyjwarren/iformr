@@ -5,7 +5,7 @@ iformr
 Overview
 --------
 
-This package provides a collection of tools to leverage the power of the iFormBuilder API. The package is in an early-development state. Additional functions will be added as time allows.
+This package provides a collection of tools to leverage the power of the iFormBuilder API. The package is in an early-development state. Additional functions will be added as time allows. Contributions are always welcome. A big thanks to Bill DeVoe of the Maine Department of Marine Resources for several recent contributions. Please see function documentation for author credits.
 
 iFormBuilder <https://www.iformbuilder.com/> provides a commercial platform for mobile data collection. The platform includes a number of web-based tools to build and distribute mobile forms, assign users, edit data, and retrieve data from the cloud. Unfortunately, the point-and-click web interface can become a major bottleneck as data volume increases, or you try to push the limits of form design.
 
@@ -60,3 +60,10 @@ Please see the introduction section of the iFormBuilder [API](http://docs.iformb
 There are limits to the number of items you can retrieve per request. You can typically request up to `1000` records of data from individual forms or subforms. The same `1000` record limit applies to requests for items in option lists. Other request are limited to `100` items. For example, if you need to retrieve a list of the names of all option lists in your profile, you can only retrieve `100` in each request. This is more fully explained in the link above. If you hit these limits you can simply make additional requests and set the `offset` parameter to skip previously returned records.
 
 The introduction section provides examples of how to specify the *fields* you need to return from any given request, and how to set request *parameters*. **Please read** the [API introduction](http://docs.iformbuilder.apiary.io/#reference/user-resource/user) before proceeding.
+
+Building mobile forms
+---------------------
+
+Recent contributions by Bill DeVoe (<William.DeVoe@maine.gov>) provide a new set of tools to generate the basic structure of mobile forms directly from R dataframes. See the `create_page()`, `copy_page()`, `rename_page()`, and `data2form()` functions. By programatically generating mobile forms from data, the otherwise tedious task of creating mobile forms by hand can be standardized and made considerably more reliable and efficient.
+
+For those just beginning to learn form design, [Mobile forms for salmon surveys](https://arestrom.github.io/mf4ss/) may serve as a useful starting point. This online text steps through the manual process of form design using the standard iFormBuilder toolset.

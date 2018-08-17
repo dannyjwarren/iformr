@@ -14,7 +14,8 @@ get_all_option_lists(server_name, profile_id, access_token)
 \item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
 }
 \value{
-Tibble of two columns containing the option list IDs and option list names: id <int>, name <chr>
+Tibble of two columns containing the option list IDs and option
+  list names: id <int>, name <chr>
 }
 \description{
 Retrieves all option lists in a profile in chunks of 100 (API call limit).
@@ -36,4 +37,7 @@ option_lists <- get_all_option_lists(
 # Inspect
 option_lists
 }
+}
+\author{
+Bill Devoe, \email{William.DeVoe@maine.gov}
 }
