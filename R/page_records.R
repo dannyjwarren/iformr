@@ -814,15 +814,16 @@ create_new_records <- function(server_name, profile_id, page_id, access_token, r
   record_data[is.na(record_data)] <- ""
   # Get list of elements in existing page
   ifb_flds <- iformr::retrieve_element_list(server_name, profile_id, access_token,
-                                             page_id, fields = 'label')
+                                            page_id, fields = 'label')
   # Fields in page
   ifb_flds <- ifb_flds$name
   # Fields in source table also in IFB
-  flds <- intersect(new_flds, ifb_flds)
+  fields <- intersect(new_flds, ifb_flds)
   # Remove columns from new record data not in IFB data
-  record_data <- record_data[ , (names(record_data) %in% flds)]
+  record_data <- record_data[ , (names(record_data) %in% fields)]
   # Convert record data to JSON.
   # TODO BD 8/20/2018: Way to do this with JSONlite package
+  #
   values = ""
   for (row in 1:nrow(record_data)){
     if (row != nrow(record_data)){
@@ -861,8 +862,116 @@ create_new_records <- function(server_name, profile_id, page_id, access_token, r
                   encode = "json")
   httr::stop_for_status(r)
   response <- httr::content(r, type = "application/json")
-  message(response)
   return(response)
 }
 
+
+#' Sync table
+#'
+#' Syncs a dataframe with the contents of an IFB page. An example use case
+#' is syncing an existing database table with a Smart Table Search form
+#' in IFB. TODO: Add support for data column comparison to update records.
+#'
+#' @rdname sync_table
+#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @param server_name String of the iFormBuilder server name.
+#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param data A dataframe containing the data to be synced with the page.
+#' @param form_name The name of a page to sync the source data to; if the page does
+#' not exist, it will be created.
+#' @param label *Optional* - String of the label to be used if a new page is created.
+#' If a label is not provided and a new page is created, the form_name argument will
+#' be used to create a page label.
+#' @param uid The name of the column in the source and IFB data that uniquely identifies
+#' a record.
+#' @return The page ID of the existing or created form.
+#' @examples
+#' \dontrun{
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Add new data to form
+#' sync_table(server_name, profile_id, access_token,
+#'   data = "new_dataframe", form_name = "my_form",
+#'   uid = "unique_id_col")
+#' }
+#' @export
+sync_table <- function(server_name, profile_id, access_token,
+                       data, form_name, label, uid){
+  # Convert the dataframe to be Smart Table search friendly -
+  # Date fields to UNIX epoch string, everything else to string
+  for (fld in names(data)) {
+    # Class of field
+    class <- data[[fld]][1]
+    if (identical(class,"POSIXct")) {
+      data[[fld]] <- as.numeric(data[[fld]])
+    }
+    else {
+      data[[fld]] <- as.character(data[[fld]])
+    }
+  }
+  # Get a list of all the pages in the profile
+  page_list <- iformr::get_all_pages_list(server_name, profile_id, access_token)
+  # Remove whitespace, punctuation, etc from name
+  form_name <- tolower(gsub('([[:punct:]])|\\s+','_', form_name))
+  # If the form does not exist, create it
+  if (form_name %in% page_list$name == F){
+    message("Form ",form_name," does not yet exist.")
+    # If form label has not been provided, create a label from the form name
+    if (methods::missingArg(label)) {
+      label <- stringr::str_to_title(gsub('_',' ', form_name))
+    }
+    # Create page for table data
+    page_id <- iformr::data2form(server_name, profile_id, access_token,
+                                 name = form_name, label, data)
+  }
+  else {
+    # Get id of existing page
+    page_id <- page_list[page_list$name == form_name ,]$id
+  }
+  # If something goes wrong with request
+  stopifnot(page_id > 0)
+  # Field names of input table to lowercase to match IFB
+  names(data) <- tolower(names(data))
+  # Fields names in source table
+  src_flds <- names(data)
+  # Get list of elements in existing page
+  ifb_flds <- iformr::retrieve_element_list(server_name, profile_id, access_token,
+                                            page_id, fields = 'label')
+  # Fields in page from elements dataframe
+  ifb_flds <- ifb_flds$name
+  # Fields in source table also in page
+  flds <- intersect(src_flds, ifb_flds)
+  # Fields in both tables collapsed to string
+  fldstr <- paste(flds, collapse = ',')
+  # Check that UID column is in both datasets
+  uid <- tolower(uid)
+  if (!(uid %in% src_flds))
+  {stop(paste0("UID column ",uid,"is missing from source data."))}
+  if (!(uid %in% ifb_flds))
+  {stop(paste0("UID column ",uid,"is missing from IFB data."))}
+  # Pull all data in IFB table
+  i_data <- iformr::get_all_records(server_name, profile_id, page_id, fields = "fields",
+                                    limit = 1000, offset = 0, access_token,
+                                    field_string = fldstr, since_id = 0)
+  # If there is data in IFB
+  if (nrow(i_data) > 0) {
+    # Find data in source table that is not in IFB table
+    new_data <- dplyr::anti_join(data, i_data, by=uid)
+    # Remove columns from source table not in IFB table
+    new_data <- new_data[ , (names(new_data) %in% flds)]
+  }
+  else {
+    new_data <- data
+  }
+  # Upload new data to IFB
+  message(paste0(nrow(new_data), " new records will be added to ",form_name))
+  upload <- create_new_records(server_name, profile_id, page_id,
+                               access_token, record_data = new_data)
+  return(upload)
+}
 
