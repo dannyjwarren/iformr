@@ -812,16 +812,12 @@ create_new_records <- function(server_name, profile_id, page_id, access_token, r
   # Field names in new data
   new_flds <- names(record_data)
   record_data[is.na(record_data)] <- ""
-  # Get data record from existing page
-  # Ids of existing records
-  record_ids <- iformr::get_page_record_list(server_name, profile_id, page_id, limit = 100,
-                                             offset = 0, access_token)
-  # Get one record
-  record_id <- record_ids[1]
-  record <- iformr::get_page_record(server_name, profile_id, page_id, record_id, access_token)
-  # Fields in record
-  ifb_flds <- names(record)
-  # Fields in source table also in record
+  # Get list of elements in existing page
+  ifb_flds <- iformr::retrieve_element_list(server_name, profile_id, access_token,
+                                             page_id, fields = 'label')
+  # Fields in page
+  ifb_flds <- ifb_flds$name
+  # Fields in source table also in IFB
   flds <- intersect(new_flds, ifb_flds)
   # Remove columns from new record data not in IFB data
   record_data <- record_data[ , (names(record_data) %in% flds)]
