@@ -222,7 +222,10 @@ create_new_option_list <- function(server_name,
 
 #' Delete option list.
 #'
-#' Deletes an option list from a profile.
+#' Deletes an option list from a profile. Deleting options and option lists
+#' should be done with consideration for existing data referencing the
+#' list. As an alternative, options can be disabled by setting their condition
+#' value to 'False'
 #'
 #' @rdname delete_option_list
 #' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
