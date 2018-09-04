@@ -513,7 +513,7 @@ get_all_records = function(server_name,
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
 #' @param page_id ID of the page to retrieve.
-#' @return List containing page details.
+#' @return Dataframe containing page details.
 #' @examples
 #' \dontrun{
 #' # Get access_token
@@ -539,6 +539,11 @@ retrieve_page = function(server_name, profile_id, access_token, page_id) {
                  encode = "json")
   httr::stop_for_status(r)
   page_data <- httr::content(r, type = "application/json")
+  # Unlist permissions and localizations
+  page_data$permissions <- unlist(page_data$permissions)
+  page_data$localizations <- unlist(page_data$localizations)
+  # Output as dataframe
+  return(do.call(rbind.data.frame, page_data))
 }
 
 
@@ -1029,9 +1034,12 @@ sync_table <- function(server_name, profile_id, access_token,
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
 #' @param page_id ID of the form to get metadata from.
-#' @param file Filename of the output Markdown file.
+#' @param filename Filename of the output Markdown file.
 #' @param subforms **Optional** - Indicates if metadata should be generated for subforms.
-#' @return
+#' Defaults to True.
+#' @param sub  **Optional** - Defaults to False. Used by function to self-reference
+#' and append subform metadata to beginning file.
+#' @return Add this later.
 #' @examples
 #' \dontrun{
 #' # Get access_token
@@ -1047,5 +1055,37 @@ sync_table <- function(server_name, profile_id, access_token,
 #' }
 #' @export
 form_metadata <- function(server_name, profile_id, access_token,
-                       page_id, file, subforms=T) {
+                       page_id, filename, subforms=T, sub=F) {
+  # If not appending subform data to an existing file
+  if (sub == F) {
+    # Add Markdown extension if it was not provided
+    if (!(endsWith(filename, ".md")) || !(endsWith(filename, ".Rmd"))) {
+      filename <- paste0(filename,".md")
+    }
+    # Create/overwrite output file
+    file.create(filename)
+  }
+  # Get metadata for page
+  page <- iformr::retrieve_page(server_name, profile_id, access_token, page_id)
+  elements <- iformr::retrieve_element_list(server_name, profile_id, access_token, page_id)
+  # Convert date columns
+  page$created_date <- iformr::idate_time(page$created_date, Sys.timezone())
+  page$modified_date <- iformr::idate_time(page$modified_date, Sys.timezone())
+  elements$created_date <- iformr::idate_time(elements$created_date, Sys.timezone())
+  elements$modified_date <- iformr::idate_time(elements$modified_date, Sys.timezone())
+  # Blank vector for subform IDs
+  subs <- c()
+  # Open md file connection
+  conn <- file(filename, 'w')
+  # Write form title
+  if (sub == F) {
+    cat("# Parent Form: ",page$label,"\n",file=conn)
+  }
+  else {
+    cat("# Sub Form: ",page$label,"\n",file=conn)
+  }
+
+
+
+  page$name
 }
