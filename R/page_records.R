@@ -951,9 +951,9 @@ sync_table <- function(server_name, profile_id, access_token,
   # Check that UID column is in both datasets
   uid <- tolower(uid)
   if (!(uid %in% src_flds))
-  {stop(paste0("UID column ",uid,"is missing from source data."))}
+  {stop(paste0("UID column ",uid," is missing from source data."))}
   if (!(uid %in% ifb_flds))
-  {stop(paste0("UID column ",uid,"is missing from IFB data."))}
+  {stop(paste0("UID column ",uid," is missing from IFB data."))}
   # Pull all data in IFB table
   i_data <- iformr::get_all_records(server_name, profile_id, page_id, fields = "fields",
                                     limit = 1000, offset = 0, access_token,
@@ -972,6 +972,41 @@ sync_table <- function(server_name, profile_id, access_token,
   message(paste0(nrow(new_data), " new records will be added to ",form_name))
   upload <- create_new_records(server_name, profile_id, page_id,
                                access_token, record_data = new_data)
-  return(upload)
 }
 
+
+#' Form metadata
+#'
+#' Builds a Markdown document containing metadata for a given
+#' iFormBuilder form by querying the API for page and element
+#' level information. By utilizing the description fields during
+#' form building, detailed metadata can be built afterward using
+#' this function.
+#'
+#' @rdname form_metadata
+#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @param server_name String of the iFormBuilder server name.
+#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param page_id ID of the form to get metadata from.
+#' @param file Filename of the output Markdown file.
+#' @param subforms **Optional** - Indicates if metadata should be generated for subforms.
+#' @return
+#' @examples
+#' \dontrun{
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Add new data to form
+#' sync_table(server_name, profile_id, access_token,
+#'   data = "new_dataframe", form_name = "my_form",
+#'   uid = "unique_id_col")
+#' }
+#' @export
+form_metadata <- function(server_name, profile_id, access_token,
+                       page_id, file, subforms=T) {
+
+}
