@@ -503,6 +503,46 @@ get_all_records = function(server_name,
 }
 
 
+#' Retrieve page
+#'
+#' Retrieves page details for a page ID.
+#'
+#' @rdname retrieve_page
+#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @param server_name String of the iFormBuilder server name.
+#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param page_id ID of the page to retrieve.
+#' @return List containing page details.
+#' @examples
+#' \dontrun{
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Retrieve page
+#' page_data <- retrieve_page(
+#'   server_name = "your_server_name",
+#'   profile_id = "your_profile_id",
+#'   access_token = access_token,
+#'   page_id = page_id)
+#'   }
+#' @export
+retrieve_page = function(server_name, profile_id, access_token, page_id) {
+  retrieve_page_url <- paste0(api_v60_url(server_name = server_name),
+                              profile_id, "/pages/", page_id)
+  bearer <- paste0("Bearer ", access_token)
+  r <- httr::GET(url = retrieve_page_url,
+                 httr::add_headers('Authorization' = bearer),
+                 encode = "json")
+  httr::stop_for_status(r)
+  page_data <- httr::content(r, type = "application/json")
+}
+
+
+
 #' Create page
 #'
 #' Creates a new page in the given profile with the name and label specified.
@@ -1008,5 +1048,4 @@ sync_table <- function(server_name, profile_id, access_token,
 #' @export
 form_metadata <- function(server_name, profile_id, access_token,
                        page_id, file, subforms=T) {
-
 }
