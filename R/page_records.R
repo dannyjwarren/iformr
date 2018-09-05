@@ -513,7 +513,7 @@ get_all_records = function(server_name,
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
 #' @param page_id ID of the page to retrieve.
-#' @return Dataframe containing page details.
+#' @return List containing page details.
 #' @examples
 #' \dontrun{
 #' # Get access_token
@@ -539,11 +539,11 @@ retrieve_page = function(server_name, profile_id, access_token, page_id) {
                  encode = "json")
   httr::stop_for_status(r)
   page_data <- httr::content(r, type = "application/json")
-  # Unlist permissions and localizations
-  page_data$permissions <- unlist(page_data$permissions)
-  page_data$localizations <- unlist(page_data$localizations)
-  # Output as dataframe
-  return(do.call(rbind.data.frame, page_data))
+  # Remove permissions and localizations nested lists
+  page_data$permissions <- paste(unlist(page_data$permissions),sep="",collapse=",")
+  page_data$localizations <- paste(unlist(page_data$localizations),sep="",collapse=",")
+  # Output
+  return(page_data)
 }
 
 
@@ -1054,8 +1054,11 @@ sync_table <- function(server_name, profile_id, access_token,
 #'   uid = "unique_id_col")
 #' }
 #' @export
+#' @import tidyr
+#' @import knitr
+#' @import dplyr
 form_metadata <- function(server_name, profile_id, access_token,
-                       page_id, filename, subforms=T, sub=F) {
+                          page_id, filename, subforms=T, sub=F) {
   # If not appending subform data to an existing file
   if (sub == F) {
     # Add Markdown extension if it was not provided
@@ -1073,10 +1076,29 @@ form_metadata <- function(server_name, profile_id, access_token,
   page$modified_date <- iformr::idate_time(page$modified_date, Sys.timezone())
   elements$created_date <- iformr::idate_time(elements$created_date, Sys.timezone())
   elements$modified_date <- iformr::idate_time(elements$modified_date, Sys.timezone())
+  # Convert data type to label
+  data_types <- list("1" = "Text", "2" = "Number", "3" = "Date",
+                     "4" = "Time", "5" = "Date-Time", "6" = "Toggle",
+                     "7" = "Select", "8" = "Pick List", "9" = "Multi-Select",
+                     "10" = "Range", "11" = "Image", "12" = "Signature",
+                     "13" = "Sound", "15" = "Manatee Works", "16" = "Label",
+                     "17" = "Divider", "18" = "Subform", "19" = "Text Area",
+                     "20" = "Phone", "21" = "SSN", "22" = "Email",
+                     "23" = "Zip Code", "24" = "Assign To", "25" = "Unique ID",
+                     "28" = "Drawing", "30" = "Magstripe", "31" = "RFID",
+                     "32" = "Attachment", "33" = "Read Only", "35" = "Image Label",
+                     "37" = "Location", "38" = "Socket Scanner", "39" = "Linea Pro",
+                     "42" = "ETI Thermometer", "44" = "ESRI", "45" = "3rd Party",
+                     "46" = "Counter", "47" = "Timer")
+  elements$data_type <- unlist(data_types[as.character(elements$data_type)], use.names = F)
+  # Replace option list IDs with option list name
+  # TODO: Add this.
+  # Replace blank fields with NA so they will not be added to metadata
+  elements[elements == ''] <- NA
   # Blank vector for subform IDs
   subs <- c()
   # Open md file connection
-  conn <- file(filename, 'w')
+  conn <- file(filename, 'a')
   # Write form title
   if (sub == F) {
     cat("# Parent Form: ",page$label,"\n",file=conn)
@@ -1084,8 +1106,41 @@ form_metadata <- function(server_name, profile_id, access_token,
   else {
     cat("# Sub Form: ",page$label,"\n",file=conn)
   }
-
-
-
-  page$name
+  # Collapse page detail list to table
+  page_data <- do.call(rbind, page)
+  page_data <- data.frame(Value=page_data[,1])
+  # Write page table to md file
+  md <- knitr::kable(page_data, format = 'markdown')
+  cat(md, sep = "\n", file = conn)
+  # For each element, write a table to the md document
+  cat("## Element Details\n", file = conn)
+  for (row in 1:nrow(elements)) {
+    # Element label
+    label <- elements[row, 'label']
+    # Element type
+    type <- elements[row, 'data_type']
+    # If a subform, append subform page id (data_size) to subform list
+    if (type == 'Subform') {
+      subs <- c(subs, elements[row, 'data_size'])
+    }
+    # Subsample element dataframe to element
+    element <- elements[row,]
+    # Gather element columns to rows
+    field <- tidyr::gather(element, key = "Attribute", value = "Value",
+                           na.rm = T, convert = FALSE, factor_key = FALSE)
+    rownames(field) <- c()
+    # Write to markdown file
+    cat("### ", label, "\n", file = conn)
+    md <- knitr::kable(field, format = 'markdown')
+    cat(md, sep = "\n", file = conn)
+    cat("\n", file = conn)
+  }
+  # Self-reference function to build subform metadata
+  for (sub in subs) {
+    form_metadata(server_name, profile_id, access_token,
+                  page_id=sub, filename, subforms = T, sub = T)
+  }
+  # Close file connection
+  close(conn)
 }
+
