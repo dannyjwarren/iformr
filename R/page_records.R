@@ -838,5 +838,35 @@ create_new_records <- function(server_name, profile_id, page_id, access_token, r
   return(response)
 }
 
+#' Delete record
+#'
+#' Delete a single record.
+#'
+#' @rdname delete_record
+#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @param server_name String of the iFormBuilder server name.
+#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param page_id ID of the page from which to delete the record.
+#' @param record_id ID of the record to delete.
+#' @return ID of the record deleted.
+#' @export
+delete_record <- function(server_name, profile_id,
+                              access_token, page_id,
+                              record_id){
+  delete_record_url <- paste0(api_v60_url(server_name = server_name),
+                                   profile_id, "/pages/", page_id,
+                                   "/records/", record_id)
+  bearer <- paste0("Bearer ", access_token)
+  # No body, DELETE HTTP method
+  r <- httr::DELETE(url = delete_record_url,
+                    httr::add_headers('Authorization' = bearer),
+                    encode = "json")
+  httr::stop_for_status(r)
+  response <- httr::content(r, type = "application/json")
+  response$id
+}
+
+
 
 
