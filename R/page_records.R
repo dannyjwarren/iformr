@@ -794,39 +794,17 @@ create_new_records <- function(server_name, profile_id, page_id, access_token, r
   fields <- intersect(new_flds, ifb_flds)
   # Remove columns from new record data not in IFB data
   record_data <- record_data[ , (names(record_data) %in% fields)]
-  # Convert record data to JSON.
-  # TODO BD 8/20/2018: Way to do this with JSONlite package
-  #
-  values = ""
-  for (row in 1:nrow(record_data)){
-    if (row != nrow(record_data)){
-      values = paste0(values,'{"fields": [')
-      for (field in 1:length(fields)){
-        fldname = fields[field]
-        fldvalue = record_data[row,fldname]
-        if (field != length(fields)){
-          values = paste0(values,'{"element_name": "',fldname,'", "value": "',fldvalue,'"},')
-        }
-        else {
-          values = paste0(values,'{"element_name": "',fldname,'", "value": "',fldvalue,'"}]},')
-        }
-      }
-    }
-    else {
-      values = paste0(values,'{"fields": [')
-      for (field in 1:length(fields)){
-        fldname = fields[field]
-        fldvalue = record_data[row,fldname]
-        if (field != length(fields)){
-          values = paste0(values,'{"element_name": "',fldname,'", "value": "',fldvalue,'"},')
-        }
-        else {
-          values = paste0(values,'{"element_name": "',fldname,'", "value": "',fldvalue,'"}]}')
-        }
-      }
-    }
-  }
-  values = paste0('[',values,']')
+  # Convert record data to JSON
+  # First, split into list of a dataframe per row
+  values <- split(record_data, seq(nrow(record_data)))
+  # Reassign list item names to 'fields'
+  names(values) <- rep_len("fields", nrow(record_data))
+  # For each df, pivot data into 'element_name' and 'value' columns
+  values <- lapply(test, function(x){tidyr::gather(x,
+                                                 key = "element_name",
+                                                 value = "value", na.rm = T)})
+  # Have to use RJSON to avoid numbered list items from JSONlite (ie, fields.1)
+  values <- rjson::toJSON(test)
 
   # Execute API call to insert records
   r <- httr::POST(url = new_records_url,
@@ -901,4 +879,3 @@ delete_records <- function(server_name, profile_id,
   httr::stop_for_status(r)
   response <- httr::content(r, type = "application/json")
 }
-
