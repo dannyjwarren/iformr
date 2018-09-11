@@ -847,8 +847,8 @@ create_new_records <- function(server_name, profile_id, page_id, access_token, r
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
-#' @param page_id ID of the page from which to delete the record.
-#' @param record_id ID of the record to delete.
+#' @param page_id Integer - ID of the page from which to delete the record.
+#' @param record_id Integer - ID of the record to delete.
 #' @return ID of the record deleted.
 #' @export
 delete_record <- function(server_name, profile_id,
@@ -868,5 +868,37 @@ delete_record <- function(server_name, profile_id,
 }
 
 
-
+#' Delete records
+#'
+#' Delete a list of records.
+#'
+#' @rdname delete_records
+#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @param server_name String of the iFormBuilder server name.
+#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param page_id ID of the page from which to delete the record.
+#' @param record_ids Integer vector of the record IDs to delete.
+#' @return JSON of the deleted record IDs.
+#' @export
+delete_records <- function(server_name, profile_id,
+                          access_token, page_id,
+                          record_ids){
+  # URL for call
+  delete_records_url <- paste0(api_v60_url(server_name = server_name),
+                              profile_id, "/pages/", page_id,
+                              "/records?fields=&limit=100&offset=0")
+  # Record IDs converted to JSON
+  record_ids <- data.frame("id" = record_ids)
+  ids_json <- jsonlite::toJSON(ids_json)
+  # Bearer and call
+  bearer <- paste0("Bearer ", access_token)
+  # DELETE HTTP method
+  r <- httr::DELETE(url = delete_records_url,
+                    httr::add_headers('Authorization' = bearer),
+                    body = ids_json,
+                    encode = "json")
+  httr::stop_for_status(r)
+  response <- httr::content(r, type = "application/json")
+}
 
