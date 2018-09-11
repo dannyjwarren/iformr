@@ -54,9 +54,11 @@ sync_table <- function(server_name, profile_id, access_token,
                        delete = F){
   # Convert the dataframe to be Smart Table search friendly -
   # Date fields to UNIX epoch string, everything else to string
-  is.Date <- function(x) inherits(x, c("POSIXct", "POSIXlt", "POSIXt", "Date"))
-  data <- dplyr::mutate_if(data, is.Date(data), as.numeric)
-  data <- dplyr::mutate_if(data, !is.Date(data), as.character)
+  #is.Date <- function(x) inherits(x, c("POSIXct", "POSIXlt", "POSIXt", "Date"))
+  #data <- dplyr::mutate_if(data, is.Date(data), as.numeric)
+  #data <- dplyr::mutate_if(data, !is.Date(data), as.character)
+  # Remove whitespace, punctuation, etc from input data column names
+  names(data) <- tolower(gsub('([[:punct:]])|\\s+','_', names(data)))
   # Get a list of all the pages in the profile
   page_list <- iformr::get_all_pages_list(server_name, profile_id, access_token)
   # Remove whitespace, punctuation, etc from name
@@ -84,7 +86,7 @@ sync_table <- function(server_name, profile_id, access_token,
   src_flds <- names(data)
   # Get list of elements in existing page
   ifb_flds <- iformr::retrieve_element_list(server_name, profile_id, access_token,
-                                            page_id, fields = 'label')
+                                            page_id, fields = 'name')
   # Fields in page from elements dataframe
   ifb_flds <- ifb_flds$name
   # Fields in source table also in page
@@ -120,7 +122,10 @@ sync_table <- function(server_name, profile_id, access_token,
     # UIDs in form data NOT in source data
     del_data <- dplyr::anti_join(i_data, data, by=uid)
     message(paste0(nrow(del_data), " records will be removed from ",form_name))
-    #TODO: call to function to remove
+    # Delete records
+    del <- iformr::delete_records(server_name, profile_id,
+                                  access_token, page_id,
+                                  record_ids = del_data$id)
   }
   # Update data in IFB if update option true
   if (update == T) {
@@ -190,20 +195,7 @@ form_metadata <- function(server_name, profile_id, access_token,
   page$modified_date <- iformr::idate_time(page$modified_date, Sys.timezone())
   elements$created_date <- iformr::idate_time(elements$created_date, Sys.timezone())
   elements$modified_date <- iformr::idate_time(elements$modified_date, Sys.timezone())
-  # Convert data type to label
-  data_types <- list("1" = "Text", "2" = "Number", "3" = "Date",
-                     "4" = "Time", "5" = "Date-Time", "6" = "Toggle",
-                     "7" = "Select", "8" = "Pick List", "9" = "Multi-Select",
-                     "10" = "Range", "11" = "Image", "12" = "Signature",
-                     "13" = "Sound", "15" = "Manatee Works", "16" = "Label",
-                     "17" = "Divider", "18" = "Subform", "19" = "Text Area",
-                     "20" = "Phone", "21" = "SSN", "22" = "Email",
-                     "23" = "Zip Code", "24" = "Assign To", "25" = "Unique ID",
-                     "28" = "Drawing", "30" = "Magstripe", "31" = "RFID",
-                     "32" = "Attachment", "33" = "Read Only", "35" = "Image Label",
-                     "37" = "Location", "38" = "Socket Scanner", "39" = "Linea Pro",
-                     "42" = "ETI Thermometer", "44" = "ESRI", "45" = "3rd Party",
-                     "46" = "Counter", "47" = "Timer")
+  # Convert data type to label using data_types from sysdata.rda
   elements$data_type <- unlist(data_types[as.character(elements$data_type)], use.names = F)
   # Replace option list IDs with option list name
   # TODO: Add this.
