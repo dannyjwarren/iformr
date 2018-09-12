@@ -581,8 +581,8 @@ retrieve_page = function(server_name, profile_id, access_token, page_id) {
 #'   }
 #' @export
 create_page = function(server_name, profile_id, access_token, name, label) {
-  # Remove whitespace, punctuation, etc from name
-  name <- tolower(gsub('([[:punct:]])|\\s+','_',name))
+  # Format page name to be IFB complaint
+  name <- format_name(name)
   message(paste0("Creating page: ", name))
   create_page_url <- paste0(api_v60_url(server_name = server_name),
                             profile_id, "/pages")
@@ -671,8 +671,8 @@ copy_page = function(server_name, profile_id, access_token, page_id) {
 #' @export
 rename_page = function(server_name, profile_id, access_token,
                        page_id, name, label) {
-  # Remove whitespace, punctuation, etc from name
-  name <- tolower(gsub('([[:punct:]])|\\s+','_',name))
+  # Format new page name as IFB compliant
+  name <- format_name(name)
   rename_page_url <- paste0(api_v60_url(server_name = server_name),
                             profile_id, "/pages/", page_id)
   bearer <- paste0("Bearer ", access_token)
@@ -788,7 +788,7 @@ create_new_records <- function(server_name, profile_id, page_id, access_token, r
   new_flds <- names(record_data)
   record_data[is.na(record_data)] <- ""
   # Get list of elements in existing page
-  ifb_flds <- iformr::retrieve_element_list(server_name, profile_id, access_token,
+  ifb_flds <- retrieve_element_list(server_name, profile_id, access_token,
                                             page_id, fields = 'label')
   # Fields in page
   ifb_flds <- ifb_flds$name

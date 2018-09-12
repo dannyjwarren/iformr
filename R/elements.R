@@ -43,8 +43,8 @@
 #' @export
 create_element = function(server_name, profile_id, access_token, page_id, name, label,
                           description = "", data_type, data_size = 100, optionlist_id) {
-  # Remove whitespace, punctuation, etc from element name
-  name <- tolower(gsub('([[:punct:]])|\\s+','_', name))
+  # Format element name to be IFB compliant
+  name <- format_name(name)
   message(paste0("Creating new element: ", name))
   create_element_url <- paste0(api_v60_url(server_name = server_name),
                                profile_id, "/pages/", page_id, "/elements")

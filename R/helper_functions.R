@@ -57,12 +57,12 @@ sync_table <- function(server_name, profile_id, access_token,
   #is.Date <- function(x) inherits(x, c("POSIXct", "POSIXlt", "POSIXt", "Date"))
   #data <- dplyr::mutate_if(data, is.Date(data), as.numeric)
   #data <- dplyr::mutate_if(data, !is.Date(data), as.character)
-  # Remove whitespace, punctuation, etc from input data column names
-  names(data) <- tolower(gsub('([[:punct:]])|\\s+','_', names(data)))
+  # Format input data column names to be IFB compliant
+  names(data) <- sapply(names(data), format_name)
   # Get a list of all the pages in the profile
-  page_list <- iformr::get_all_pages_list(server_name, profile_id, access_token)
-  # Remove whitespace, punctuation, etc from name
-  form_name <- tolower(gsub('([[:punct:]])|\\s+','_', form_name))
+  page_list <- get_all_pages_list(server_name, profile_id, access_token)
+  # Form name to IFB compliant name
+  form_name <- format_name(form_name)
   # If the form does not exist, create it
   if (form_name %in% page_list$name == F){
     message("Form ",form_name," does not yet exist.")
@@ -71,7 +71,7 @@ sync_table <- function(server_name, profile_id, access_token,
       label <- stringr::str_to_title(gsub('_',' ', form_name))
     }
     # Create page for table data
-    page_id <- iformr::data2form(server_name, profile_id, access_token,
+    page_id <- data2form(server_name, profile_id, access_token,
                                  name = form_name, label, data)
   }
   else {
@@ -85,7 +85,7 @@ sync_table <- function(server_name, profile_id, access_token,
   # Fields names in source table
   src_flds <- names(data)
   # Get list of elements in existing page
-  ifb_flds <- iformr::retrieve_element_list(server_name, profile_id, access_token,
+  ifb_flds <- retrieve_element_list(server_name, profile_id, access_token,
                                             page_id, fields = 'name')
   # Fields in page from elements dataframe
   ifb_flds <- ifb_flds$name
@@ -100,7 +100,7 @@ sync_table <- function(server_name, profile_id, access_token,
   if (!(uid %in% ifb_flds))
   {stop(paste0("UID column ",uid," is missing from IFB data."))}
   # Pull all data in IFB table
-  i_data <- iformr::get_all_records(server_name, profile_id, page_id, fields = "fields",
+  i_data <- get_all_records(server_name, profile_id, page_id, fields = "fields",
                                     limit = 1000, offset = 0, access_token,
                                     field_string = fldstr, since_id = 0)
   # If there is data in IFB
@@ -123,7 +123,7 @@ sync_table <- function(server_name, profile_id, access_token,
     del_data <- dplyr::anti_join(i_data, data, by=uid)
     message(paste0(nrow(del_data), " records will be removed from ",form_name))
     # Delete records
-    del <- iformr::delete_records(server_name, profile_id,
+    del <- delete_records(server_name, profile_id,
                                   access_token, page_id,
                                   record_ids = del_data$id)
   }
@@ -167,10 +167,9 @@ sync_table <- function(server_name, profile_id, access_token,
 #'   client_key_name = "your_client_key_name",
 #'   client_secret_name = "your_client_secret_name")
 #'
-#' # Add new data to form
-#' sync_table(server_name, profile_id, access_token,
-#'   data = "new_dataframe", form_name = "my_form",
-#'   uid = "unique_id_col")
+#' # Create metadata for form.
+#' form_metadata(server_name, profile_id, access_token,
+#'                 page_id = 012345, filename = "metadata", subforms = T)
 #' }
 #' @export
 #' @import tidyr
@@ -188,13 +187,13 @@ form_metadata <- function(server_name, profile_id, access_token,
     file.create(filename)
   }
   # Get metadata for page
-  page <- iformr::retrieve_page(server_name, profile_id, access_token, page_id)
-  elements <- iformr::retrieve_element_list(server_name, profile_id, access_token, page_id)
+  page <- retrieve_page(server_name, profile_id, access_token, page_id)
+  elements <- retrieve_element_list(server_name, profile_id, access_token, page_id)
   # Convert date columns
-  page$created_date <- iformr::idate_time(page$created_date, Sys.timezone())
-  page$modified_date <- iformr::idate_time(page$modified_date, Sys.timezone())
-  elements$created_date <- iformr::idate_time(elements$created_date, Sys.timezone())
-  elements$modified_date <- iformr::idate_time(elements$modified_date, Sys.timezone())
+  page$created_date <- idate_time(page$created_date, Sys.timezone())
+  page$modified_date <- idate_time(page$modified_date, Sys.timezone())
+  elements$created_date <- idate_time(elements$created_date, Sys.timezone())
+  elements$modified_date <- idate_time(elements$modified_date, Sys.timezone())
   # Convert data type to label using data_types from sysdata.rda
   elements$data_type <- unlist(data_types[as.character(elements$data_type)], use.names = F)
   # Replace option list IDs with option list name
@@ -297,8 +296,10 @@ form_metadata <- function(server_name, profile_id, access_token,
 #' @export
 data2form = function(server_name, profile_id, access_token,
                      name, label, data) {
-  # Remove whitespace, punctuation, etc from name
-  name <- tolower(gsub('([[:punct:]])|\\s+','_', name))
+  # Format page name to be IFB compliant
+  name <- format_name(name)
+  # Format data column names to be IFB compliant
+  names(data) <- sapply(names(data), format_name)
   # Create empty form
   page_id <- create_page(server_name, profile_id, access_token, name, label)
   # Get field classes of input data
@@ -321,3 +322,27 @@ data2form = function(server_name, profile_id, access_token,
   }
   return(page_id)
 }
+
+
+
+#' Format a page or element name to be IFB compliant
+#'
+#' Replaces whitespace and punctuation in an element/form name
+#' with _ and converts name to lowercase.
+#' Checks name against list of IFB reserved words, appending a '2'
+#' after the name if it is in the reserved word list.
+#'
+#' @rdname format_name
+#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @param name String of new page or element name.
+#' @return IFB compliant name.
+format_name <- function(name) {
+  name <- tolower(gsub('([[:punct:]])|\\s+','_', name))
+  if (name %in% reserved_words) {
+    warning(paste0(name," is a reserved word, renaming as ",name,"2"))
+    name <- paste0(name,'2')
+    }
+  return(name)
+}
+
+
