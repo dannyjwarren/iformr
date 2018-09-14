@@ -113,17 +113,26 @@ sync_table <- function(server_name, profile_id, access_token,
   }
   # Upload new data to IFB
   message(paste0(nrow(new_data), " new records will be added to ",form_name))
-  upload <- create_new_records(server_name, profile_id, page_id,
+  if (nrow(new_data) > 0) {
+    upload <- create_new_records(server_name, profile_id, page_id,
                                access_token, record_data = new_data)
+  }
   # Remove data from IFB if delete option is true
-  if (delete == T) {
+  if (delete == T && nrow(i_data) > 0) {
+    # Refresh table of data from IFB since data
+    # may have been added
+    i_data <- get_all_records(server_name, profile_id, page_id, fields = "fields",
+                              limit = 1000, offset = 0, access_token,
+                              field_string = fldstr, since_id = 0)
     # UIDs in form data NOT in source data
     del_data <- dplyr::anti_join(i_data, data, by=uid)
-    message(paste0(nrow(del_data), " records will be removed from ",form_name))
     # Delete records
+    message(paste0(nrow(del_data), " records will be removed from ",form_name))
+    if (nrow(del_data) != 0) {
     del <- delete_records(server_name, profile_id,
                                   access_token, page_id,
                                   record_ids = del_data$id)
+    }
   }
   # Update data in IFB if update option true
   if (update == T) {
@@ -133,6 +142,7 @@ sync_table <- function(server_name, profile_id, access_token,
     up_data <- dplyr::distinct(up_data, uid)
     message(paste0(nrow(up_data), " records will be updated in ",form_name))
     #TODO: call to update data
+    message("Update functionality has not yet been implemented...")
   }
 }
 
