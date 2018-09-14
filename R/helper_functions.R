@@ -80,8 +80,6 @@ sync_table <- function(server_name, profile_id, access_token,
   }
   # If something goes wrong with request
   stopifnot(page_id > 0)
-  # Field names of input table to lowercase to match IFB
-  names(data) <- tolower(names(data))
   # Fields names in source table
   src_flds <- names(data)
   # Get list of elements in existing page
