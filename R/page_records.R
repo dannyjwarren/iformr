@@ -891,7 +891,7 @@ delete_records <- function(server_name, profile_id,
                               "/records?fields=&limit=100&offset=0")
   # Record IDs converted to JSON
   record_ids <- data.frame("id" = record_ids)
-  ids_json <- jsonlite::toJSON(ids_json)
+  ids_json <- jsonlite::toJSON(record_ids)
   # Bearer and call
   bearer <- paste0("Bearer ", access_token)
   # DELETE HTTP method
