@@ -137,10 +137,10 @@ sync_table <- function(server_name, profile_id, access_token,
   # Update data in IFB if update option true
   if (update == T) {
     # Natural anti-join gets all records where fields do not match
-    up_data <- dplyr::anti_join(data, i_data)
+    #up_data <- dplyr::anti_join(data, i_data)
     # Filter by unique uid
-    up_data <- dplyr::distinct(up_data, uid)
-    message(paste0(nrow(up_data), " records will be updated in ",form_name))
+    #up_data <- dplyr::distinct(up_data, uid)
+    #message(paste0(nrow(up_data), " records will be updated in ",form_name))
     #TODO: call to update data
     message("Update functionality has not yet been implemented...")
   }

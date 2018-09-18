@@ -42,10 +42,9 @@ access_token <- get_iform_access_token(
   client_key_name = "your_client_key_name",
   client_secret_name = "your_client_secret_name")
 
-# Add new data to form
-sync_table(server_name, profile_id, access_token,
-  data = "new_dataframe", form_name = "my_form",
-  uid = "unique_id_col")
+# Create metadata for form.
+form_metadata(server_name, profile_id, access_token,
+                page_id = 012345, filename = "metadata", subforms = T)
 }
 }
 \author{

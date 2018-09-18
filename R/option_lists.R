@@ -204,8 +204,6 @@ create_new_option_list <- function(server_name,
                                    profile_id,
                                    option_list_name,
                                    access_token) {
-  # Option list name to IFB compliant name
-  option_list_name <- format_name(option_list_name)
   optionlist_uri <- paste0(api_v60_url(server_name = server_name),
                            profile_id, "/optionlists")
   bearer <- paste0("Bearer ", access_token)
