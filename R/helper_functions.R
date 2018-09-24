@@ -418,3 +418,33 @@ get_photos <- function(server_name, profile_id, access_token,
   }
   return(T)
 }
+
+
+
+
+#' @title Truncate form
+#'
+#' @description Removes all records from a page, leaving the page structure.
+#' USE WITH CAUTION!
+#'
+#' @rdname truncate_form
+#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @param server_name String of the iFormBuilder server name.
+#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param page_id Integer ID of the form to truncate.
+#' @return Boolean True if succesful.
+#' @export
+truncate_form <- function(server_name, profile_id,
+                          access_token, page_id) {
+  # Get all record IDs from the form
+  record_ids <- get_all_records(server_name, profile_id, page_id, fields = "fields",
+                  limit = 1000, offset = 0, access_token,
+                  field_string = "id", since_id = 0)
+  record_ids <- record_ids$id
+  # Delete them all
+  delete_records(server_name, profile_id, access_token, page_id, record_ids)
+}
+
+
+

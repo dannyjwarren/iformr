@@ -18,7 +18,7 @@ delete_records(server_name, profile_id, access_token, page_id, record_ids)
 \item{record_ids}{Integer vector of the record IDs to delete.}
 }
 \value{
-JSON of the deleted record IDs.
+Integer vector of the deleted record IDs.
 }
 \description{
 Delete a list of records.

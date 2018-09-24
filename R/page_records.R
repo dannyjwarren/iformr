@@ -910,7 +910,7 @@ delete_records <- function(server_name, profile_id,
     if (length(ids) < 100) {break()}
     offset <- offset + 100
   }
-  deleted
+  return(deleted)
 }
 
 
