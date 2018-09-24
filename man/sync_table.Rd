@@ -46,7 +46,7 @@ with matching columns in the form data are synced. Data is synced
 in a parent-to-child fashion:
 - Rows in the source data not in the form data are added (based on
 the unique identifier from the \code{uid} argument.)
-- Rows in the form data that are not prseent in the source data
+- Rows in the form data that are not present in the source data
 can be optionally removed using the \code{delete} argument.
 - Rows in the form data are updated if any of their fields differ
 from the matching row in the source data. Updating can be disabled
