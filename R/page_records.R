@@ -757,8 +757,7 @@ rm_nulls <- function(x) {
 
 #' Create new records
 #'
-#' Creates new records in an iFormBuilder page. The page must already
-#' contain at least one record.
+#' Creates new records in an iFormBuilder page.
 #'
 #' @rdname create_new_records
 #' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
@@ -787,7 +786,7 @@ create_new_records <- function(server_name, profile_id, page_id, access_token, r
   # Field names in new data
   new_flds <- names(record_data)
   record_data[is.na(record_data)] <- ""
-  # Get list of elements in existing page
+  # Get list of elements in existing page, default fields plus Label
   ifb_flds <- retrieve_element_list(server_name, profile_id, access_token,
                                             page_id, fields = 'label')
   # Fields in page
@@ -880,25 +879,98 @@ delete_record <- function(server_name, profile_id,
 #' @param access_token Access token produced by \code{iformr::get_iform_access_token}
 #' @param page_id ID of the page from which to delete the record.
 #' @param record_ids Integer vector of the record IDs to delete.
-#' @return JSON of the deleted record IDs.
+#' @return Integer vector of the deleted record IDs.
 #' @export
 delete_records <- function(server_name, profile_id,
                           access_token, page_id,
                           record_ids){
-  # URL for call
-  delete_records_url <- paste0(api_v60_url(server_name = server_name),
-                              profile_id, "/pages/", page_id,
-                              "/records?fields=&limit=100&offset=0")
-  # Record IDs converted to JSON
-  record_ids <- data.frame("id" = record_ids)
-  ids_json <- jsonlite::toJSON(record_ids)
-  # Bearer and call
+  # Blank vector
+  deleted <- c()
+  offset = 0
+  while (T) {
+    # URL for call
+    delete_records_url <- paste0(api_v60_url(server_name = server_name),
+                                profile_id, "/pages/", page_id,
+                                "/records?fields=&limit=100&offset=",offset)
+    # Record IDs converted to JSON
+    record_ids <- data.frame("id" = record_ids)
+    ids_json <- jsonlite::toJSON(record_ids)
+    # Bearer and call
+    bearer <- paste0("Bearer ", access_token)
+    # DELETE HTTP method
+    r <- httr::DELETE(url = delete_records_url,
+                      httr::add_headers('Authorization' = bearer),
+                      body = ids_json,
+                      encode = "json")
+    httr::stop_for_status(r)
+    response <- httr::content(r, type = "application/json")
+    ids <- response$id
+    deleted <- c(deleted, ids)
+    # If less than 100 deleted records, break
+    if (length(ids) < 100) {break()}
+    offset <- offset + 100
+  }
+  deleted
+}
+
+
+
+
+
+
+
+
+#' Update records (up to 100)
+#'
+#' Updates up to 100 records in an iFormBuilder page.
+#'
+#' @rdname update_records
+#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @param server_name String of the iFormBuilder server name.
+#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param page_id Integer ID of the page to perform the update on.
+#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param record_data A dataframe containing the update data.
+#' @param uid A field in both the update and destination data uniquely identifying each record.
+#' @return The updated record ID or IDs.
+#' @examples
+#' \dontrun{
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'}
+#' @export
+#' @import httr
+update_records <- function(server_name, profile_id, page_id, access_token,
+                           record_data, uid) {
+  stop("This function has not yet been fully implemented.")
+  # Url and bearer for query to create new records
+  up_records_url <- paste0(api_v60_url(server_name = server_name),
+                            profile_id, "/pages/", page_id,
+                           "/records?fields=&limit=100&offset=0")
   bearer <- paste0("Bearer ", access_token)
-  # DELETE HTTP method
-  r <- httr::DELETE(url = delete_records_url,
-                    httr::add_headers('Authorization' = bearer),
-                    body = ids_json,
-                    encode = "json")
+  # Field names in update data
+  up_flds <- names(record_data)
+  record_data[is.na(record_data)] <- ""
+  # Get list of elements in existing page, default fields plus Label
+  ifb_flds <- retrieve_element_list(server_name, profile_id, access_token,
+                                    page_id, fields = 'label')
+  # Fields in page
+  ifb_flds <- ifb_flds$name
+  # Fields in source table also in IFB
+  fields <- intersect(up_flds, ifb_flds)
+  # Remove columns from update record data not in IFB data
+  record_data <- record_data[ , (names(record_data) %in% fields)]
+  # Convert record data to JSON.
+  # DO THIS
+  # Execute API call to insert records
+  r <- httr::PUT(url = up_records_url,
+                  httr::add_headers('Authorization' = bearer),
+                  body = values,
+                  encode = "json")
   httr::stop_for_status(r)
   response <- httr::content(r, type = "application/json")
+  return(response)
 }
