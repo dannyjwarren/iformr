@@ -45,6 +45,7 @@ image. This can be useful as images from iFormBuilder have limited EXIF data.
 To enable this functionality, provide the full path to exiftool.exe, available
 from \url{https://www.sno.phy.queensu.ca/~phil/exiftool/} If ExifTool is available,
 the following form metadata will be added to the image file:
+
 \itemize{
 \item Date the photo was taken (CREATED_DATE field) to EXIF tag \emph{CreateDate}
 \item The iFormBuilder user who took the photo (CREATED_BY field) to EXIF tag \emph{Artist}
@@ -60,6 +61,19 @@ the following form metadata will be added to the image file:
 \item If the comment argument is provided, the text from the comment field in the form
  will be added to the EXIF tag \emph{ImageDescription}
  }
+
+
+- Date the photo was taken (CREATED_DATE field) to EXIF tag `CreateDate`
+- The iFormBuilder user who took the photo (CREATED_BY field) to EXIF tag `Artist`
+- CREATED_DEVICE_ID field to EXIF tag `CameraSerialNumber`
+- CREATED_LOCATION field will be parsed into EXIF tags:
++ `GPSLatitude` and `GPSLongitude`
++ `GPSLatitudeRef` and `GPSLongitudeRef` for N/S and E/W hemispheres respectively.
++ `GPSAltitude`
++ `GPSAltitudeRef` set to 0 if above sea level or 1 if below.
+- EXIF tag `Software` will be set to "Zerion iFormBuilder"
+- If the comment argument is provided, the text from the comment field in the form
+ will be added to the EXIF tag `ImageDescription`
 }
 \examples{
 \dontrun{
