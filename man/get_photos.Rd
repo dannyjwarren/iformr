@@ -4,8 +4,8 @@
 \alias{get_photos}
 \title{Get photos from form}
 \usage{
-get_photos(server_name, profile_id, access_token, page_id, photo, output,
-  photoid)
+get_photos(server_name, profile_id, access_token, page_id, photo, photoid,
+  output, exif, comment)
 }
 \arguments{
 \item{server_name}{String of the iFormBuilder server name.}
@@ -18,10 +18,15 @@ get_photos(server_name, profile_id, access_token, page_id, photo, output,
 
 \item{photo}{Character string of the photo element's DCN.}
 
-\item{output}{Path of the output directory for the downloaded photos.}
-
 \item{photoid}{Character string of the DCN to use as a filename
 for the photo. Must contain unique values.}
+
+\item{output}{Path of the output directory for the downloaded photos.}
+
+\item{exif}{Optional; the path to exiftool.exe. If provided, ExifTool will be used
+to add metadata to the image files.}
+
+\item{comment}{Optional; the DCN of a field to append to the EXIF tag "ImageDescription".}
 }
 \value{
 Boolean True if succesful.
@@ -34,6 +39,24 @@ is to include a dynamically calculated element to uniquely identify each photo.
 For example, in a workflow with a trip form, station subform, and station_photos
 subform, the station_photos form would include a photoid field that created unique
 photoids by concaternation of the trip ID, site ID, and index of the photo record.
+
+    Support is also provided for writing form data to the EXIF data of the downloaded
+image. This can be useful as images from iFormBuilder have limited EXIF data.
+To enable this functionality, provide the full path to exiftool.exe, available
+from \url{https://www.sno.phy.queensu.ca/~phil/exiftool/} If ExifTool is available,
+the following form metadata will be added to the image file:
+
+- Date the photo was taken (CREATED_DATE field) to EXIF tag `CreateDate`
+- The iFormBuilder user who took the photo (CREATED_BY field) to EXIF tag `Artist`
+- CREATED_DEVICE_ID field to EXIF tag `CameraSerialNumber`
+- CREATED_LOCATION field will be parsed into EXIF tags:
++ `GPSLatitude` and `GPSLongitude`
++ `GPSLatitudeRef` and `GPSLongitudeRef` for N/S and E/W hemispheres respectively.
++ `GPSAltitude`
++ `GPSAltitudeRef` set to 0 if above sea level or 1 if below.
+- EXIF tag `Software` will be set to "Zerion iFormBuilder"
+- If the comment argument is provided, the text from the comment field in the form
+ will be added to the EXIF tag `ImageDescription`
 }
 \examples{
 \dontrun{
