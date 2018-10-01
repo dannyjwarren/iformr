@@ -6,7 +6,7 @@
 #' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param page_id Page ID where the new element will be created.
 #' @param name String of the element DCN. The provided name will be converted to be
 #'   IFB database compliant (no special characters, all lowercase, spaces replaced
@@ -75,7 +75,7 @@ create_element = function(server_name, profile_id, access_token, page_id, name, 
 #' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param page_id Page ID where the new element will be created.
 #' @param fields *Optional* - Defaults to 'all', which returns all fields for each
 #'   element. Optionally, a character vector of fields to return can be provided.

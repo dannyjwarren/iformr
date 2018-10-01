@@ -14,7 +14,7 @@ update_records(server_name, profile_id, page_id, access_token, record_data,
 
 \item{page_id}{Integer ID of the page to perform the update on.}
 
-\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 
 \item{record_data}{A dataframe containing the update data.}
 

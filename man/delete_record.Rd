@@ -11,7 +11,7 @@ delete_record(server_name, profile_id, access_token, page_id, record_id)
 
 \item{profile_id}{Integer of the iFormBuilder profile ID.}
 
-\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 
 \item{page_id}{Integer - ID of the page from which to delete the record.}
 

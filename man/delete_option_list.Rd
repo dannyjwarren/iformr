@@ -11,7 +11,7 @@ delete_option_list(server_name, profile_id, access_token, option_list_id)
 
 \item{profile_id}{Integer of the iFormBuilder profile ID.}
 
-\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 
 \item{option_list_id}{ID of the option list to be deleted.}
 }

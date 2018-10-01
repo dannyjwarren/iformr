@@ -63,7 +63,7 @@ get_option_lists <- function(server_name,
 #' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return Tibble of two columns containing the option list IDs and option
 #'   list names: id <int>, name <chr>
 #' @examples
@@ -231,7 +231,7 @@ create_new_option_list <- function(server_name,
 #' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param option_list_id ID of the option list to be deleted.
 #' @return ID of the option list to be deleted.
 #' @examples

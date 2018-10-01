@@ -63,7 +63,7 @@ get_pages_list <- function(server_name,
 #' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return Tibble of two columns containing the page ID and page name:
 #'   id <int>, name <chr>
 #' @export
@@ -511,7 +511,7 @@ get_all_records = function(server_name,
 #' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param page_id ID of the page to retrieve.
 #' @return List containing page details.
 #' @examples
@@ -558,7 +558,7 @@ retrieve_page = function(server_name, profile_id, access_token, page_id) {
 #' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param name String of new page name; coerced to iFormBuilder table
 #'   name conventions.
 #' @param label String of the label for the new page.
@@ -604,7 +604,7 @@ create_page = function(server_name, profile_id, access_token, name, label) {
 #' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param page_id Integer of the page ID to copy.
 #' @return Integer of the new page ID.
 #' @examples
@@ -645,7 +645,7 @@ copy_page = function(server_name, profile_id, access_token, page_id) {
 #' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param page_id Integer of the page ID to rename.
 #' @param name String of renamed page name; coerced to iFormBuilder
 #'   table name conventions.
@@ -764,7 +764,7 @@ rm_nulls <- function(x) {
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param page_id Integer ID of the page to insert new records.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param record_data A dataframe containing the data to be added to the page.
 #' @return The created record ID or IDs.
 #' @examples
@@ -846,7 +846,7 @@ create_new_records <- function(server_name, profile_id, page_id, access_token, r
 #' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param page_id Integer - ID of the page from which to delete the record.
 #' @param record_id Integer - ID of the record to delete.
 #' @return ID of the record deleted.
@@ -876,7 +876,7 @@ delete_record <- function(server_name, profile_id,
 #' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param page_id ID of the page from which to delete the record.
 #' @param record_ids Integer vector of the record IDs to delete.
 #' @return Integer vector of the deleted record IDs.
@@ -929,7 +929,7 @@ delete_records <- function(server_name, profile_id,
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param page_id Integer ID of the page to perform the update on.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param record_data A dataframe containing the update data.
 #' @param uid A field in both the update and destination data uniquely identifying each record.
 #' @return The updated record ID or IDs.

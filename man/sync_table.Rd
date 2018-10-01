@@ -12,7 +12,7 @@ sync_table(server_name, profile_id, access_token, data, form_name, label,
 
 \item{profile_id}{Integer of the iFormBuilder profile ID.}
 
-\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 
 \item{data}{A dataframe containing the data to be synced with the page.}
 

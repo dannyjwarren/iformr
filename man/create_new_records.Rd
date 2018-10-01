@@ -14,7 +14,7 @@ create_new_records(server_name, profile_id, page_id, access_token,
 
 \item{page_id}{Integer ID of the page to insert new records.}
 
-\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 
 \item{record_data}{A dataframe containing the data to be added to the page.}
 }

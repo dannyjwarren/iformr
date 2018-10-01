@@ -12,7 +12,7 @@ form_metadata(server_name, profile_id, access_token, page_id, filename,
 
 \item{profile_id}{Integer of the iFormBuilder profile ID.}
 
-\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 
 \item{page_id}{ID of the form to get metadata from.}
 
