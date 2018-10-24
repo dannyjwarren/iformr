@@ -52,11 +52,8 @@
 sync_table <- function(server_name, profile_id, access_token,
                        data, form_name, label, uid, update = T,
                        delete = F){
-  # Convert the dataframe to be Smart Table search friendly -
-  # Date fields to UNIX epoch string, everything else to string
-  #is.Date <- function(x) inherits(x, c("POSIXct", "POSIXlt", "POSIXt", "Date"))
-  #data <- dplyr::mutate_if(data, is.Date(data), as.numeric)
-  #data <- dplyr::mutate_if(data, !is.Date(data), as.character)
+  # Convert the dataframe to be Smart Table search friendly - all columns character
+  data <- dplyr::mutate_all(data, as.character)
   # Format input data column names to be IFB compliant
   names(data) <- sapply(names(data), format_name)
   # Get a list of all the pages in the profile
