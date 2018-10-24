@@ -454,7 +454,6 @@ get_photos <- function(server_name, profile_id, access_token,
     loc <- strsplit(data[["created_location"]][row], split = ":")[[1]]
     # If loc is blank
     if (length(loc) < 1) {loc <- c(0,0,0)}
-    message(loc)
     desc_text <- ifelse(descrip == T, data[[comment]], "No description available.")
     # Parse location to invidiual variables
     lat <- as.numeric(loc[1])
@@ -476,7 +475,6 @@ get_photos <- function(server_name, profile_id, access_token,
                    "%s"',
                    exif, hemi2, lon, hemi1, lat, created,
                    user, device, alt, altref, desc_text, path)
-    message(cmd)
     system(cmd)
   }
   return(T)
