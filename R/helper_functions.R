@@ -16,7 +16,7 @@
 #' by passing False to the \code{update} argument.
 #'
 #' @rdname sync_table
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{\link{get_iform_access_token}}
@@ -140,13 +140,12 @@ sync_table <- function(server_name, profile_id, access_token,
   }
   # Update data in IFB if update option true
   if (update == T) {
-    # Natural anti-join gets all records where fields do not match
-    #up_data <- dplyr::anti_join(data, i_data)
-    # Filter by unique uid
-    #up_data <- dplyr::distinct(up_data, uid)
-    #message(paste0(nrow(up_data), " records will be updated in ",form_name))
-    #TODO: call to update data
     message("Update functionality has not yet been implemented...")
+    # Natural anti-join gets all records where fields do not match
+    up_data <- dplyr::anti_join(data, i_data)
+    message(paste0(nrow(up_data), " records will be updated in ",form_name))
+    up_data
+    #TODO: call to update data
   }
 }
 
@@ -160,7 +159,7 @@ sync_table <- function(server_name, profile_id, access_token,
 #' this function.
 #'
 #' @rdname form_metadata
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{\link{get_iform_access_token}}
@@ -267,7 +266,7 @@ form_metadata <- function(server_name, profile_id, access_token,
 #' element types in the form.
 #'
 #' @rdname data2form
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{\link{get_iform_access_token}}
@@ -345,7 +344,7 @@ data2form = function(server_name, profile_id, access_token,
 #' after the name if it is in the reserved word list.
 #'
 #' @rdname format_name
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param name String of new page or element name.
 #' @return IFB compliant name.
 #' @export
@@ -390,7 +389,7 @@ format_name <- function(name) {
 #'  will be added to the EXIF tag \emph{ImageDescription}
 #'  }
 #' @rdname get_photos
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{\link{get_iform_access_token}}
@@ -402,7 +401,9 @@ format_name <- function(name) {
 #' @param exif Optional; the path to exiftool.exe. If provided, ExifTool will be used
 #' to add metadata to the image files.
 #' @param comment Optional; the DCN of a field to append to the EXIF tag "ImageDescription".
-#' @return Boolean True if succesful.
+#' @param overwrite Optional; should photos already existing in the download
+#' directory be overwritten? Defaults to false.
+#' @return Boolean True if successfull.
 #' @examples
 #' \dontrun{
 #' # Get access_token
@@ -417,7 +418,7 @@ format_name <- function(name) {
 #' @export
 get_photos <- function(server_name, profile_id, access_token,
                        page_id, photo, photoid, output,
-                       exif, comment) {
+                       exif, comment, overwrite = F) {
   # Make a list of fields to get from the form
   flds <- c(photo, photoid, "created_date", "created_device_id",
             "created_location", "created_by")
@@ -444,6 +445,8 @@ get_photos <- function(server_name, profile_id, access_token,
     url <- data[[photo]][row]
     filename <- paste0(data[[photoid]][row],'.jpg')
     path <- file.path(output, filename, fsep = "\\")
+    # If the file already exists and overwrite = F, skip photo
+    if (file.exists(path) && overwrite == F) {next}
     # Download image file
     try(download.file(url, path, quiet = FALSE, mode = "wb"))
     # Next image if EXIF not used
@@ -491,7 +494,7 @@ get_photos <- function(server_name, profile_id, access_token,
 #' USE WITH CAUTION!
 #'
 #' @rdname truncate_form
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{\link{get_iform_access_token}}
