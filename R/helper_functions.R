@@ -52,11 +52,8 @@
 sync_table <- function(server_name, profile_id, access_token,
                        data, form_name, label, uid, update = T,
                        delete = F){
-  # Convert the dataframe to be Smart Table search friendly -
-  # Date fields to UNIX epoch string, everything else to string
-  #is.Date <- function(x) inherits(x, c("POSIXct", "POSIXlt", "POSIXt", "Date"))
-  #data <- dplyr::mutate_if(data, is.Date(data), as.numeric)
-  #data <- dplyr::mutate_if(data, !is.Date(data), as.character)
+  # Convert the dataframe to be Smart Table search friendly - all columns character
+  data <- dplyr::mutate_all(data, as.character)
   # Format input data column names to be IFB compliant
   names(data) <- sapply(names(data), format_name)
   # Get a list of all the pages in the profile
@@ -460,7 +457,6 @@ get_photos <- function(server_name, profile_id, access_token,
     loc <- strsplit(data[["created_location"]][row], split = ":")[[1]]
     # If loc is blank
     if (length(loc) < 1) {loc <- c(0,0,0)}
-    message(loc)
     desc_text <- ifelse(descrip == T, data[[comment]], "No description available.")
     # Parse location to invidiual variables
     lat <- as.numeric(loc[1])
@@ -482,7 +478,6 @@ get_photos <- function(server_name, profile_id, access_token,
                    "%s"',
                    exif, hemi2, lon, hemi1, lat, created,
                    user, device, alt, altref, desc_text, path)
-    message(cmd)
     system(cmd)
   }
   return(T)
