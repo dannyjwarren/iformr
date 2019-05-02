@@ -4,8 +4,7 @@
 \alias{update_records}
 \title{Update records (up to 100)}
 \usage{
-update_records(server_name, profile_id, page_id, access_token, record_data,
-  uid)
+update_records(server_name, profile_id, page_id, access_token, record_data)
 }
 \arguments{
 \item{server_name}{String of the iFormBuilder server name.}
@@ -14,11 +13,12 @@ update_records(server_name, profile_id, page_id, access_token, record_data,
 
 \item{page_id}{Integer ID of the page to perform the update on.}
 
-\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
+\item{access_token}{Access token produced by
+\code{\link{get_iform_access_token}}}
 
-\item{record_data}{A dataframe containing the update data.}
-
-\item{uid}{A field in both the update and destination data uniquely identifying each record.}
+\item{record_data}{A dataframe containing the update data.The dataframe must
+contain columns for the fields to update, along with an 'id' column
+containing the record IDs to update.}
 }
 \value{
 The updated record ID or IDs.

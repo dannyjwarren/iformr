@@ -1,9 +1,8 @@
 #' Sync table
 #'
 #' Syncs a dataframe with the contents of an IFB page. If the page does
-#' not yet exist, it will be created and populated with the source data.
-#'
-#' An example use case is syncing an existing database table with a
+#' not yet exist, it will be created and populated with the source data. An
+#' example use case is syncing an existing database table with a
 #' Smart Table Search form in IFB. All columns in the source data
 #' with matching columns in the form data are synced. Data is synced
 #' in a parent-to-child fashion:
@@ -19,19 +18,21 @@
 #' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
+#' @param access_token Access token produced by
+#' \code{\link{get_iform_access_token}}
 #' @param data A dataframe containing the data to be synced with the page.
-#' @param form_name The name of a page to sync the source data to; if the page does
-#' not exist, it will be created.
-#' @param label *Optional* - String of the label to be used if a new page is created.
-#' If a label is not provided and a new page is created, the form_name argument will
-#' be used to create a page label.
-#' @param uid The name of the column in the source and IFB data that uniquely identifies
-#' a record.
+#' @param form_name The name of a page to sync the source data to; if the page
+#' does not exist, it will be created.
+#' @param label *Optional* - String of the label to be used if a new page is
+#' created.
+#' If a label is not provided and a new page is created, the form_name argument
+#' will be used to create a page label.
+#' @param uid The name of the column in the source and IFB data that uniquely
+#' identifies a record.
 #' @param update *Optional* Defaults to True - If True, records in the form data
 #' will be updated if the matching record in the source data is different.
-#' @param delete *Optional* Defaults to False - If True, records in the form data
-#' not present in the source data will be removed.
+#' @param delete *Optional* Defaults to False - If True, records in the form
+#' data not present in the source data will be removed.
 #' @return The page ID of the existing or created form.
 #' @examples
 #' \dontrun{
@@ -52,7 +53,7 @@
 sync_table <- function(server_name, profile_id, access_token,
                        data, form_name, label, uid, update = T,
                        delete = F){
-  # Convert the dataframe to be Smart Table search friendly - all columns character
+  # Convert the dataframe to be Smart Table search friendly - all columns char
   data <- dplyr::mutate_all(data, as.character)
   # Format input data column names to be IFB compliant
   names(data) <- sapply(names(data), format_name)
@@ -95,9 +96,15 @@ sync_table <- function(server_name, profile_id, access_token,
   if (!(uid %in% ifb_flds))
   {stop(paste0("UID column ",uid," is missing from IFB data."))}
   # Check that UID is unique and non-null in incoming data
-  if (any(is.na(data[[uid]]))) {stop(paste0("Input data has NA values in UID column ",uid))}
-  if ("" %in% data[[uid]]) {stop(paste0("Input data has blank values in UID column ",uid))}
-  if (any(duplicated(data[[uid]]))) {stop(paste0("Input data has duplicate values in UID column ",uid))}
+  if (any(is.na(data[[uid]]))) {
+    stop(paste0("Input data has NA values in UID column ",uid))
+    }
+  if ("" %in% data[[uid]]) {
+    stop(paste0("Input data has blank values in UID column ",uid))
+    }
+  if (any(duplicated(data[[uid]]))) {
+    stop(paste0("Input data has duplicate values in UID column ",uid))
+    }
   # Pull all data in IFB table
   i_data <- get_all_records(server_name, profile_id, page_id, fields = "fields",
                                     limit = 1000, offset = 0, access_token,
@@ -122,7 +129,8 @@ sync_table <- function(server_name, profile_id, access_token,
   if (delete == T && nrow(i_data) > 0) {
     # Refresh table of data from IFB since data
     # may have been added
-    i_data <- get_all_records(server_name, profile_id, page_id, fields = "fields",
+    i_data <- get_all_records(server_name, profile_id, page_id,
+                              fields = "fields",
                               limit = 1000, offset = 0, access_token,
                               field_string = fldstr, since_id = 0)
     # UIDs in form data NOT in source data
@@ -159,13 +167,15 @@ sync_table <- function(server_name, profile_id, access_token,
 #' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
+#' @param access_token Access token produced by
+#' \code{\link{get_iform_access_token}}
 #' @param page_id ID of the form to get metadata from.
 #' @param filename Filename of the output Markdown file.
-#' @param subforms **Optional** - Indicates if metadata should be generated for subforms.
+#' @param subforms **Optional** - Indicates if metadata should be generated for
+#' subforms.
 #' Defaults to True.
-#' @param sub  **Optional** - Defaults to False. Used by function to self-reference
-#' and append subform metadata to beginning file.
+#' @param sub  **Optional** - Defaults to False. Used by function to
+#' self-reference and append subform metadata to beginning file.
 #' @return Add this later.
 #' @examples
 #' \dontrun{
@@ -196,14 +206,16 @@ form_metadata <- function(server_name, profile_id, access_token,
   }
   # Get metadata for page
   page <- retrieve_page(server_name, profile_id, access_token, page_id)
-  elements <- retrieve_element_list(server_name, profile_id, access_token, page_id)
+  elements <- retrieve_element_list(server_name, profile_id,
+                                    access_token, page_id)
   # Convert date columns
   page$created_date <- idate_time(page$created_date, Sys.timezone())
   page$modified_date <- idate_time(page$modified_date, Sys.timezone())
   elements$created_date <- idate_time(elements$created_date, Sys.timezone())
   elements$modified_date <- idate_time(elements$modified_date, Sys.timezone())
   # Convert data type to label using data_types from sysdata.rda
-  elements$data_type <- unlist(data_types[as.character(elements$data_type)], use.names = F)
+  elements$data_type <- unlist(data_types[as.character(elements$data_type)],
+                               use.names = F)
   # Replace option list IDs with option list name
   # TODO: Add this.
   # Replace blank fields with NA so they will not be added to metadata
@@ -266,7 +278,8 @@ form_metadata <- function(server_name, profile_id, access_token,
 #' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
+#' @param access_token Access token produced by
+#' \code{\link{get_iform_access_token}}
 #' @param name String of new page name; coerced to iFormBuilder
 #'   table name conventions.
 #' @param label String of the label for the new page.
@@ -359,45 +372,53 @@ format_name <- function(name) {
 #' @description
 #'     Downloads all of the photos taken with the photo element in a form
 #' to a local directory, naming the files based on another field in the form.
-#' Since the filenames produced in IFB are jibberish to people, the recommended practice
-#' is to include a dynamically calculated element to uniquely identify each photo.
-#' For example, in a workflow with a trip form, station subform, and station_photos
-#' subform, the station_photos form would include a photoid field that created unique
-#' photoids by concaternation of the trip ID, site ID, and index of the photo record.
+#' Since the filenames produced in IFB are jibberish to people, the recommended
+#' practice is to include a dynamically calculated element to uniquely identify
+#' each photo. For example, in a workflow with a trip form, station subform, and
+#'  station_photos subform, the station_photos form would include a photoid
+#' field that created unique photoids by concaternation of the trip ID, site ID,
+#'  and index of the photo record.
 #'
-#'     Support is also provided for writing form data to the EXIF data of the downloaded
-#' image. This can be useful as images from iFormBuilder have limited EXIF data.
-#' To enable this functionality, provide the full path to exiftool.exe, available
-#' from \url{https://www.sno.phy.queensu.ca/~phil/exiftool/} If ExifTool is available,
-#' the following form metadata will be added to the image file:
+#'     Support is also provided for writing form data to the EXIF data of the
+#' downloaded image. This can be useful as images from iFormBuilder have limited
+#'  EXIF data. To enable this functionality, provide the full path to
+#' exiftool.exe, available from
+#' \url{https://www.sno.phy.queensu.ca/~phil/exiftool/} If ExifTool is
+#' available, the following form metadata will be added to the image file:
 #' \itemize{
-#' \item Date the photo was taken (CREATED_DATE field) to EXIF tag \emph{CreateDate}
-#' \item The iFormBuilder user who took the photo (CREATED_BY field) to EXIF tag \emph{Artist}
+#' \item Date the photo was taken (CREATED_DATE field) to #' EXIF tag
+#' \emph{CreateDate}
+#' \item The iFormBuilder user who took the photo (CREATED_BY field) to EXIF tag
+#'  \emph{Artist}
 #' \item CREATED_DEVICE_ID field to EXIF tag \emph{CameraSerialNumber}
 #' \item CREATED_LOCATION field will be parsed into EXIF tags:
 #' \itemize{
 #' \item \emph{GPSLatitude} and \emph{GPSLongitude}
-#' \item \emph{GPSLatitudeRef} and \emph{GPSLongitudeRef} for N/S and E/W hemispheres respectively.
+#' \item \emph{GPSLatitudeRef} and \emph{GPSLongitudeRef} for N/S and E/W
+#' hemispheres respectively.
 #' \item \emph{GPSAltitude}
 #' \item \emph{GPSAltitudeRef} set to 0 if above sea level or 1 if below.
 #' }
 #' \item EXIF tag \emph{Software} will be set to "Zerion iFormBuilder"
-#' \item If the comment argument is provided, the text from the comment field in the form
-#'  will be added to the EXIF tag \emph{ImageDescription}
+#' \item If the comment argument is provided, the text from the comment field in
+#'  the form will be added to the EXIF tag \emph{ImageDescription}
 #'  }
 #' @rdname get_photos
 #' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
+#' @param access_token Access token produced by
+#' \code{\link{get_iform_access_token}}
 #' @param page_id Integer ID of the form to download photos from.
 #' @param photo Character string of the photo element's DCN.
 #' @param photoid Character string of the DCN to use as a filename
 #' for the photo. Must contain unique values.
 #' @param output Path of the output directory for the downloaded photos.
-#' @param exif Optional; the path to exiftool.exe. If provided, ExifTool will be used
+#' @param exif Optional; the path to exiftool.exe. If provided, ExifTool will be
+#'  used
 #' to add metadata to the image files.
-#' @param comment Optional; the DCN of a field to append to the EXIF tag "ImageDescription".
+#' @param comment Optional; the DCN of a field to append to the EXIF tag
+#' "ImageDescription".
 #' @param overwrite Optional; should photos already existing in the download
 #' directory be overwritten? Defaults to false.
 #' @return Boolean True if successfull.
@@ -423,14 +444,26 @@ get_photos <- function(server_name, profile_id, access_token,
   fldstr <- paste(flds, collapse = ',')
   # Get all the data from the page
   data <- get_all_records(server_name, profile_id, page_id,
-                          access_token = access_token, field_string = fldstr, since_id = 0)
+                          access_token = access_token,
+                          field_string = fldstr,
+                          since_id = 0)
   # Check that photo and photoid columns exist
-  if (!(photo %in% colnames(data))) {stop(paste0("Form data is missing photo element ",photo))}
-  if (!(photoid %in% colnames(data))) {stop(paste0("Form data is missing photo id ",photoid))}
+  if (!(photo %in% colnames(data))) {
+    stop(paste0("Form data is missing photo element ",photo))
+    }
+  if (!(photoid %in% colnames(data))) {
+    stop(paste0("Form data is missing photo id ",photoid))
+    }
   # Check that photoids are unique
-  if (any(is.na(data[[photoid]]))) {stop(paste0("Form data has NA values in photoid field ",photoid))}
-  if ("" %in% data[[photoid]]) {stop(paste0("Form data has blank values in photoid field ",photoid))}
-  if (any(duplicated(data[photoid]))) {stop(paste0("Form data has non-unique values in photoid field ",photoid))}
+  if (any(is.na(data[[photoid]]))) {
+    stop(paste0("Form data has NA values in photoid field ",photoid))
+    }
+  if ("" %in% data[[photoid]]) {
+    stop(paste0("Form data has blank values in photoid field ",photoid))
+    }
+  if (any(duplicated(data[photoid]))) {
+    stop(paste0("Form data has non-unique values in photoid field ",photoid))
+    }
   # Check that output path exists, and if not create it
   if (!(dir.exists(output))) {dir.create(file.path(output))}
   # Flag for if EXIF exists
@@ -457,7 +490,8 @@ get_photos <- function(server_name, profile_id, access_token,
     loc <- strsplit(data[["created_location"]][row], split = ":")[[1]]
     # If loc is blank
     if (length(loc) < 1) {loc <- c(0,0,0)}
-    desc_text <- ifelse(descrip == T, data[[comment]], "No description available.")
+    desc_text <- ifelse(descrip == T, data[[comment]],
+                        "No description available.")
     # Parse location to invidiual variables
     lat <- as.numeric(loc[1])
     lon <- as.numeric(loc[2])
@@ -492,20 +526,158 @@ get_photos <- function(server_name, profile_id, access_token,
 #' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
+#' @param access_token Access token produced by
+#' \code{\link{get_iform_access_token}}
 #' @param page_id Integer ID of the form to truncate.
 #' @return Boolean True if succesful.
 #' @export
 truncate_form <- function(server_name, profile_id,
                           access_token, page_id) {
   # Get all record IDs from the form
-  record_ids <- get_all_records(server_name, profile_id, page_id, fields = "fields",
-                  limit = 1000, offset = 0, access_token,
-                  field_string = "id", since_id = 0)
+  record_ids <- get_all_records(server_name, profile_id, page_id,
+                                fields = "fields", limit = 1000,
+                                offset = 0, access_token, field_string = "id",
+                                since_id = 0)
   record_ids <- record_ids$id
   # Delete them all
   delete_records(server_name, profile_id, access_token, page_id, record_ids)
 }
 
-
+#' @title Update iFormBuilder option lists
+#'
+#' @description For an input dataframe of option lists, adds new option lists
+#' to the profile, adds new options to existing option lists, and updates
+#' condition_value for existing options.
+#'
+#' @rdname update_option_lists
+#' @param access_token Access token produced by
+#' \code{\link[iformr]{get_iform_access_token}}
+#' @param server_name String of the iFormBuilder server name
+#' @param profile_id Integer of the iFormBuilder profile ID
+#' @param option_lists A dataframe containing option lists withname, key_value,
+#' label, condition_value, and sort_order.
+#' @return No return value.
+#' @export
+#' @import dplyr
+#' @import jsonlite
+#' @importFrom methods missingArg
+update_option_lists <- function(access_token, server_name,
+                                profile_id, option_lists) {
+  # Column names of option list df to lowercase
+  colnames(option_lists) <- tolower(colnames(option_lists))
+  # Check incoming options for correct columns
+  option_flds <- c("name", "key_value", "label",
+                   "condition_value", "sort_order")
+  for (fld in option_flds) {
+    if (!(fld %in% colnames(option_lists))) {
+      stop(paste0(fld, " column is missing from option_lists dataframe."))
+    }
+  }
+  # Select only option list columns
+  option_lists <- dplyr::select(option_lists,
+                                name,
+                                key_value,
+                                label,
+                                condition_value,
+                                sort_order)
+  # Truncate key_value and label to 100 characters (IFB max)
+  option_lists$key_value <- strtrim(option_lists$key_value, 100)
+  option_lists$label <- strtrim(option_lists$label, 100)
+  # Convert option list name to be IFB friendly
+  option_lists$name <- format_name(option_lists$name)
+  # Vector of unique option list names
+  option_list_names <- unique(option_lists$name)
+  # Get all option lists from IFB
+  ifb_option_lists <- get_all_option_lists(server_name = server_name,
+                                           profile_id = profile_id,
+                                           access_token = access_token)
+  # For each incoming option list name, check if an option list with the same
+  # name exists in the IFB profile. If no, create it, if yes update the
+  # existing list.
+  for (name in option_list_names){
+    # Subset of options in option_lists df
+    options <- option_lists[option_lists$name == name,]
+    # Option list already exists in IFB profile - update it
+    if (name %in% ifb_option_lists$name) {
+      #message("Option list already exists: ",name)
+      # Get list id
+      listid <- ifb_option_lists[ifb_option_lists$name == name,]$id
+      # Try to get options from IFB option list, if there are any
+      test <- try(
+        ifb_options <- get_core_option_list_elements(server_name = server_name,
+                                                    profile_id = profile_id,
+                                                    optionlist_id = listid,
+                                                    limit = 1000,
+                                                    offset = 0,
+                                                    access_token = access_token)
+        )
+      # If the option list was blank and threw an error, all incoming options
+      # are new options
+      if("try-error" %in% class(test)) {new_options <- options}
+      # Else get incoming options not in i_options
+      else {
+        new_options <- dplyr::anti_join(options, ifb_options, by="key_value")}
+      # If new options exist, upload them
+      if (nrow(new_options) > 0) {
+        # New options to JSON
+        new_options = jsonlite::toJSON(new_options, auto_unbox = TRUE)
+        # Append new options to option list
+        message("Adding new options to ",name)
+        try(add_options_to_list(server_name = server_name,
+                                profile_id = profile_id,
+                                optionlist_id=listid,
+                                option_values=new_options,
+                                access_token = access_token))
+      }
+      ## Update option lists condition value
+      # Join options from incoming options to option from IFB on key_value
+      join <- dplyr::inner_join(options, ifb_options, by="key_value")
+      # Options that are different in MARVIN from IFB
+      options_changed <- join[which(join$condition_value.x !=
+                                    join$condition_value.y),]
+      # If there are no option updates, skip to next code
+      if (nrow(options_changed) < 1) {next}
+      message("Updating options in ",name)
+      # Select and rename fields for new option values
+      options_changed <- dplyr::select(options_changed,
+                                       key_value = id,
+                                       label = label.x,
+                                       condition_value = condition_value.x,
+                                       sort_order = sort_order.x)
+      # Convert to JSON for update
+      updated_options_json <- jsonlite::toJSON(options_changed,
+                                               auto_unbox = TRUE)
+      # Commit option list updates to API
+      try(iformr::update_options_in_list(server_name = server_name,
+                                         profile_id = profile_id,
+                                         optionlist_id = listid,
+                                         option_values = updated_options_json,
+                                         fields = "fields",
+                                         limit = 1000,
+                                         offset = 0,
+                                         access_token = access_token))
+    }
+    else {
+      # Create new option list and populate it
+      message("Creating new option list: ",name)
+      listid <- create_new_option_list(server_name = server_name,
+                                      profile_id = profile_id,
+                                      option_list_name = name,
+                                      access_token = access_token)
+      # If list ID is valid
+      if (listid > 0) {
+        # Convert options to to JSON
+        new_options = jsonlite::toJSON(options, auto_unbox = TRUE)
+        # Append new options to new option list
+        try(add_options_to_list(server_name = server_name,
+                                profile_id = profile_id,
+                                optionlist_id = listid,
+                                option_values = new_options,
+                                access_token = access_token)
+            )
+      }
+      else {message("Option list ",name," could not be created.")}
+    }
+  }
+}
 

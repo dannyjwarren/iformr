@@ -12,35 +12,35 @@ sync_table(server_name, profile_id, access_token, data, form_name, label,
 
 \item{profile_id}{Integer of the iFormBuilder profile ID.}
 
-\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
+\item{access_token}{Access token produced by
+\code{\link{get_iform_access_token}}}
 
 \item{data}{A dataframe containing the data to be synced with the page.}
 
-\item{form_name}{The name of a page to sync the source data to; if the page does
-not exist, it will be created.}
+\item{form_name}{The name of a page to sync the source data to; if the page
+does not exist, it will be created.}
 
-\item{label}{*Optional* - String of the label to be used if a new page is created.
-If a label is not provided and a new page is created, the form_name argument will
-be used to create a page label.}
+\item{label}{*Optional* - String of the label to be used if a new page is
+created.
+If a label is not provided and a new page is created, the form_name argument
+will be used to create a page label.}
 
-\item{uid}{The name of the column in the source and IFB data that uniquely identifies
-a record.}
+\item{uid}{The name of the column in the source and IFB data that uniquely
+identifies a record.}
 
 \item{update}{*Optional* Defaults to True - If True, records in the form data
 will be updated if the matching record in the source data is different.}
 
-\item{delete}{*Optional* Defaults to False - If True, records in the form data
-not present in the source data will be removed.}
+\item{delete}{*Optional* Defaults to False - If True, records in the form
+data not present in the source data will be removed.}
 }
 \value{
 The page ID of the existing or created form.
 }
 \description{
 Syncs a dataframe with the contents of an IFB page. If the page does
-not yet exist, it will be created and populated with the source data.
-}
-\details{
-An example use case is syncing an existing database table with a
+not yet exist, it will be created and populated with the source data. An
+example use case is syncing an existing database table with a
 Smart Table Search form in IFB. All columns in the source data
 with matching columns in the form data are synced. Data is synced
 in a parent-to-child fashion:
@@ -67,5 +67,5 @@ sync_table(server_name, profile_id, access_token,
 }
 }
 \author{
-Bill Devoe, \email{William.DeVoe@maine.gov}
+Bill DeVoe, \email{William.DeVoe@maine.gov}
 }

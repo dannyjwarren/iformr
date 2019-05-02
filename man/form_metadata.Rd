@@ -12,17 +12,19 @@ form_metadata(server_name, profile_id, access_token, page_id, filename,
 
 \item{profile_id}{Integer of the iFormBuilder profile ID.}
 
-\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
+\item{access_token}{Access token produced by
+\code{\link{get_iform_access_token}}}
 
 \item{page_id}{ID of the form to get metadata from.}
 
 \item{filename}{Filename of the output Markdown file.}
 
-\item{subforms}{**Optional** - Indicates if metadata should be generated for subforms.
+\item{subforms}{**Optional** - Indicates if metadata should be generated for
+subforms.
 Defaults to True.}
 
-\item{sub}{**Optional** - Defaults to False. Used by function to self-reference
-and append subform metadata to beginning file.}
+\item{sub}{**Optional** - Defaults to False. Used by function to
+self-reference and append subform metadata to beginning file.}
 }
 \value{
 Add this later.
@@ -48,5 +50,5 @@ form_metadata(server_name, profile_id, access_token,
 }
 }
 \author{
-Bill Devoe, \email{William.DeVoe@maine.gov}
+Bill DeVoe, \email{William.DeVoe@maine.gov}
 }

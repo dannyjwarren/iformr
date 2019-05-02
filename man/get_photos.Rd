@@ -5,14 +5,15 @@
 \title{Get photos from form}
 \usage{
 get_photos(server_name, profile_id, access_token, page_id, photo, photoid,
-  output, exif, comment)
+  output, exif, comment, overwrite = F)
 }
 \arguments{
 \item{server_name}{String of the iFormBuilder server name.}
 
 \item{profile_id}{Integer of the iFormBuilder profile ID.}
 
-\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
+\item{access_token}{Access token produced by
+\code{\link{get_iform_access_token}}}
 
 \item{page_id}{Integer ID of the form to download photos from.}
 
@@ -23,42 +24,52 @@ for the photo. Must contain unique values.}
 
 \item{output}{Path of the output directory for the downloaded photos.}
 
-\item{exif}{Optional; the path to exiftool.exe. If provided, ExifTool will be used
+\item{exif}{Optional; the path to exiftool.exe. If provided, ExifTool will be
+ used
 to add metadata to the image files.}
 
-\item{comment}{Optional; the DCN of a field to append to the EXIF tag "ImageDescription".}
+\item{comment}{Optional; the DCN of a field to append to the EXIF tag
+"ImageDescription".}
+
+\item{overwrite}{Optional; should photos already existing in the download
+directory be overwritten? Defaults to false.}
 }
 \value{
-Boolean True if succesful.
+Boolean True if successfull.
 }
 \description{
 Downloads all of the photos taken with the photo element in a form
 to a local directory, naming the files based on another field in the form.
-Since the filenames produced in IFB are jibberish to people, the recommended practice
-is to include a dynamically calculated element to uniquely identify each photo.
-For example, in a workflow with a trip form, station subform, and station_photos
-subform, the station_photos form would include a photoid field that created unique
-photoids by concaternation of the trip ID, site ID, and index of the photo record.
+Since the filenames produced in IFB are jibberish to people, the recommended
+practice is to include a dynamically calculated element to uniquely identify
+each photo. For example, in a workflow with a trip form, station subform, and
+ station_photos subform, the station_photos form would include a photoid
+field that created unique photoids by concaternation of the trip ID, site ID,
+ and index of the photo record.
 
-    Support is also provided for writing form data to the EXIF data of the downloaded
-image. This can be useful as images from iFormBuilder have limited EXIF data.
-To enable this functionality, provide the full path to exiftool.exe, available
-from \url{https://www.sno.phy.queensu.ca/~phil/exiftool/} If ExifTool is available,
-the following form metadata will be added to the image file:
+    Support is also provided for writing form data to the EXIF data of the
+downloaded image. This can be useful as images from iFormBuilder have limited
+ EXIF data. To enable this functionality, provide the full path to
+exiftool.exe, available from
+\url{https://www.sno.phy.queensu.ca/~phil/exiftool/} If ExifTool is
+available, the following form metadata will be added to the image file:
 \itemize{
-\item Date the photo was taken (CREATED_DATE field) to EXIF tag \emph{CreateDate}
-\item The iFormBuilder user who took the photo (CREATED_BY field) to EXIF tag \emph{Artist}
+\item Date the photo was taken (CREATED_DATE field) to #' EXIF tag
+\emph{CreateDate}
+\item The iFormBuilder user who took the photo (CREATED_BY field) to EXIF tag
+ \emph{Artist}
 \item CREATED_DEVICE_ID field to EXIF tag \emph{CameraSerialNumber}
 \item CREATED_LOCATION field will be parsed into EXIF tags:
 \itemize{
 \item \emph{GPSLatitude} and \emph{GPSLongitude}
-\item \emph{GPSLatitudeRef} and \emph{GPSLongitudeRef} for N/S and E/W hemispheres respectively.
+\item \emph{GPSLatitudeRef} and \emph{GPSLongitudeRef} for N/S and E/W
+hemispheres respectively.
 \item \emph{GPSAltitude}
 \item \emph{GPSAltitudeRef} set to 0 if above sea level or 1 if below.
 }
 \item EXIF tag \emph{Software} will be set to "Zerion iFormBuilder"
-\item If the comment argument is provided, the text from the comment field in the form
- will be added to the EXIF tag \emph{ImageDescription}
+\item If the comment argument is provided, the text from the comment field in
+ the form will be added to the EXIF tag \emph{ImageDescription}
  }
 }
 \examples{
@@ -74,5 +85,5 @@ access_token <- get_iform_access_token(
 }
 }
 \author{
-Bill Devoe, \email{William.DeVoe@maine.gov}
+Bill DeVoe, \email{William.DeVoe@maine.gov}
 }

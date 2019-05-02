@@ -19,5 +19,5 @@ Checks name against list of IFB reserved words, appending a '2'
 after the name if it is in the reserved word list.
 }
 \author{
-Bill Devoe, \email{William.DeVoe@maine.gov}
+Bill DeVoe, \email{William.DeVoe@maine.gov}
 }
