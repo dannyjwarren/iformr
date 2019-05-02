@@ -1,7 +1,7 @@
 #' Sync table
 #'
 #' Syncs a dataframe with the contents of an IFB page. If the page does
-#' not yet exist, it will be created and populated with the source data.
+#' not yet exist, it will be created and populated with the source data.
 #'
 #' An example use case is syncing an existing database table with a
 #' Smart Table Search form in IFB. All columns in the source data
