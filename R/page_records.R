@@ -776,7 +776,6 @@ rm_nulls <- function(x) {
 #'   client_secret_name = "your_client_secret_name")
 #'}
 #' @export
-#' @import rjson
 #' @import tidyr
 create_new_records <- function(server_name, profile_id, page_id, access_token, record_data) {
   # Url and bearer for query to create new records
