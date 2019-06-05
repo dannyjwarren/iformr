@@ -179,3 +179,7 @@ hex_to_raw <- function(str){
   out
 }
 
+# Define the API url
+api_v60_url <- function(server_name) {
+  paste0(base_url(server_name), "/exzact/api/v60/profiles/")
+}

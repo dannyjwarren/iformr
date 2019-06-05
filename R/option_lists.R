@@ -624,8 +624,5 @@ update_options_in_list <- function(server_name,
   as.vector(unlist(httr::content(r, type = "application/json")))
 }
 
-# Define the API url
-api_v60_url <- function(server_name) {
-  paste0(base_url(server_name), "/exzact/api/v60/profiles/")
-}
+
 
