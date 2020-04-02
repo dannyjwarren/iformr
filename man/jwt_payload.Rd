@@ -4,8 +4,7 @@
 \alias{jwt_payload}
 \title{Define the jwt payload}
 \usage{
-jwt_payload(client_key, iat = NULL, exp = NULL, token_uri,
-  duration = 600L)
+jwt_payload(client_key, iat = NULL, exp = NULL, token_uri, duration = 600L)
 }
 \arguments{
 \item{client_key}{The client_key assigned to the application}

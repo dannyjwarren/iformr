@@ -4,13 +4,15 @@
 \name{locations}
 \alias{locations}
 \title{Stream reach breaks for spawning ground surveys.}
-\format{A data frame with 186 rows and 4 variables:
+\format{
+A data frame with 186 rows and 4 variables:
 \describe{
   \item{key_value}{unique id}
   \item{label}{point along stream, in river mile}
   \item{condition_value}{stream filter, unique stream id after equals sign}
   \item{sort_order}{unique integer sequence, starting at zero, incrementing by one}
-}}
+}
+}
 \usage{
 locations
 }

@@ -86,35 +86,39 @@ jencode <- function(jheader, jpayload, client_secret) {
 #'
 #' @export
 get_iform_access_token <- function(server_name, client_key_name, client_secret_name) {
-  jheader <- jsonlite::toJSON(jwt_header(), auto_unbox = TRUE)
-  client_key <- iform_secret(client_key_name)
-  client_secret <- iform_secret(client_secret_name)
-  token_uri <- token_url(server_name = server_name)
-  if (has_key(client_key)) {
-    payload <- jsonlite::toJSON(jwt_payload(client_key = client_key,
-                                            token_uri = token_uri), auto_unbox = TRUE)
-  } else {
-    stop("Client Key failed to load")
+  acc_token <- NULL
+  # Hack to loop until access token is returned
+  while (is.null(acc_token) ) {
+    jheader <- jsonlite::toJSON(jwt_header(), auto_unbox = TRUE)
+    client_key <- iform_secret(client_key_name)
+    client_secret <- iform_secret(client_secret_name)
+    token_uri <- token_url(server_name = server_name)
+    if (has_key(client_key)) {
+      payload <- jsonlite::toJSON(jwt_payload(client_key = client_key,
+                                              token_uri = token_uri), auto_unbox = TRUE)
+    } else {
+      stop("Client Key failed to load")
+    }
+    if (has_secret(client_secret)) {
+      encoded <- jencode(jheader = jheader, jpayload = payload, client_secret = client_secret)
+    } else {
+      stop("Client Secret failed to load")
+    }
+    while (encoded == "") {
+      payload <- jsonlite::toJSON(jwt_payload(client_key = client_key,
+                                              token_uri = token_uri), auto_unbox = TRUE)
+      encoded <- jencode(jheader = jheader, jpayload = payload, client_secret = client_secret)
+    }
+    body <- list(grant_type = "urn:ietf:params:oauth:grant-type:jwt-bearer",
+                 assertion = encoded)
+    r <- httr::POST(url = token_uri,
+                    body = body,
+                    httr::add_headers('Content-Type' = 'application/x-www-form-urlencoded'),
+                    encode = "form")
+    httr::stop_for_status(r)
+    acc_token = httr::content(r, type = "application/json")$access_token
+    if (identical(acc_token, "")) acc_token <- NULL
   }
-  if (has_secret(client_secret)) {
-    encoded <- jencode(jheader = jheader, jpayload = payload, client_secret = client_secret)
-  } else {
-    stop("Client Secret failed to load")
-  }
-  while (encoded == "") {
-    payload <- jsonlite::toJSON(jwt_payload(client_key = client_key,
-                                            token_uri = token_uri), auto_unbox = TRUE)
-    encoded <- jencode(jheader = jheader, jpayload = payload, client_secret = client_secret)
-  }
-  body <- list(grant_type = "urn:ietf:params:oauth:grant-type:jwt-bearer",
-               assertion = encoded)
-  r <- httr::POST(url = token_uri,
-                  body = body,
-                  httr::add_headers('Content-Type' = 'application/x-www-form-urlencoded'),
-                  encode = "form")
-  httr::stop_for_status(r)
-  acc_token = httr::content(r, type = "application/json")$access_token
-  if (identical(acc_token, "")) stop("No access_token was returned", call. = FALSE)
   return(acc_token)
 }
 

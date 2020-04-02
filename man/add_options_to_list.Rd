@@ -4,8 +4,13 @@
 \alias{add_options_to_list}
 \title{Add option values to new option list}
 \usage{
-add_options_to_list(server_name, profile_id, optionlist_id, option_values,
-  access_token)
+add_options_to_list(
+  server_name,
+  profile_id,
+  optionlist_id,
+  option_values,
+  access_token
+)
 }
 \arguments{
 \item{server_name}{The server name as encoded in the url:

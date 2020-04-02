@@ -4,8 +4,7 @@
 \alias{create_new_option_list}
 \title{Create a new option list}
 \usage{
-create_new_option_list(server_name, profile_id, option_list_name,
-  access_token)
+create_new_option_list(server_name, profile_id, option_list_name, access_token)
 }
 \arguments{
 \item{server_name}{The server name as encoded in the url:

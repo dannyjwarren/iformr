@@ -4,8 +4,18 @@
 \alias{create_element}
 \title{Add element to page.}
 \usage{
-create_element(server_name, profile_id, access_token, page_id, name, label,
-  description = "", data_type, data_size = 100, optionlist_id)
+create_element(
+  server_name,
+  profile_id,
+  access_token,
+  page_id,
+  name,
+  label,
+  description = "",
+  data_type,
+  data_size = 100,
+  optionlist_id
+)
 }
 \arguments{
 \item{server_name}{String of the iFormBuilder server name.}

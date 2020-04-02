@@ -51,7 +51,7 @@ get_pages_list <- function(server_name,
                           function(i) pgsx[i] <- pgs[[i]]$id))
   pgs_name <- unlist(lapply(seq_along(pgsx),
                             function(i) pgsx[i] <- pgs[[i]]$name))
-  dplyr::data_frame(id = pgs_id, name = pgs_name)
+  tibble::tibble(id = pgs_id, name = pgs_name)
 }
 
 
@@ -147,7 +147,7 @@ get_page_id <- function(server_name,
                           function(i) pgsx[i] <- pgs[[i]]$id))
   pgs_name <- unlist(lapply(seq_along(pgsx),
                             function(i) pgsx[i] <- pgs[[i]]$name))
-  pg = dplyr::data_frame(id = pgs_id, name = pgs_name)
+  pg = tibble::tibble(id = pgs_id, name = pgs_name)
   pg$id[pg$name == page_name]
 }
 
@@ -383,7 +383,7 @@ get_selected_page_records <- function(server_name,
   rcrd <- httr::content(r, type = "application/json")
   rcrd <- lapply(rcrd, rm_nulls)
   rcrd <- as.data.frame(do.call(rbind, lapply(rcrd, rbind)))
-  rcrd <- dplyr::as_data_frame(rcrd)
+  rcrd <- tibble::as_tibble(rcrd)
   rcrd[] <- lapply(rcrd, unlist)
   rcrd
 }

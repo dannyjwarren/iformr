@@ -5,8 +5,17 @@
 \title{Get all records for a set of fields in a page (i.e., form, or
   subform)}
 \usage{
-get_all_records(server_name, profile_id, page_id, fields = "fields",
-  limit = 1000, offset = 0, access_token, field_string, since_id)
+get_all_records(
+  server_name,
+  profile_id,
+  page_id,
+  fields = "fields",
+  limit = 1000,
+  offset = 0,
+  access_token,
+  field_string,
+  since_id
+)
 }
 \arguments{
 \item{server_name}{The server name as encoded in the url:
@@ -71,7 +80,7 @@ form_fields <- paste(field_list, collapse = ',')
 \dontrun{
 # Set id to ascending order and pull only records greater than the last_id
 since_id <- 5
-field_string <- paste0("id:<(>\\"", since_id, "\\"),", form_fields)
+field_string <- paste0("id:<(>\"", since_id, "\"),", form_fields)
 
 # Get access_token
 access_token <- get_iform_access_token(

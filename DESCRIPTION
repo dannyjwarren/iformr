@@ -1,11 +1,12 @@
 Package: iformr
 Type: Package
 Title: A set of tools to leverage the iFormBuilder API
-Version: 0.1.0.9009
+Version: 0.1.1
 Authors@R: as.person(c(
     "Are Strom <Are.Strom@dfw.wa.gov> [aut, cre]",
     "Tyler Garber <Tyler.Garber@dfw.wa.gov> [ctb]",
-    "Bill DeVoe <William.DeVoe@maine.gov> [ctb]"
+    "Bill DeVoe <William.DeVoe@maine.gov> [ctb]",
+    "Danny Warren <Danny.Warren@dfw.wa.gov> [ctb]"
     ))
 Description: A collection of tools to connect R to the iFormBuilder API. 
     For now, these functions allow the most basic operations such as 
@@ -26,4 +27,4 @@ Imports:
     methods (>= 3.5.0)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.0
+RoxygenNote: 7.1.0
