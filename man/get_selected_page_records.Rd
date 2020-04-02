@@ -62,17 +62,13 @@ This will likely be the primary function used to retrieve records
 
 \examples{
 # Specify the fields (columns) to be returned
-field_list <- c(
- "surveyors", "survey_start_datetime", "survey_method",
- "stream", "survey_end_time")
-
-# Collapse vector of column names into a single string
-form_fields <- paste(field_list, collapse = ',')
+field_list <- glue::glue("observers, survey_start_datetime, survey_method, ",
+                         "stream, start_point")
 
 \dontrun{
 # Set id to ascending order and pull only records greater than the last_id
-since_id <- 5
-parent_form_fields <- paste0("id:<(>\"", since_id, "\"),", form_fields)
+since_id <- 5L
+parent_form_fields <- glue::glue('id:<(>"{since_id}"), {field_list}')
 
 # Get access_token
 access_token <- get_iform_access_token(
