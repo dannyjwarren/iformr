@@ -5,21 +5,21 @@ Version: 0.1.1
 Authors@R: as.person(c(
     "Are Strom <Are.Strom@dfw.wa.gov> [aut, cre]",
     "Tyler Garber <Tyler.Garber@dfw.wa.gov> [ctb]",
-    "Bill DeVoe <William.DeVoe@maine.gov> [ctb]",
-    "Danny Warren <Danny.Warren@dfw.wa.gov> [ctb]"
+    "Bill DeVoe <William.DeVoe@maine.gov> [ctb]"
     ))
 Description: A collection of tools to connect R to the iFormBuilder API. 
     For now, these functions allow the most basic operations such as 
     creating new option lists and downloading data. Additional functions
     will be added as time allows.
 License: MIT + file LICENSE
-Depends: R (>= 3.4.0)
+Depends: R (>= 3.4.0),
+         openssl (>= 1.2.1)
 Imports:
+    jose (>= 1.0),
     curl (>= 2.7),
     httr (>= 1.2.1),
     jsonlite (>= 1.5),
     lubridate (>= 1.6.0),
-    openssl (>= 0.9.6),
     dplyr (>= 0.7.1),
     stringi (>= 1.1.5),
     tibble (>= 1.4.2),

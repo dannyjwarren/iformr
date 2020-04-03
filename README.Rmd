@@ -17,7 +17,7 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 
 ## Overview
 
-This package provides a collection of tools to leverage the power of the iFormBuilder API. The package is in an early-development state. Additional functions will be added as time allows. Contributions are always welcome. A big thanks to Bill DeVoe of the Maine Department of Marine Resources for several recent contributions. Please see function documentation for author credits. 
+This package provides a collection of tools to leverage the power of the iFormBuilder API. The package is in a slow developmental state. Additional functions will be added as time allows. Contributions are always welcome. A big thanks to Bill DeVoe of the Maine Department of Marine Resources for several contributions. Please see function documentation for author credits. 
 
 iFormBuilder <https://www.iformbuilder.com/> provides a commercial platform for mobile data collection. The platform includes a number of web-based tools to build and distribute mobile forms, assign users, edit data, and retrieve data from the cloud. Unfortunately, the point-and-click web interface can become a major bottleneck as data volume increases, or you try to push the limits of form design.
 
@@ -25,11 +25,11 @@ Certain tasks, such a preloading large option-lists with newly collected data, a
 
 Just about anything that can be done using the iFormBuilder web interface can be done infinitely faster using the API. However, for a majority of users, requesting access tokens, or learning the correct syntax to navigate the API can be an insurmountable hurdle. The functions in this repository aim to lower the threshold so that biologists, or field staff with only limited R programming experience will feel comfortable working with the API. The aim is to make form building, data collection, and data retrieval more efficient. 
 
-This package was inspired by the Hadley Wickham's httr package. In particular the *oauth-server-side.R* file at: https://github.com/r-lib/httr/blob/master/R/oauth-server-side.R. The *hex_to_raw()* function has been imported from the openssl package by Jeroen Ooms. Future plans are to shift to the *jose* package https://github.com/jeroen/jose for signing and verifying JSON web tokens.
+This package was inspired by the Hadley Wickham's httr package. In particular the *oauth-server-side.R* file at: https://github.com/r-lib/httr/blob/master/R/oauth-server-side.R. Encoding and signing JSON web tokens now relies on the `jose` package by Jeroen Ooms https://github.com/jeroen/jose.
 
 ## Installation
 
-There was a bug in R-3.4.0 that prevented installation of this package. You will need to install R-3.4.1 or higher.
+You will need to install R-3.4.1 or higher.
 
 ```{r, eval = FALSE}
 # Install the development version from GitHub:
@@ -75,7 +75,7 @@ The introduction section provides examples of how to specify the *fields* you ne
 
 ## Building mobile forms
 
-Recent contributions by Bill DeVoe (William.DeVoe@maine.gov) provide a new set of tools to generate the basic structure of mobile forms directly from R dataframes. See the `create_page()`, `copy_page()`, `rename_page()`, and `data2form()` functions. By programatically generating mobile forms from data, the otherwise tedious task of creating mobile forms by hand can be standardized and made considerably more reliable and efficient. 
+Contributions by Bill DeVoe (William.DeVoe@maine.gov) provide a set of tools to generate the basic structure of mobile forms directly from R dataframes. See the `create_page()`, `copy_page()`, `rename_page()`, and `data2form()` functions. By programatically generating mobile forms from data, the otherwise tedious task of creating mobile forms by hand can be standardized and made considerably more reliable and efficient. 
 
 For those just beginning to learn form design, [Mobile forms for salmon surveys](https://arestrom.github.io/mf4ss/) may serve as a useful starting point. This online text steps through the manual process of form design using the standard iFormBuilder toolset. 
 
