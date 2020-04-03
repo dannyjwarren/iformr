@@ -4,8 +4,7 @@
 \alias{get_pages_list}
 \title{Get list of the first 100 pages (i.e., forms, or subforms) in a profile}
 \usage{
-get_pages_list(server_name, profile_id, limit = 1000, offset = 0,
-  access_token)
+get_pages_list(server_name, profile_id, limit = 1000, offset = 0, access_token)
 }
 \arguments{
 \item{server_name}{The server name as encoded in the url:

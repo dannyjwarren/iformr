@@ -4,8 +4,14 @@
 \alias{get_page_record_list}
 \title{Get list of all record ids in a single page (i.e., form, or subform)}
 \usage{
-get_page_record_list(server_name, profile_id, page_id, limit = 1000,
-  offset = 0, access_token)
+get_page_record_list(
+  server_name,
+  profile_id,
+  page_id,
+  limit = 1000,
+  offset = 0,
+  access_token
+)
 }
 \arguments{
 \item{server_name}{The server name as encoded in the url:
