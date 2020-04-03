@@ -4,8 +4,14 @@
 \alias{get_core_option_list_elements}
 \title{Get core elements in an option list}
 \usage{
-get_core_option_list_elements(server_name, profile_id, optionlist_id,
-  limit = 1000, offset = 0, access_token)
+get_core_option_list_elements(
+  server_name,
+  profile_id,
+  optionlist_id,
+  limit = 1000,
+  offset = 0,
+  access_token
+)
 }
 \arguments{
 \item{server_name}{The server name as encoded in the url:

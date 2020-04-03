@@ -51,7 +51,7 @@ get_option_lists <- function(server_name,
                           function(i) optx[i] <- opts[[i]]$id))
   opt_name <- unlist(lapply(seq_along(optx),
                             function(i) optx[i] <- opts[[i]]$name))
-  dplyr::data_frame(id = opt_id, name = opt_name)
+  tibble::tibble(id = opt_id, name = opt_name)
 }
 
 
@@ -86,7 +86,7 @@ get_option_lists <- function(server_name,
 #' @export
 get_all_option_lists = function(server_name, profile_id, access_token) {
   # Blank tibble
-  option_lists = dplyr::tibble(id=integer(), name=character())
+  option_lists = tibble::tibble(id=integer(), name=character())
   # tart looping at list 0, in chunks of 100 (limit per api call)
   offset = 0
   while (T) {
@@ -161,7 +161,7 @@ get_option_list_id <- function(server_name,
                           function(i) optx[i] <- opts[[i]]$id))
   opt_name <- unlist(lapply(seq_along(optx),
                             function(i) optx[i] <- opts[[i]]$name))
-  opt <- dplyr::data_frame(id = opt_id, name = opt_name)
+  opt <- tibble::tibble(id = opt_id, name = opt_name)
   opt$id[opt$name == option_list_name]
 }
 
@@ -363,7 +363,7 @@ add_options_to_list <- function(server_name,
 #' \dontrun{
 #' # Define .json list of ids for elements to delete
 #' # Replace example values below with your own
-#'   id_values = data_frame(id = c(663487010, 663487013))
+#'   id_values = tibble::tibble(id = c(663487010, 663487013))
 #'   id_values_json = jsonlite::toJSON(id_values, auto_unbox = TRUE)
 #'
 #' # Get access_token
@@ -472,7 +472,7 @@ get_option_list_element_ids <- function(server_name,
   optx <- integer(length(opts))
   opt_id <- unlist(lapply(seq_along(optx), function(i) optx[i] <- opts[[i]]$id))
   opt_element <- unlist(lapply(seq_along(optx), function(i) optx[i] <- opts[[i]][element]))
-  dat = dplyr::data_frame(id = opt_id, element_name = opt_element)
+  dat = tibble::tibble(id = opt_id, element_name = opt_element)
   names(dat) <- c("id", element)
   dat
 }
@@ -536,8 +536,8 @@ get_core_option_list_elements <- function(server_name,
   opt_label <- unlist(lapply(seq_along(optx), function(i) optx[i] <- opts[[i]]$label))
   opt_key <- unlist(lapply(seq_along(optx), function(i) optx[i] <- opts[[i]]$key_value))
   opt_cond <- unlist(lapply(seq_along(optx), function(i) optx[i] <- opts[[i]]$condition_value))
-  dat = dplyr::data_frame(id = opt_id, sort_order = opt_sort_order, label = opt_label,
-                   key_value = opt_key, condition_value = opt_cond)
+  dat = tibble::tibble(id = opt_id, sort_order = opt_sort_order, label = opt_label,
+                       key_value = opt_key, condition_value = opt_cond)
   dat
 }
 

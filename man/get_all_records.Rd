@@ -5,8 +5,17 @@
 \title{Get all records for a set of fields in a page (i.e., form, or
   subform)}
 \usage{
-get_all_records(server_name, profile_id, page_id, fields = "fields",
-  limit = 1000, offset = 0, access_token, field_string, since_id)
+get_all_records(
+  server_name,
+  profile_id,
+  page_id,
+  fields = "fields",
+  limit = 1000,
+  offset = 0,
+  access_token,
+  field_string,
+  since_id
+)
 }
 \arguments{
 \item{server_name}{The server name as encoded in the url:
@@ -62,16 +71,13 @@ This function should be used with caution. It should only be used in
 
 \examples{
 # Specify the fields (columns) to be returned
-field_list <- c("surveyors", "survey_start_datetime", "survey_method",
-                "stream", "survey_end_time")
-
-# Collapse vector of column names into a single string
-form_fields <- paste(field_list, collapse = ',')
+field_list <- glue::glue("observers, survey_start_datetime, ",
+                         "survey_method, stream, start_point")
 
 \dontrun{
 # Set id to ascending order and pull only records greater than the last_id
-since_id <- 5
-field_string <- paste0("id:<(>\\"", since_id, "\\"),", form_fields)
+since_id <- 5L
+field_string <- glue::glue('id:<(>"{since_id}"), {field_list}')
 
 # Get access_token
 access_token <- get_iform_access_token(

@@ -1,0 +1,6 @@
+0.1.1
+  - Use {jose} package for encoding and signing jwt request tokens
+  - Fix deprecation warnings in examples. Updated to use {tibble}
+
+0.1.0.9008
+  - Add contributed functions from Bill Devoe

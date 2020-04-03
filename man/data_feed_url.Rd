@@ -4,8 +4,15 @@
 \alias{data_feed_url}
 \title{Compose a url to get data via the data feed mechanism}
 \usage{
-data_feed_url(server_name, parent_form_id, profile_id, parent_form_name,
-  since_id, user_label, pw_label)
+data_feed_url(
+  server_name,
+  parent_form_id,
+  profile_id,
+  parent_form_name,
+  since_id,
+  user_label,
+  pw_label
+)
 }
 \arguments{
 \item{server_name}{The server name as encoded in the url:

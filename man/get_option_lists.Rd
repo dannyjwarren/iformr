@@ -4,8 +4,13 @@
 \alias{get_option_lists}
 \title{Get a listing of the first 100 option lists in a given profile}
 \usage{
-get_option_lists(server_name, profile_id, limit = 100, offset = 0,
-  access_token)
+get_option_lists(
+  server_name,
+  profile_id,
+  limit = 100,
+  offset = 0,
+  access_token
+)
 }
 \arguments{
 \item{server_name}{The server name as encoded in the url:

@@ -4,8 +4,13 @@
 \alias{retrieve_element_list}
 \title{Retrieve a List of Elements}
 \usage{
-retrieve_element_list(server_name, profile_id, access_token, page_id,
-  fields = "all")
+retrieve_element_list(
+  server_name,
+  profile_id,
+  access_token,
+  page_id,
+  fields = "all"
+)
 }
 \arguments{
 \item{server_name}{String of the iFormBuilder server name.}

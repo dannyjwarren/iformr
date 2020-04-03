@@ -4,8 +4,15 @@
 \alias{get_option_list_element_ids}
 \title{Get list of option_ids for a given element}
 \usage{
-get_option_list_element_ids(server_name, profile_id, optionlist_id,
-  element, limit = 1000, offset = 0, access_token)
+get_option_list_element_ids(
+  server_name,
+  profile_id,
+  optionlist_id,
+  element,
+  limit = 1000,
+  offset = 0,
+  access_token
+)
 }
 \arguments{
 \item{server_name}{The server name as encoded in the url:

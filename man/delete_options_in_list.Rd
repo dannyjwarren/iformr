@@ -4,9 +4,16 @@
 \alias{delete_options_in_list}
 \title{Delete all or some options in an option list}
 \usage{
-delete_options_in_list(server_name, profile_id, optionlist_id,
-  fields = "fields", id_values, limit = 1000, offset = 0,
-  access_token)
+delete_options_in_list(
+  server_name,
+  profile_id,
+  optionlist_id,
+  fields = "fields",
+  id_values,
+  limit = 1000,
+  offset = 0,
+  access_token
+)
 }
 \arguments{
 \item{server_name}{The server name as encoded in the url:
@@ -39,7 +46,7 @@ order will automatically be reassigned after deleting specified elements.
 \dontrun{
 # Define .json list of ids for elements to delete
 # Replace example values below with your own
-  id_values = data_frame(id = c(663487010, 663487013))
+  id_values = tibble::tibble(id = c(663487010, 663487013))
   id_values_json = jsonlite::toJSON(id_values, auto_unbox = TRUE)
 
 # Get access_token
