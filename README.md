@@ -4,11 +4,11 @@
 ## Overview
 
 This package provides a collection of tools to leverage the power of the
-iFormBuilder API. The package is in a slow developmental state.
-Additional functions will be added as time allows. Contributions are
-always welcome. A big thanks to Bill DeVoe of the Maine Department of
-Marine Resources for several contributions. Please see function
-documentation for author credits.
+iFormBuilder API. The package is in a developmental state. Additional
+functions will be added as time allows. Contributions are always
+welcome. A big thanks to Bill DeVoe of the Maine Department of Marine
+Resources for several contributions. Please see function documentation
+for author credits.
 
 iFormBuilder <https://www.iformbuilder.com/> provides a commercial
 platform for mobile data collection. The platform includes a number of
@@ -35,7 +35,10 @@ This package was inspired by the Hadley Wickham’s httr package. In
 particular the *oauth-server-side.R* file at:
 <https://github.com/r-lib/httr/blob/master/R/oauth-server-side.R>.
 Encoding and signing JSON web tokens now relies on the `jose` package by
-Jeroen Ooms <https://github.com/jeroen/jose>.
+Jeroen Ooms <https://github.com/jeroen/jose>. Thanks to Danny Warren
+(WDFW) for identifying issues where requests for access tokens would
+occasionaly fail. That issue should now be fixed by using the `jose`
+package to sign and encode JSON web tokens.
 
 ## Installation
 
