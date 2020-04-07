@@ -21,7 +21,7 @@
 #'   file
 #' @param client_secret_name The name given to the client_secret in your
 #'   .Renviron file
-#' @return An access_token that expires after ten minutes
+#' @return An access_token that expires after five minutes
 #' @examples
 #' \dontrun{
 #' # Get access_token, assuming you do not have a dedicated server
@@ -104,5 +104,10 @@ jwt_header <- function() {
     alg = 'HS256',
     typ = 'JWT'
   )
+}
+
+# Define the API url
+api_v60_url <- function(server_name) {
+  paste0(base_url(server_name), "/exzact/api/v60/profiles/")
 }
 
