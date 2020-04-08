@@ -18,7 +18,7 @@
 #'
 #' @rdname get_iform_access_token
 #' @param server_name The server name as encoded in the url:
-#'   `https//server_name.iformbuilder.com`
+#'   for example: `https//server_name.iformbuilder.com`
 #' @param client_key_name The name given to the client_key in your .Renviron
 #'   file
 #' @param client_secret_name The name given to the client_secret in your
