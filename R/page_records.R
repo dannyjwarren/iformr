@@ -543,10 +543,6 @@ delete_record <- function(server_name, profile_id,
   return(response)
 }
 
-
-# STOPPED HERE...FORMAT EXAMPLES BELOW.....
-
-
 #' Delete multiple records
 #'
 #' Delete a list of records.
@@ -555,14 +551,15 @@ delete_record <- function(server_name, profile_id,
 #' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param page_id ID of the page from which to delete the record.
 #' @param record_ids Integer vector of the record IDs to delete.
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return Integer vector of the deleted record IDs.
 #' @examples
 #' \dontrun{
-#' # Identify the last record added to the form for deletion
-#' record_to_delete = max(parent_form_records$id)
+#' # Set id to ascending order and pull only records greater than the last_id
+#' since_id <- 5L
+#' field_string <- glue::glue('id:<(>"{since_id}"), {field_list}')
 #'
 #' # Get access_token
 #' access_token <- get_iform_access_token(
@@ -570,12 +567,34 @@ delete_record <- function(server_name, profile_id,
 #'   client_key_name = "your_client_key_name",
 #'   client_secret_name = "your_client_secret_name")
 #'
-#' # Delete the last added record...need to manually add prior to testing
-#'  deleted_record = delete_record(
+#' # Get the id of a single form in the profile given the form name
+#' form_id <- get_page_id(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   page_name = "your_form_p",
+#'   access_token = access_token)
+#'
+#' # Get all existing records for a set of columns from a form or subform
+#' parent_form_records <- get_all_records(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   page_id = form_id,
+#'   fields = "fields",
+#'   limit = 1000,
+#'   offset = 0,
+#'   access_token = access_token,
+#'   field_string,
+#'   since_id)
+#'
+#' # Get IDs of the last two records added so they can be deleted.
+#' records_to_delete = tail(parent_form_records$id, 2)
+#'
+#' # Delete the last two records added to the form
+#'  deleted_records = delete_multiple_records(
 #'    server_name = "your_server_name",
 #'    profile_id = "your_profile_id",
 #'    page_id = form_id,
-#'    record_id = record_to_delete,
+#'    record_ids = records_to_delete,
 #'    access_token = access_token)
 #' }
 #' @export
@@ -603,7 +622,7 @@ delete_multiple_records <- function(server_name, profile_id,
                       encode = "json")
     httr::stop_for_status(r)
     response <- httr::content(r, type = "application/json")
-    ids <- response$id
+    ids <- unlist(response)
     deleted <- c(deleted, ids)
     # If less than 100 deleted records, break
     if (length(ids) < 100) {break()}
@@ -611,7 +630,6 @@ delete_multiple_records <- function(server_name, profile_id,
   }
   return(deleted)
 }
-
 
 #' Compose a url to get data via the data feed mechanism
 #'
