@@ -8,7 +8,7 @@
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{\link{get_iform_access_token}}
-#' @return List containing the ID, username, and device_id for all device licenses in a profile
+#' @return Dataframe containing the ID, username, and device_id for all device licenses in a profile
 #' @import httr
 #'
 #' @examples
@@ -26,7 +26,7 @@
 #'   access_token = access_token)
 
 #' # Pull out the first device license for next function
-#' license_id = all_device_license_info[[1]]$id
+#' license_id = all_device_license_info$id[1]
 #'
 #' @export
 retrieve_all_device_licenses <- function(server_name, profile_id, access_token) {
@@ -39,8 +39,17 @@ retrieve_all_device_licenses <- function(server_name, profile_id, access_token) 
                  httr::add_headers('Authorization' = bearer),
                  encode = "json")
   httr::stop_for_status(r)
-  all_device_licenses <- httr::content(r, type = "application/json")
-  return(all_device_licenses)
+  all_lic <- httr::content(r, type = "application/json")
+  licx <- integer(length(all_lic))
+  usrid <- unlist(lapply(seq_along(licx),
+                         function(i) licx[i] <- all_lic[[i]]$id))
+  usrname <- unlist(lapply(seq_along(licx),
+                           function(i) licx[i] <- all_lic[[i]]$username))
+  dev_id <- unlist(lapply(seq_along(licx),
+                          function(i) licx[i] <- all_lic[[i]]$device_id))
+  all_lic <- tibble::tibble(id = usrid, username = usrname,
+                            device_id = dev_id)
+  return(all_lic)
 }
 
 #' Retrieve a device license
@@ -65,11 +74,8 @@ retrieve_all_device_licenses <- function(server_name, profile_id, access_token) 
 #'   profile_id = 123456,
 #'   license_id = license_id,
 #'   access_token = access_token)
-
-#' # Pull out the first device license for next function
-#' license_id = all_device_license_info[[1]]$id
 #'
-#'#' @export
+#' @export
 retrieve_device_license <- function(server_name, profile_id,
                                     access_token, license_id) {
   # Build URL

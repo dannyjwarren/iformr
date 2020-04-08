@@ -8,7 +8,7 @@
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{\link{get_iform_access_token}}
-#' @return List containing all usernames and user IDs in the profile.
+#' @return Dataframe containing all usernames and user IDs in the profile.
 #'
 #' @examples
 #' \dontrun{
@@ -25,13 +25,13 @@
 #'   access_token = access_token)
 #'
 # Pull out first user_id in the list
-#' user_id = all_users_info[[1]]$id
+#' user_id = all_users_info$id[1]
 #'
 #' @export
 retrieve_all_users <- function(server_name, profile_id, access_token) {
   # Build URL
   retrieve_all_users_uri <- paste0(api_v60_url(server_name = server_name),
-                               profile_id, "/users")
+                                   profile_id, "/users")
   bearer <- paste0("Bearer ", access_token)
   # Build request
   r <- httr::GET(url = retrieve_all_users_uri,
@@ -39,6 +39,12 @@ retrieve_all_users <- function(server_name, profile_id, access_token) {
                  encode = "json")
   httr::stop_for_status(r)
   user_ids = httr::content(r, type = "application/json")
+  userx <- integer(length(user_ids))
+  usr_id <- unlist(lapply(seq_along(userx),
+                          function(i) userx[i] <- user_ids[[i]]$id))
+  usr_name <- unlist(lapply(seq_along(userx),
+                            function(i) userx[i] <- user_ids[[i]]$username))
+  user_ids <- tibble::tibble(id = usr_id, username = usr_name)
   return(user_ids)
 }
 

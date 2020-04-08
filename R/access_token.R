@@ -21,7 +21,7 @@
 #'   file
 #' @param client_secret_name The name given to the client_secret in your
 #'   .Renviron file
-#' @return An access_token that expires after five minutes
+#' @return An access_token that expires after ten minutes
 #' @examples
 #' \dontrun{
 #' # Get access_token, assuming you do not have a dedicated server
@@ -48,7 +48,7 @@ get_iform_access_token <- function(server_name, client_key_name, client_secret_n
   if (has_key(client_key)) {
     claim <- jose::jwt_claim(
       iss = client_key, aud = token_uri,
-      exp = unclass(Sys.time() + 300),
+      exp = unclass(Sys.time() + 600),
       iat = unclass(Sys.time()))
   } else {
     stop("Client Key failed to load")
