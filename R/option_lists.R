@@ -346,8 +346,7 @@ add_options_to_list <- function(server_name,
 #' @param id_values A .json list of ids for elements to delete
 #' @param limit The maximum number of option elements to delete
 #' @param offset Skips the offset number of options before beginning to delete
-#' @param access_token The access_token required to establish communication with
-#'   the API
+#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
 #' @return A vector of option list elements that were deleted
 #' @examples
 #' \dontrun{
