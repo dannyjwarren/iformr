@@ -62,9 +62,9 @@ get_iform_access_token <- function(server_name, client_key_name, client_secret_n
   }
   body <- list(grant_type = "urn:ietf:params:oauth:grant-type:jwt-bearer",
                assertion = signed_encoded)
-  r <- httr::POST(url = token_uri, body = body,
+  r <- httr::RETRY("POST", url = token_uri, body = body,
                   httr::add_headers('Content-Type' = 'application/x-www-form-urlencoded'),
-                  encode = "form")
+                  encode = "form", pause_cap = 10)
   httr::warn_for_status(r)
   acc_token <- httr::content(r, type = "application/json")$access_token
   return(acc_token)
