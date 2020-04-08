@@ -6,3 +6,4 @@
 ^locations_data.R$
 ^iformTestExamples.R$
 ^access_token_test.R$
+^data-raw$
