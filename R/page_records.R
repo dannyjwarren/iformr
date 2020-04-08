@@ -495,6 +495,124 @@ get_all_records = function(server_name,
   all_records
 }
 
+#' Delete record
+#'
+#' Delete a single record.
+#'
+#' @rdname delete_record
+#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @param server_name String of the iFormBuilder server name.
+#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param page_id Integer - ID of the page from which to delete the record.
+#' @param record_id Integer - ID of the record to delete.
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
+#' @return ID of the record deleted.
+#' @examples
+#' \dontrun{
+#' # Identify the last record added to the form for deletion
+#' record_to_delete = max(parent_form_records$id)
+#'
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Delete the last added record...need to manually add prior to testing
+#'  deleted_record = delete_record(
+#'    server_name = "your_server_name",
+#'    profile_id = "your_profile_id",
+#'    page_id = form_id,
+#'    record_id = record_to_delete,
+#'    access_token = access_token)
+#' }
+#' @export
+delete_record <- function(server_name, profile_id,
+                          page_id, record_id,
+                          access_token) {
+  delete_record_url <- paste0(api_v60_url(server_name = server_name),
+                              profile_id, "/pages/", page_id,
+                              "/records/", record_id)
+  bearer <- paste0("Bearer ", access_token)
+  # No body, DELETE HTTP method
+  r <- httr::DELETE(url = delete_record_url,
+                    httr::add_headers('Authorization' = bearer),
+                    encode = "json")
+  httr::stop_for_status(r)
+  response <- httr::content(r, type = "application/json")$id
+  return(response)
+}
+
+
+# STOPPED HERE...FORMAT EXAMPLES BELOW.....
+
+
+#' Delete multiple records
+#'
+#' Delete a list of records.
+#'
+#' @rdname delete_multiple_records
+#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @param server_name String of the iFormBuilder server name.
+#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
+#' @param page_id ID of the page from which to delete the record.
+#' @param record_ids Integer vector of the record IDs to delete.
+#' @return Integer vector of the deleted record IDs.
+#' @examples
+#' \dontrun{
+#' # Identify the last record added to the form for deletion
+#' record_to_delete = max(parent_form_records$id)
+#'
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Delete the last added record...need to manually add prior to testing
+#'  deleted_record = delete_record(
+#'    server_name = "your_server_name",
+#'    profile_id = "your_profile_id",
+#'    page_id = form_id,
+#'    record_id = record_to_delete,
+#'    access_token = access_token)
+#' }
+#' @export
+delete_multiple_records <- function(server_name, profile_id,
+                                    page_id, record_ids,
+                                    access_token) {
+  # Blank vector
+  deleted <- c()
+  offset = 0
+  while (TRUE) {
+    # URL for call
+    delete_records_uri <- paste0(api_v60_url(server_name = server_name),
+                                 profile_id, "/pages/", page_id,
+                                 "/records?fields=&limit=100&offset=",
+                                 offset)
+    # Record IDs converted to JSON
+    record_ids <- data.frame("id" = record_ids)
+    ids_json <- jsonlite::toJSON(record_ids)
+    # Bearer and call
+    bearer <- paste0("Bearer ", access_token)
+    # DELETE HTTP method
+    r <- httr::DELETE(url = delete_records_uri,
+                      httr::add_headers('Authorization' = bearer),
+                      body = ids_json,
+                      encode = "json")
+    httr::stop_for_status(r)
+    response <- httr::content(r, type = "application/json")
+    ids <- response$id
+    deleted <- c(deleted, ids)
+    # If less than 100 deleted records, break
+    if (length(ids) < 100) {break()}
+    offset <- offset + 100
+  }
+  return(deleted)
+}
+
+
 #' Compose a url to get data via the data feed mechanism
 #'
 #' Creates a url with username and password embedded that can be used to

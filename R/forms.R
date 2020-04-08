@@ -142,21 +142,21 @@ copy_page = function(server_name, profile_id, page_id, access_token) {
 #'   label = "new_page_label")
 #'   }
 #' @export
-rename_page = function(server_name, profile_id, access_token,
-                       page_id, name, label) {
-  # Remove whitespace, punctuation, etc from name
-  name <- tolower(gsub('([[:punct:]])|\\s+','_',name))
+rename_page = function(server_name, profile_id, page_id,
+                       name, label, access_token) {
+  # Format new page name as IFB compliant
+  name <- format_name(name)
   rename_page_url <- paste0(api_v60_url(server_name = server_name),
                             profile_id, "/pages/", page_id)
   bearer <- paste0("Bearer ", access_token)
-  page_attributes = paste0('{"name": "',name,'", "label": "',label,'"}')
+  page_attributes = paste0('{"name": "', name, '", "label": "', label, '"}')
   r <- httr::PUT(url = rename_page_url,
                  httr::add_headers('Authorization' = bearer),
                  body = page_attributes,
                  encode = "json")
   httr::stop_for_status(r)
-  returned_page_id <- httr::content(r, type = "application/json")
-  return(returned_page_id$id)
+  returned_page_id <- httr::content(r, type = "application/json")$id
+  return(returned_page_id)
 }
 
 #' Delete page
