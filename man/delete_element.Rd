@@ -21,7 +21,7 @@ delete_element(server_name, profile_id, page_id, element_id, access_token)
 ID of the deleted element.
 }
 \description{
-Deletes an element from a page
+Deletes an element from a page (form or subform)
 }
 \examples{
 \dontrun{

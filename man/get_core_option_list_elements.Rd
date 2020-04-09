@@ -14,9 +14,9 @@ get_core_option_list_elements(
 )
 }
 \arguments{
-\item{server_name}{String of the iFormBuilder server name.}
+\item{server_name}{String of the iFormBuilder server name}
 
-\item{profile_id}{Integer of the iFormBuilder profile ID.}
+\item{profile_id}{Integer of the iFormBuilder profile ID}
 
 \item{optionlist_id}{The id number for the option list}
 
@@ -24,7 +24,7 @@ get_core_option_list_elements(
 
 \item{offset}{Skips the offset number of options before beginning to return}
 
-\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 }
 \value{
 A dataframe of the core option list elements

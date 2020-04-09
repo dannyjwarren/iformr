@@ -1,9 +1,9 @@
 #' Add element to page.
 #'
-#' Adds a new element to a page.
+#' Adds a new element to a page (form or subform).
 #'
 #' @rdname create_element
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{\link{get_iform_access_token}}
@@ -65,17 +65,17 @@ create_element = function(server_name, profile_id,  access_token,
                   httr::add_headers('Authorization' = bearer),
                   body = page_attributes,
                   encode = "json")
-  httr::message_for_status(r, task = "write new element")
+  try(httr::stop_for_status(r))
   element_id <- httr::content(r, type = "application/json")
   return(element_id)
 }
 
 #' Retrieve a List of Elements
 #'
-#' Retrieves a list of all the elements contained in a page.
+#' Retrieves a list of all the elements contained in a page (form or subform)
 #'
 #' @rdname retrieve_element_list
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{\link{get_iform_access_token}}
@@ -142,7 +142,7 @@ retrieve_element_list <- function(server_name, profile_id,
 
 #' Delete an element
 #'
-#' Deletes an element from a page
+#' Deletes an element from a page (form or subform)
 #'
 #' @rdname delete_element
 #' @param server_name String of the iFormBuilder server name.

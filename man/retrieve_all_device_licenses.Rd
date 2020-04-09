@@ -18,9 +18,8 @@ Dataframe containing the ID, username, and device_id for
   all device licenses in a profile
 }
 \description{
-Retrieves a list of all device licenses in a profile.
-Core API call [Retrieve a List of Device Licenses](
-https://iformbuilder.docs.apiary.io/#reference/device-license-resource/device-license-collection/retrieve-a-list-of-device-licenses)
+Retrieves a list of all device licenses in a profile. Core API call
+\href{https://iformbuilder.docs.apiary.io/#reference/device-license-resource/device-license-collection/retrieve-a-list-of-device-licenses}{Retrieve a List of Device Licenses}
 }
 \examples{
 \dontrun{

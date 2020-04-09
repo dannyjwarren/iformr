@@ -7,9 +7,9 @@
 truncate_form(server_name, profile_id, page_id, access_token)
 }
 \arguments{
-\item{server_name}{String of the iFormBuilder server name.}
+\item{server_name}{String of the iFormBuilder server name}
 
-\item{profile_id}{Integer of the iFormBuilder profile ID.}
+\item{profile_id}{Integer of the iFormBuilder profile ID}
 
 \item{page_id}{Integer ID of the form to truncate.}
 

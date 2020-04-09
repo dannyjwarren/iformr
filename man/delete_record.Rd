@@ -7,13 +7,13 @@
 delete_record(server_name, profile_id, page_id, record_id, access_token)
 }
 \arguments{
-\item{server_name}{String of the iFormBuilder server name.}
+\item{server_name}{String of the iFormBuilder server name}
 
-\item{profile_id}{Integer of the iFormBuilder profile ID.}
+\item{profile_id}{Integer of the iFormBuilder profile ID}
 
-\item{page_id}{Integer - ID of the page from which to delete the record.}
+\item{page_id}{Integer ID of the page from which to delete the record.}
 
-\item{record_id}{Integer - ID of the record to delete.}
+\item{record_id}{Integer ID of the record to delete.}
 
 \item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 }
@@ -21,11 +21,11 @@ delete_record(server_name, profile_id, page_id, record_id, access_token)
 ID of the record deleted.
 }
 \description{
-Delete a single record.
+Delete a single record
 }
 \examples{
 \dontrun{
-# Identify the last record added to the form for deletion
+# Identify the last record added to the form so it can be deleted
 record_to_delete = max(parent_form_records$id)
 
 # Get access_token
@@ -34,7 +34,7 @@ access_token <- get_iform_access_token(
   client_key_name = "your_client_key_name",
   client_secret_name = "your_client_secret_name")
 
-# Delete the last added record...need to manually add prior to testing
+# Delete the last record that was added
  deleted_record = delete_record(
    server_name = "your_server_name",
    profile_id = "your_profile_id",
@@ -44,5 +44,5 @@ access_token <- get_iform_access_token(
 }
 }
 \author{
-Bill Devoe, \email{William.DeVoe@maine.gov}
+Bill DeVoe, \email{William.DeVoe@maine.gov}
 }

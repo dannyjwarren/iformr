@@ -28,7 +28,7 @@ get_selected_page_records(
 
 \item{offset}{Skips the offset number of records before beginning to return}
 
-\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 }
 \value{
 A dataframe of records for the specified fields (columns)
@@ -46,7 +46,10 @@ This will likely be the primary function used to retrieve records
   function the retrieved data will contain the record id as the first column.
   By archiving these ids, each request for new records can incorporate the
   last downloaded id in the \code{fields} parameter to only pull newly
-  submitted records. See example below.
+  submitted records. See example below. For more information on how to
+  construct a string that specifies fields and conditions to apply to a
+  request for records, see the Introduction section of the
+  \href{https://iformbuilder.docs.apiary.io/#}{iFormBuilder Apiary}
 }
 \section{Warning}{
  This function should \strong{only} be used to request

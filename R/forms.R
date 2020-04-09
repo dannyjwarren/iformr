@@ -22,15 +22,15 @@ format_name <- function(name) {
 #'
 #' Create page
 #'
-#' Creates a new page in the given profile with the name and label specified.
-#' The name provided will be converted to iFormBuilder standards; punctuation
-#' and whitespace replaced with _ and all text to lowercase.
+#' Creates a new page (form or subform) in the given profile with the name and
+#' label specified. The name provided will be converted to iFormBuilder standards;
+#' punctuation and whitespace replaced with _ and all text to lowercase.
 #'
 #' @rdname create_page
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param name String of new page name; coerced to iFormBuilder table
 #'   name conventions.
 #' @param label String of the label for the new page.
@@ -71,12 +71,12 @@ create_page = function(server_name, profile_id,  access_token, name, label) {
 
 #' Copy page
 #'
-#' Copies a page to a new page in the profile.
+#' Copies an existing page (form or subform) to create a new page in the profile.
 #' @rdname copy_page
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name
 #' @param profile_id Integer of the iFormBuilder profile ID
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param page_id Integer of the page ID to copy.
 #' @return Integer of the new page ID.
 #' @examples
@@ -110,15 +110,15 @@ copy_page = function(server_name, profile_id, page_id, access_token) {
 
 #' Rename page
 #'
-#' Renames a page given a page_id and new name and label. The name provided
-#' will be converted to iFormBuilder standards; punctuation and whitespace
-#' replaced with _ and all text to lowercase.
+#' Renames a page (form or subform) given a page_id and new name and label.
+#' The name provided will be converted to iFormBuilder standards; punctuation
+#' and whitespace will be replaced with _ and all text to lowercase.
 #'
 #' @rdname rename_page
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param page_id Integer of the page ID to rename.
 #' @param name String of renamed page name; coerced to iFormBuilder
 #'   table name conventions.
@@ -161,9 +161,9 @@ rename_page = function(server_name, profile_id, access_token,
 
 #' Delete page
 #'
-#' Deletes a single page (form) from a profile. Use caution when deleting forms.
-#' It should only be done with consideration for existing data referencing the
-#' form.
+#' Deletes a single page (form or subform) from a profile. Use caution when
+#' deleting forms. It should only be done with consideration for existing
+#' data referencing the form.
 #'
 #' @rdname delete_page
 #' @param server_name String of the iFormBuilder server name.
@@ -215,8 +215,7 @@ delete_page <- function(server_name, profile_id,
 #' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by
-#' \code{\link{get_iform_access_token}}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param name String of new page name; coerced to iFormBuilder
 #'   table name conventions.
 #' @param label String of the label for the new page.

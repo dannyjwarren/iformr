@@ -29,7 +29,7 @@ Dataframe containing a row for each element and a column for each
   element field.
 }
 \description{
-Retrieves a list of all the elements contained in a page.
+Retrieves a list of all the elements contained in a page (form or subform)
 }
 \examples{
 \dontrun{
@@ -49,5 +49,5 @@ elements <- retrieve_element_list(
   }
 }
 \author{
-Bill Devoe, \email{William.DeVoe@maine.gov}
+Bill DeVoe, \email{William.DeVoe@maine.gov}
 }

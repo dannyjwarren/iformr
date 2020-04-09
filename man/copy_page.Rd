@@ -13,13 +13,13 @@ copy_page(server_name, profile_id, page_id, access_token)
 
 \item{page_id}{Integer of the page ID to copy.}
 
-\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 }
 \value{
 Integer of the new page ID.
 }
 \description{
-Copies a page to a new page in the profile.
+Copies an existing page (form or subform) to create a new page in the profile.
 }
 \examples{
 \dontrun{
@@ -39,5 +39,5 @@ new_page_id <- copy_page(
 
 }
 \author{
-Bill Devoe, \email{William.DeVoe@maine.gov}
+Bill DeVoe, \email{William.DeVoe@maine.gov}
 }

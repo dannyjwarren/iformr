@@ -1,12 +1,12 @@
 #' Retrieve a profile
 #'
-#' Retrieves a profile. Core API call [Retrieve a Profile](
-#' https://iformbuilder.docs.apiary.io/#reference/profile-resource/profile/retrieve-a-profile)
+#' Retrieves a profile. Core API call
+#' \href{https://iformbuilder.docs.apiary.io/#reference/profile-resource/profile/retrieve-a-profile}{Retrieve a Profile}
 #'
 #' @rdname retrieve_profile
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name
-#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param profile_id Integer of the iFormBuilder profile ID
 #' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return Dataframe containing profile attributes
 #' @examples
@@ -42,11 +42,11 @@ retrieve_profile <- function(server_name, profile_id, access_token) {
 
 #' Retrieve company info
 #'
-#' Retrieves company (profile) info. Core API call [Retrieve Company Info](
-#' https://iformbuilder.docs.apiary.io/#reference/profile-resource/company-info/retrieve-company-info)
+#' Retrieves company (profile) info. Core API call
+#' \href{https://iformbuilder.docs.apiary.io/#reference/profile-resource/company-info/retrieve-company-info}{Retrieve Company Info}
 #'
 #' @rdname retrieve_company_info
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name
 #' @param profile_id Integer of the iFormBuilder profile ID
 #' @param access_token Access token produced by \code{\link{get_iform_access_token}}

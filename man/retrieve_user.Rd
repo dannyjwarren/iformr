@@ -7,28 +7,32 @@
 retrieve_user(server_name, profile_id, user_id, access_token)
 }
 \arguments{
-\item{server_name}{String of the iFormBuilder server name.}
+\item{server_name}{String of the iFormBuilder server name}
 
-\item{profile_id}{Integer of the iFormBuilder profile ID.}
+\item{profile_id}{Integer of the iFormBuilder profile ID}
 
 \item{user_id}{Integer of the user ID to retrieve.}
 
 \item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 }
 \value{
-List containing the user details.
+List containing the user details
+}
+\description{
+Retrieves information for a specific user. Core API call
+\href{https://iformbuilder.docs.apiary.io/#reference/user-resource/user/retrieve-a-user}{Retrieve a User}
+}
+\examples{
+\dontrun{
 
-#' # Get a list of details for a given user
-all_users_info <- retrieve_all_users(
+# Get a list of details for a given user
+user_info <- retrieve_user(
   server_name = "your_server_name",
   profile_id = 123456,
   user_id = user_id,
   access_token = access_token)
 }
-\description{
-Retrieves information for a specific user. Core API call [Retrieve a User](
-https://iformbuilder.docs.apiary.io/#reference/user-resource/user/retrieve-a-user)
 }
 \author{
-Bill Devoe, \email{William.DeVoe@maine.gov}
+Bill DeVoe, \email{William.DeVoe@maine.gov}
 }

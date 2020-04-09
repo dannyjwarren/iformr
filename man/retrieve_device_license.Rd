@@ -19,9 +19,8 @@ retrieve_device_license(server_name, profile_id, access_token, license_id)
 List containing attributes of the device license
 }
 \description{
-Retrieves a single device license.
-Core API call [Retrieve a Device License](
-https://iformbuilder.docs.apiary.io/#reference/device-license-resource/device-license/retrieve-a-device-license)
+Retrieves a single device license. Core API call
+\href{https://iformbuilder.docs.apiary.io/#reference/device-license-resource/device-license/retrieve-a-device-license}{Retrieve a Device License}
 }
 \examples{
 \dontrun{

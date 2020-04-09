@@ -7,7 +7,7 @@
 retrieve_all_users(server_name, profile_id, access_token)
 }
 \arguments{
-\item{server_name}{String of the iFormBuilder server name.}
+\item{server_name}{String of the iFormBuilder server name}
 
 \item{profile_id}{Integer of the iFormBuilder profile ID.}
 
@@ -17,8 +17,8 @@ retrieve_all_users(server_name, profile_id, access_token)
 Dataframe containing all usernames and user IDs in the profile.
 }
 \description{
-Retrieves a list of all users in a profile. Core API call [Retrieve a List of Users](
-https://iformbuilder.docs.apiary.io/#reference/user-resource/user-collection/retrieve-a-list-of-users)
+Retrieves a list of all users in a profile. Core API call
+\href{https://iformbuilder.docs.apiary.io/#reference/user-resource/user-collection/retrieve-a-list-of-users}{Retrieve a List of Users}
 }
 \examples{
 \dontrun{

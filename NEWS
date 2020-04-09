@@ -1,6 +1,24 @@
+0.1.2
+  - Added retry method and better error handling when requesting
+    access tokens.
+  - Added functions to retrieve license, profile, and company
+    information. Contributed by Bill DeVoe.
+  - Added functions to retrieve lists of existing data elements
+    in forms, and create new elements. Contributed by Bill DeVoe.
+  - Added function to delete existing data elements in forms.
+  - Added new functionality for creating, copying, and deleting
+    forms. Contributed by Bill DeVoe.
+  - Added new functionality to delete one or more records in a
+    form, or truncate all records. Contributed by Bill DeVoe.
+  - Added functions to retrieve lists of users in a profile,
+    and retrieve details on individual users. Contributed by
+    Bill DeVoe.
+  - Added function to allow sending notifications to users.
+    Contributed by Bill DeVoe.
+
 0.1.1
   - Use {jose} package for encoding and signing jwt request tokens
   - Fix deprecation warnings in examples. Updated to use {tibble}
 
 0.1.0.9008
-  - Add contributed functions from Bill Devoe
+  - Added several contributed functions from Bill DeVoe.

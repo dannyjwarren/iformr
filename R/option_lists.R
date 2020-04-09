@@ -5,11 +5,11 @@
 #' currently set at 100 records.
 #'
 #' @rdname get_option_lists
-#' @param server_name String of the iFormBuilder server name.
-#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param server_name String of the iFormBuilder server name
+#' @param profile_id Integer of the iFormBuilder profile ID
 #' @param limit The maximum number of option lists to return
 #' @param offset Skips the offset number of options before beginning to return
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return A listing of all option lists in the given profile
 #' @examples
 #' \dontrun{
@@ -57,10 +57,10 @@ get_option_lists <- function(server_name,
 #' Retrieves all option lists in a profile in chunks of 100 (API call limit).
 #'
 #' @rdname get_all_option_lists
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
-#' @param server_name String of the iFormBuilder server name.
-#' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
+#' @param server_name String of the iFormBuilder server name
+#' @param profile_id Integer of the iFormBuilder profile ID
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return Tibble of two columns containing the option list IDs and option
 #'   list names: id <int>, name <chr>
 #' @examples
@@ -113,9 +113,9 @@ get_all_option_lists = function(server_name, profile_id, access_token) {
 #' value to 'False'
 #'
 #' @rdname delete_option_list
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
-#' @param server_name String of the iFormBuilder server name.
-#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
+#' @param server_name String of the iFormBuilder server name
+#' @param profile_id Integer of the iFormBuilder profile ID
 #' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param option_list_id ID of the option list to be deleted.
 #' @return ID of the option list to be deleted.
@@ -132,22 +132,23 @@ get_all_option_lists = function(server_name, profile_id, access_token) {
 #'   server_name = "your_server_name",
 #'   profile_id = "your_profile_id",
 #'   access_token = access_token,
-#'   option_list_id
+#'   option_list_id)
 #'   }
 #' @export
-delete_option_list <- function(server_name, profile_id,
-                               access_token, option_list_id){
-  delete_option_list_url <- paste0(api_v60_url(server_name = server_name),
+delete_option_list <- function(server_name,
+                               profile_id,
+                               access_token,
+                               option_list_id) {
+  delete_option_list_uri <- paste0(api_v60_url(server_name = server_name),
                                    profile_id, "/optionlists/", option_list_id)
   bearer <- paste0("Bearer ", access_token)
   # No body, DELETE HTTP method
-  r <- httr::DELETE(url = delete_option_list_url,
+  r <- httr::DELETE(url = delete_option_list_uri,
                     httr::add_headers('Authorization' = bearer),
                     encode = "json")
   httr::stop_for_status(r)
   response <- httr::content(r, type = "application/json")
 }
-
 
 #' Get the id of a single option list given an option list name
 #'
@@ -155,12 +156,12 @@ delete_option_list <- function(server_name, profile_id,
 #' option list. You only need to supply the name of the option list.
 #'
 #' @rdname get_option_list_id
-#' @param server_name String of the iFormBuilder server name.
-#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param server_name String of the iFormBuilder server name
+#' @param profile_id Integer of the iFormBuilder profile ID
 #' @param option_list_name The name of the option list
 #' @param limit The maximum number of option lists to return
 #' @param offset Skips the offset number of options before beginning to return
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return A listing of all option lists in the given profile
 #' @examples
 #' \dontrun{
@@ -209,10 +210,10 @@ get_option_list_id <- function(server_name,
 #' option list will be created with the name you supply.
 #'
 #' @rdname create_new_option_list
-#' @param server_name String of the iFormBuilder server name.
-#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param server_name String of the iFormBuilder server name
+#' @param profile_id Integer of the iFormBuilder profile ID
 #' @param option_list_name A character name for the new option list
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return The id of the new option list
 #' @examples
 #' \dontrun{
@@ -258,15 +259,15 @@ create_new_option_list <- function(server_name,
 #' Add option values to new option list
 #'
 #' Sends a request to the iFormBuilder API to append a list of options in json
-#' format to an existing option list. Make sure that all options list key_values
-#' are unique or the list will not be posted.
+#' format to an existing option list. Please make sure that all option list
+#' key_values are unique, otherwise new options will not be posted.
 #'
 #' @rdname add_options_to_list
-#' @param server_name String of the iFormBuilder server name.
-#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param server_name String of the iFormBuilder server name
+#' @param profile_id Integer of the iFormBuilder profile ID
 #' @param optionlist_id The id number for the option list
 #' @param option_values A list of option values in json format
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return A vector of option list element ids, one for each option in the list
 #' @examples
 #' # The locations dataset is an example of a segmented option list
@@ -338,15 +339,14 @@ add_options_to_list <- function(server_name,
 #' order will automatically be reassigned after deleting specified elements.
 #'
 #' @rdname delete_options_in_list
-#' @param server_name The server name as encoded in the url:
-#'   `https//server_name.iformbuilder.com`
+#' @param server_name String of the iFormBuilder server name
 #' @param profile_id The id number of your profile
 #' @param optionlist_id The id number for the option list
 #' @param fields Placeholder for fields to delete, not yet implemented
 #' @param id_values A .json list of ids for elements to delete
 #' @param limit The maximum number of option elements to delete
 #' @param offset Skips the offset number of options before beginning to delete
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return A vector of option list elements that were deleted
 #' @examples
 #' \dontrun{
@@ -404,12 +404,12 @@ delete_options_in_list <- function(server_name,
 #'
 #' @rdname get_option_list_element_ids
 #' @param server_name String of the iFormBuilder server name.
-#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param profile_id Integer of the iFormBuilder profile ID
 #' @param optionlist_id The id number for the option list
 #' @param element The specific option list element. For example: "key_value".
 #' @param limit The maximum number of option element ids to return
 #' @param offset Skips the offset number of options before beginning to return
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return A dataframe with id and attributes for the selected element.
 #' @examples
 #' \dontrun{
@@ -471,12 +471,12 @@ get_option_list_element_ids <- function(server_name,
 #' condition_value.
 #'
 #' @rdname get_core_option_list_elements
-#' @param server_name String of the iFormBuilder server name.
-#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param server_name String of the iFormBuilder server name
+#' @param profile_id Integer of the iFormBuilder profile ID
 #' @param optionlist_id The id number for the option list
 #' @param limit The maximum number of option list items to return
 #' @param offset Skips the offset number of options before beginning to return
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return A dataframe of the core option list elements
 #' @examples
 #' \dontrun{
@@ -534,14 +534,14 @@ get_core_option_list_elements <- function(server_name,
 #' parameter. It has not been implemented yet.
 #'
 #' @rdname update_options_in_list
-#' @param server_name String of the iFormBuilder server name.
-#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param server_name String of the iFormBuilder server name
+#' @param profile_id Integer of the iFormBuilder profile ID
 #' @param optionlist_id The id number for the option list
 #' @param option_values A json object containing new option list values
 #' @param limit The maximum number of option list items to return
 #' @param fields Placeholder for fields to update, not yet implemented
 #' @param offset Skips the offset number of options before beginning to update
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return A vector of option ids for elements that were updated
 #' @examples
 #' \dontrun{

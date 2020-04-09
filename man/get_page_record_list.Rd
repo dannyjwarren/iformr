@@ -24,7 +24,7 @@ get_page_record_list(
 
 \item{offset}{Skips the offset number of ids before beginning to return}
 
-\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 }
 \value{
 A vector of record ids from the given form

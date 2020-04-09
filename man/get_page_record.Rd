@@ -15,7 +15,7 @@ get_page_record(server_name, profile_id, page_id, record_id, access_token)
 
 \item{record_id}{The id for the specific record to return}
 
-\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 }
 \value{
 Dataframe of a single record from the given form

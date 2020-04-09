@@ -17,8 +17,8 @@ retrieve_company_info(server_name, profile_id, access_token)
 Dataframe containing company info attributes
 }
 \description{
-Retrieves company (profile) info. Core API call [Retrieve Company Info](
-https://iformbuilder.docs.apiary.io/#reference/profile-resource/company-info/retrieve-company-info)
+Retrieves company (profile) info. Core API call
+\href{https://iformbuilder.docs.apiary.io/#reference/profile-resource/company-info/retrieve-company-info}{Retrieve Company Info}
 }
 \examples{
 \dontrun{
@@ -36,5 +36,5 @@ company_info <- retrieve_company_info(
 }
 }
 \author{
-Bill Devoe, \email{William.DeVoe@maine.gov}
+Bill DeVoe, \email{William.DeVoe@maine.gov}
 }

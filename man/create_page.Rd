@@ -11,7 +11,7 @@ create_page(server_name, profile_id, access_token, name, label)
 
 \item{profile_id}{Integer of the iFormBuilder profile ID.}
 
-\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 
 \item{name}{String of new page name; coerced to iFormBuilder table
 name conventions.}
@@ -22,9 +22,9 @@ name conventions.}
 Integer of the new page ID.
 }
 \description{
-Creates a new page in the given profile with the name and label specified.
-The name provided will be converted to iFormBuilder standards; punctuation
-and whitespace replaced with _ and all text to lowercase.
+Creates a new page (form or subform) in the given profile with the name and
+label specified. The name provided will be converted to iFormBuilder standards;
+punctuation and whitespace replaced with _ and all text to lowercase.
 }
 \examples{
 \dontrun{
@@ -44,5 +44,5 @@ new_page_id <- create_page(
 }
 }
 \author{
-Bill Devoe, \email{William.DeVoe@maine.gov}
+Bill DeVoe, \email{William.DeVoe@maine.gov}
 }

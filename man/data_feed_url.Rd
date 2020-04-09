@@ -56,3 +56,6 @@ form_data <- jsonlite::fromJSON(url)
 }
 
 }
+\author{
+Ty Garber, \email{Tyler.Garber@dfw.wa.gov}
+}

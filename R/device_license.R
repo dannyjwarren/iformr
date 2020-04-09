@@ -1,9 +1,8 @@
+#' @title Retrieve a list of device licenses
 #'
-#' Retrieve a list of device licenses
-#'
-#' Retrieves a list of all device licenses in a profile.
-#' Core API call [Retrieve a List of Device Licenses](
-#' https://iformbuilder.docs.apiary.io/#reference/device-license-resource/device-license-collection/retrieve-a-list-of-device-licenses)
+#' @description Retrieves a list of all device licenses in a profile. Core API call
+#' \href{https://iformbuilder.docs.apiary.io/#reference/device-license-resource/device-license-collection/retrieve-a-list-of-device-licenses}{Retrieve a List of Device Licenses}
+
 #'
 #' @rdname retrieve_all_device_licenses
 #' @param server_name String of the iFormBuilder server name.
@@ -50,11 +49,10 @@ retrieve_all_device_licenses <- function(server_name, profile_id, access_token) 
   return(all_lic)
 }
 
-#' Retrieve a device license
+#' @title Retrieve a device license
 #'
-#' Retrieves a single device license.
-#' Core API call [Retrieve a Device License](
-#' https://iformbuilder.docs.apiary.io/#reference/device-license-resource/device-license/retrieve-a-device-license)
+#' @description Retrieves a single device license. Core API call
+#' \href{https://iformbuilder.docs.apiary.io/#reference/device-license-resource/device-license/retrieve-a-device-license}{Retrieve a Device License}
 #'
 #' @rdname retrieve_device_license
 #' @author Bill Devoe, \email{William.DeVoe@@maine.gov}

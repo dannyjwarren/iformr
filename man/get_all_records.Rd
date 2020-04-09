@@ -30,7 +30,7 @@ get_all_records(
 
 \item{offset}{Skips the offset number of records before beginning to return}
 
-\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 
 \item{field_string}{A character string defining the data fields to return,
 including the id value where data retrieval should start. See the example
@@ -55,7 +55,9 @@ Sends a request to the iFormBuilder API to get all records in a
 This function should be used with caution. It should only be used in
   those rare cases when you know that there are more than 1000 records that
   need to be retrieved in a single call. Be observant for warnings. It may
-  on occassion throw errors.
+  on occassion throw errors. For more information on how to construct a string
+  that specifies fields and conditions to apply to a request for records, see
+  the Introduction section of the \href{https://iformbuilder.docs.apiary.io/#}{iFormBuilder Apiary}
 }
 \section{Warning}{
  This function should \strong{only} be used to request

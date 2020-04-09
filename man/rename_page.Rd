@@ -11,7 +11,7 @@ rename_page(server_name, profile_id, access_token, page_id, name, label)
 
 \item{profile_id}{Integer of the iFormBuilder profile ID.}
 
-\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 
 \item{page_id}{Integer of the page ID to rename.}
 
@@ -24,9 +24,9 @@ table name conventions.}
 Integer of the page ID.
 }
 \description{
-Renames a page given a page_id and new name and label. The name provided
-will be converted to iFormBuilder standards; punctuation and whitespace
-replaced with _ and all text to lowercase.
+Renames a page (form or subform) given a page_id and new name and label.
+The name provided will be converted to iFormBuilder standards; punctuation
+and whitespace will be replaced with _ and all text to lowercase.
 }
 \examples{
 \dontrun{
@@ -47,5 +47,5 @@ rename_page_id <- rename_page(
   }
 }
 \author{
-Bill Devoe, \email{William.DeVoe@maine.gov}
+Bill DeVoe, \email{William.DeVoe@maine.gov}
 }

@@ -7,7 +7,7 @@
 get_pages_list(server_name, profile_id, limit = 1000, offset = 0, access_token)
 }
 \arguments{
-\item{server_name}{String of the iFormBuilder server name.}
+\item{server_name}{String of the iFormBuilder server name}
 
 \item{profile_id}{The id number of your profile}
 
@@ -15,7 +15,7 @@ get_pages_list(server_name, profile_id, limit = 1000, offset = 0, access_token)
 
 \item{offset}{Skips the offset number of ids before beginning to return}
 
-\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 }
 \value{
 A dataframe of all forms (pages) in the given profile

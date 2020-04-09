@@ -45,7 +45,7 @@ Picklist, or Multi Picklist element is created.}
 ID of the new element.
 }
 \description{
-Adds a new element to a page.
+Adds a new element to a page (form or subform).
 }
 \examples{
 \dontrun{
@@ -72,5 +72,5 @@ List of iFormBuilder data types:
   \url{https://iformbuilder.zendesk.com/hc/en-us/articles/201702880-Data-Types-and-Related-Details}
 }
 \author{
-Bill Devoe, \email{William.DeVoe@maine.gov}
+Bill DeVoe, \email{William.DeVoe@maine.gov}
 }

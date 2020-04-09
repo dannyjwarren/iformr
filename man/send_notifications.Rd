@@ -22,8 +22,8 @@ ie c(1234, 3456)}
 Vector of the user IDs that were successfully notified.
 }
 \description{
-Sends a notification to a user or users. Core API call [Send Notifications](
-https://iformbuilder.docs.apiary.io/#reference/notification-resource/notification/send-notifications)
+Sends a notification to a user or users. Core API call
+\href{https://iformbuilder.docs.apiary.io/#reference/notification-resource/notification/send-notifications}{Send Notifications}
 }
 \examples{
 \dontrun{
@@ -52,5 +52,5 @@ notified_user_ids <- send_notifications(
 }
 }
 \author{
-Bill Devoe, \email{William.DeVoe@maine.gov}
+Bill DeVoe, \email{William.DeVoe@maine.gov}
 }

@@ -13,11 +13,11 @@ delete_multiple_records(
 )
 }
 \arguments{
-\item{server_name}{String of the iFormBuilder server name.}
+\item{server_name}{String of the iFormBuilder server name}
 
-\item{profile_id}{Integer of the iFormBuilder profile ID.}
+\item{profile_id}{Integer of the iFormBuilder profile ID}
 
-\item{page_id}{ID of the page from which to delete the record.}
+\item{page_id}{Integer ID of the page from which to delete the record.}
 
 \item{record_ids}{Integer vector of the record IDs to delete.}
 
@@ -27,7 +27,7 @@ delete_multiple_records(
 Integer vector of the deleted record IDs
 }
 \description{
-Delete a list of records.
+Delete a list of records
 }
 \examples{
 \dontrun{

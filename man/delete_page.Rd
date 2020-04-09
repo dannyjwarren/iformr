@@ -19,9 +19,9 @@ delete_page(server_name, profile_id, page_id, access_token)
 ID of the page that was deleted.
 }
 \description{
-Deletes a single page (form) from a profile. Use caution when deleting forms.
-It should only be done with consideration for existing data referencing the
-form.
+Deletes a single page (form or subform) from a profile. Use caution when
+deleting forms. It should only be done with consideration for existing
+data referencing the form.
 }
 \examples{
 \dontrun{

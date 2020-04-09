@@ -1,11 +1,11 @@
 #'
 #' Send notifications
 #'
-#' Sends a notification to a user or users. Core API call [Send Notifications](
-#' https://iformbuilder.docs.apiary.io/#reference/notification-resource/notification/send-notifications)
+#' Sends a notification to a user or users. Core API call
+#' \href{https://iformbuilder.docs.apiary.io/#reference/notification-resource/notification/send-notifications}{Send Notifications}
 #'
 #' @rdname send_notifications
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{\link{get_iform_access_token}}

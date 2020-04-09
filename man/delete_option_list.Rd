@@ -7,9 +7,9 @@
 delete_option_list(server_name, profile_id, access_token, option_list_id)
 }
 \arguments{
-\item{server_name}{String of the iFormBuilder server name.}
+\item{server_name}{String of the iFormBuilder server name}
 
-\item{profile_id}{Integer of the iFormBuilder profile ID.}
+\item{profile_id}{Integer of the iFormBuilder profile ID}
 
 \item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 
@@ -37,9 +37,9 @@ deleted_id <- delete_option_list(
   server_name = "your_server_name",
   profile_id = "your_profile_id",
   access_token = access_token,
-  option_list_id
+  option_list_id)
   }
 }
 \author{
-Bill Devoe, \email{William.DeVoe@maine.gov}
+Bill DeVoe, \email{William.DeVoe@maine.gov}
 }
