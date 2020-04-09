@@ -1,14 +1,16 @@
 #'
 #' Retrieve a list of device licenses
 #'
-#' Retrieves a list of all device licenses in a profile. Core API call [Retrieve a List of Device Licenses](
+#' Retrieves a list of all device licenses in a profile.
+#' Core API call [Retrieve a List of Device Licenses](
 #' https://iformbuilder.docs.apiary.io/#reference/device-license-resource/device-license-collection/retrieve-a-list-of-device-licenses)
 #'
 #' @rdname retrieve_all_device_licenses
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{\link{get_iform_access_token}}
-#' @return Dataframe containing the ID, username, and device_id for all device licenses in a profile
+#' @return Dataframe containing the ID, username, and device_id for
+#'   all device licenses in a profile
 #' @import httr
 #'
 #' @examples
@@ -21,12 +23,9 @@
 #'
 #' # Retrieve a list of all device licenses in a profile
 #' all_device_license_info <- retrieve_all_device_licenses(
-#'   server_name = "wdfw",
-#'   profile_id = 123456,
+#'   server_name = "your_server_name",
+#'   profile_id = "your_profile_id",
 #'   access_token = access_token)
-
-#' # Pull out the first device license for next function
-#' license_id = all_device_license_info$id[1]
 #'
 #' @export
 retrieve_all_device_licenses <- function(server_name, profile_id, access_token) {
@@ -54,7 +53,8 @@ retrieve_all_device_licenses <- function(server_name, profile_id, access_token) 
 
 #' Retrieve a device license
 #'
-#' Retrieves a single device license. Core API call [Retrieve a Device License](
+#' Retrieves a single device license.
+#' Core API call [Retrieve a Device License](
 #' https://iformbuilder.docs.apiary.io/#reference/device-license-resource/device-license/retrieve-a-device-license)
 #'
 #' @rdname retrieve_device_license
@@ -68,10 +68,14 @@ retrieve_all_device_licenses <- function(server_name, profile_id, access_token) 
 #'
 #' @examples
 #' \dontrun{
+#'
+#' # Pull out the first device license
+#' license_id = all_device_license_info$id[1]
+#'
 #' # Retrieve details for a single device license
 #' single_device_license_info <- retrieve_device_license(
-#'   server_name = "wdfw",
-#'   profile_id = 123456,
+#'   server_name = "your_server_name",
+#'   profile_id = "your_profile_id",
 #'   license_id = license_id,
 #'   access_token = access_token)
 #'
