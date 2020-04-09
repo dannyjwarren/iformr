@@ -6,6 +6,7 @@
 #' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param page_id Page ID where the new element will be created.
 #' @param name String of the element DCN. The provided name will be converted to be
 #'   IFB database compliant (no special characters, all lowercase, spaces replaced
@@ -18,7 +19,6 @@
 #' @param data_size *Optional* - length of the element; defaults to 100.
 #' @param optionlist_id *Optional* - id of the option list to assign if a Select,
 #'   Picklist, or Multi Picklist element is created.
-#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return ID of the new element.
 #' @examples
 #' \dontrun{
@@ -32,18 +32,19 @@
 #' new_element <- create_element(
 #'   server_name = "your_server_name",
 #'   profile_id = "your_profile_id",
+#'   access_token = access_token,
 #'   page_id = "existing_page_id",
 #'   name = "new_dcn_name",
 #'   label = "new_element_label",
 #'   description = "This is a new element.",
-#'   data_type = 1,
-#'   access_token = access_token)
+#'   data_type = 1)
 #'   }
 #' @importFrom methods missingArg
 #' @export
-create_element = function(server_name, profile_id, page_id, name, label,
-                          description = "", data_type, data_size = 100,
-                          optionlist_id, access_token) {
+create_element = function(server_name, profile_id,  access_token,
+                          page_id, name, label, description = "",
+                          data_type, data_size = 100,
+                          optionlist_id) {
   # Format element name to be IFB compliant
   name <- format_name(name)
   message(paste0("Creating new element: ", name))
@@ -51,13 +52,13 @@ create_element = function(server_name, profile_id, page_id, name, label,
                                profile_id, "/pages/", page_id, "/elements")
   bearer <- paste0("Bearer ", access_token)
   if (!missingArg(optionlist_id)) {
-    page_attributes <- list(name=name, label=label, description=description,
-                            data_type=data_type, data_size=data_size,
-                            optionlist_id=optionlist_id)
+    page_attributes <- list(name = name, label = label, description = description,
+                            data_type = data_type, data_size = data_size,
+                            optionlist_id = optionlist_id)
   }
   else {
-    page_attributes <- list(name=name, label=label, description=description,
-                            data_type=data_type, data_size=data_size)
+    page_attributes <- list(name = name, label = label, description = description,
+                            data_type = data_type, data_size = data_size)
   }
   page_attributes <- jsonlite::toJSON(page_attributes, auto_unbox = T)
   r <- httr::POST(url = create_element_url,
@@ -65,7 +66,8 @@ create_element = function(server_name, profile_id, page_id, name, label,
                   body = page_attributes,
                   encode = "json")
   httr::message_for_status(r), task = "write new element")
-  elementid <- httr::content(r, type = "application/json")
+  element_id <- httr::content(r, type = "application/json")
+  return(element_id)
 }
 
 #' Retrieve a List of Elements
@@ -94,14 +96,14 @@ create_element = function(server_name, profile_id, page_id, name, label,
 #' elements <- retrieve_element_list(
 #'   server_name = "your_server_name",
 #'   profile_id = "your_profile_id",
+#'   access_token = access_token,
 #'   page_id = "existing_page_id",
-#'   fields = 'all',
-#'   access_token = access_token)
+#'   fields = 'all')
 #'   }
 #' @export
 retrieve_element_list <- function(server_name, profile_id,
-                                  page_id, fields = 'all',
-                                  access_token) {
+                                  access_token, page_id,
+                                  fields = 'all') {
   message(paste0("Retrieving elements from: ", page_id))
   # List of fields API call can return
   all_fields <- c('global_id', 'version', 'label', 'description', 'data_type',
@@ -132,7 +134,7 @@ retrieve_element_list <- function(server_name, profile_id,
   r <- httr::GET(url,
                  httr::add_headers('Authorization' = bearer),
                  encode = "json")
-  if (r$status_code != 200){stop('Could not retrieve elements from page.')}
+  if (r$status_code != 200){ stop('Could not retrieve elements from page.') }
   json <- httr::content(r, type = "text")
   elements <- jsonlite::fromJSON(json)
   return(elements)
@@ -184,24 +186,6 @@ delete_element = function(server_name, profile_id,
   element_id <- httr::content(r, type = "application/json")
   return(element_id)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

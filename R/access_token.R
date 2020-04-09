@@ -67,7 +67,7 @@ get_iform_access_token <- function(server_name, client_key_name, client_secret_n
   r <- httr::RETRY("POST", url = token_uri, body = body,
                   httr::add_headers('Content-Type' = 'application/x-www-form-urlencoded'),
                   encode = "form", pause_cap = 10)
-  httr::warn_for_status(r)
+  httr::warn_for_status(r, task = "request for access_token")
   acc_token <- httr::content(r, type = "application/json")$access_token
   return(acc_token)
 }
