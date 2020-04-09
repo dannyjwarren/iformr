@@ -665,7 +665,7 @@ truncate_form <- function(server_name, profile_id,
   deleted_records <- delete_multiple_records(
     server_name, profile_id, page_id,
     record_ids, access_token)
-  return(deleted_record)
+  return(deleted_records)
 }
 
 #' Compose a url to get data via the data feed mechanism

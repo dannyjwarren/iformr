@@ -17,7 +17,7 @@ retrieve_element_list(
 
 \item{profile_id}{Integer of the iFormBuilder profile ID.}
 
-\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 
 \item{page_id}{Page ID where the new element will be created.}
 
@@ -45,7 +45,7 @@ elements <- retrieve_element_list(
   profile_id = "your_profile_id",
   access_token = access_token,
   page_id = "existing_page_id",
-  fields = 'all'
+  fields = 'all')
   }
 }
 \author{

@@ -15,8 +15,7 @@ data_feed_url(
 )
 }
 \arguments{
-\item{server_name}{The server name as encoded in the url:
-`https//server_name.iformbuilder.com`}
+\item{server_name}{String of the iFormBuilder server name}
 
 \item{parent_form_id}{The id of the parent form}
 
@@ -55,4 +54,5 @@ url <- data_feed_url(
 # Retrieve the form data into an R list
 form_data <- jsonlite::fromJSON(url)
 }
+
 }

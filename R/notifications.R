@@ -13,8 +13,7 @@
 #' @param users Numerical vector containing one or more user IDs,
 #'   ie c(1234, 3456)
 #' @return Vector of the user IDs that were successfully notified.
-#' @import httr
-#' #'
+#'
 #' @examples
 #' \dontrun{
 #' # Get access_token
@@ -39,7 +38,7 @@
 #'   message = "Please sync your device",
 #'   users = user_ids,
 #'   access_token = access_token)
-#'
+#'}
 #' @export
 send_notifications <- function(server_name, profile_id,
                                access_token, message, users) {

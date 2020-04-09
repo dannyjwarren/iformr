@@ -5,12 +5,10 @@
 #'
 #' @rdname retrieve_profile
 #' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
-#' @param server_name String of the iFormBuilder server name.
+#' @param server_name String of the iFormBuilder server name
 #' @param profile_id Integer of the iFormBuilder profile ID.
 #' @param access_token Access token produced by \code{\link{get_iform_access_token}}
-#' @return Dataframe containing profile attributes.
-#' @import httr
-#' #'
+#' @return Dataframe containing profile attributes
 #' @examples
 #' \dontrun{
 #' # Get access_token
@@ -24,7 +22,7 @@
 #'   server_name = "your_server_name",
 #'   profile_id = 123456,
 #'   access_token = access_token)
-#'
+#'}
 #' @export
 retrieve_profile <- function(server_name, profile_id, access_token) {
   # Build URL
@@ -49,12 +47,10 @@ retrieve_profile <- function(server_name, profile_id, access_token) {
 #'
 #' @rdname retrieve_company_info
 #' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
-#' @param server_name String of the iFormBuilder server name.
-#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param server_name String of the iFormBuilder server name
+#' @param profile_id Integer of the iFormBuilder profile ID
 #' @param access_token Access token produced by \code{\link{get_iform_access_token}}
-#' @return Dataframe containing company info attributes.
-#' @import httr
-#' #'
+#' @return Dataframe containing company info attributes
 #' @examples
 #' \dontrun{
 #' # Get access_token
@@ -68,7 +64,7 @@ retrieve_profile <- function(server_name, profile_id, access_token) {
 #'   server_name = "your_server_name",
 #'   profile_id = 123456,
 #'   access_token = access_token)
-#'
+#'}
 #' @export
 retrieve_company_info <- function(server_name, profile_id, access_token) {
   # Build URL

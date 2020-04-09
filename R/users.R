@@ -26,7 +26,7 @@
 #'
 # Pull out first user_id in the list
 #' user_id = all_users_info$id[1]
-#'
+#'}
 #' @export
 retrieve_all_users <- function(server_name, profile_id, access_token) {
   # Build URL

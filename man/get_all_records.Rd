@@ -18,8 +18,7 @@ get_all_records(
 )
 }
 \arguments{
-\item{server_name}{The server name as encoded in the url:
-`https//server_name.iformbuilder.com`}
+\item{server_name}{String of the iFormBuilder server name}
 
 \item{profile_id}{The id number of your profile}
 
@@ -31,8 +30,7 @@ get_all_records(
 
 \item{offset}{Skips the offset number of records before beginning to return}
 
-\item{access_token}{The access_token required to establish communication
-with the API}
+\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
 
 \item{field_string}{A character string defining the data fields to return,
 including the id value where data retrieval should start. See the example

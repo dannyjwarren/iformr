@@ -22,7 +22,7 @@ create_element(
 
 \item{profile_id}{Integer of the iFormBuilder profile ID.}
 
-\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 
 \item{page_id}{Page ID where the new element will be created.}
 
@@ -64,7 +64,7 @@ new_element <- create_element(
   name = "new_dcn_name",
   label = "new_element_label",
   description = "This is a new element.",
-  data_type = 1
+  data_type = 1)
   }
 }
 \seealso{

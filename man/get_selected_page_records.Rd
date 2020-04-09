@@ -16,8 +16,7 @@ get_selected_page_records(
 )
 }
 \arguments{
-\item{server_name}{The server name as encoded in the url:
-`https//server_name.iformbuilder.com`}
+\item{server_name}{String of the iFormBuilder server name}
 
 \item{profile_id}{The id number of your profile}
 
@@ -29,8 +28,7 @@ get_selected_page_records(
 
 \item{offset}{Skips the offset number of records before beginning to return}
 
-\item{access_token}{The access_token required to establish communication with
-the API}
+\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
 }
 \value{
 A dataframe of records for the specified fields (columns)

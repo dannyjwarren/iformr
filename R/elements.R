@@ -65,7 +65,7 @@ create_element = function(server_name, profile_id,  access_token,
                   httr::add_headers('Authorization' = bearer),
                   body = page_attributes,
                   encode = "json")
-  httr::message_for_status(r), task = "write new element")
+  httr::message_for_status(r, task = "write new element")
   element_id <- httr::content(r, type = "application/json")
   return(element_id)
 }

@@ -31,8 +31,7 @@ delete_options_in_list(
 
 \item{offset}{Skips the offset number of options before beginning to delete}
 
-\item{access_token}{The access_token required to establish communication with
-the API}
+\item{access_token}{Access token produced by \code{iformr::get_iform_access_token}}
 }
 \value{
 A vector of option list elements that were deleted

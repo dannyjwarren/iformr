@@ -11,7 +11,6 @@
 #' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return Dataframe containing the ID, username, and device_id for
 #'   all device licenses in a profile
-#' @import httr
 #'
 #' @examples
 #' \dontrun{
@@ -26,7 +25,7 @@
 #'   server_name = "your_server_name",
 #'   profile_id = "your_profile_id",
 #'   access_token = access_token)
-#'
+#'}
 #' @export
 retrieve_all_device_licenses <- function(server_name, profile_id, access_token) {
   # Build URL
@@ -64,7 +63,6 @@ retrieve_all_device_licenses <- function(server_name, profile_id, access_token) 
 #' @param license_id Integer id of the device license.
 #' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return List containing attributes of the device license
-#' @import httr
 #'
 #' @examples
 #' \dontrun{
@@ -78,7 +76,7 @@ retrieve_all_device_licenses <- function(server_name, profile_id, access_token) 
 #'   profile_id = "your_profile_id",
 #'   license_id = license_id,
 #'   access_token = access_token)
-#'
+#'}
 #' @export
 retrieve_device_license <- function(server_name, profile_id,
                                     access_token, license_id) {
