@@ -13,17 +13,15 @@ get_option_lists(
 )
 }
 \arguments{
-\item{server_name}{The server name as encoded in the url:
-`https//server_name.iformbuilder.com`}
+\item{server_name}{String of the iFormBuilder server name}
 
-\item{profile_id}{The id number of your profile}
+\item{profile_id}{Integer of the iFormBuilder profile ID}
 
 \item{limit}{The maximum number of option lists to return}
 
 \item{offset}{Skips the offset number of options before beginning to return}
 
-\item{access_token}{The access_token required to establish communication with
-the API}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 }
 \value{
 A listing of all option lists in the given profile

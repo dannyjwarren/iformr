@@ -13,25 +13,23 @@ add_options_to_list(
 )
 }
 \arguments{
-\item{server_name}{The server name as encoded in the url:
-`https//server_name.iformbuilder.com`}
+\item{server_name}{String of the iFormBuilder server name}
 
-\item{profile_id}{The id number of your profile}
+\item{profile_id}{Integer of the iFormBuilder profile ID}
 
 \item{optionlist_id}{The id number for the option list}
 
 \item{option_values}{A list of option values in json format}
 
-\item{access_token}{The access_token required to establish communication with
-the API}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 }
 \value{
 A vector of option list element ids, one for each option in the list
 }
 \description{
 Sends a request to the iFormBuilder API to append a list of options in json
-format to an existing option list. Make sure that all options list key_values
-are unique or the list will not be posted.
+format to an existing option list. Please make sure that all option list
+key_values are unique, otherwise new options will not be posted.
 }
 \examples{
 # The locations dataset is an example of a segmented option list

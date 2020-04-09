@@ -7,8 +7,7 @@
 get_page_record(server_name, profile_id, page_id, record_id, access_token)
 }
 \arguments{
-\item{server_name}{The server name as encoded in the url:
-`https//server_name.iformbuilder.com`}
+\item{server_name}{String of the iFormBuilder server name}
 
 \item{profile_id}{The id number of your profile}
 
@@ -16,8 +15,7 @@ get_page_record(server_name, profile_id, page_id, record_id, access_token)
 
 \item{record_id}{The id for the specific record to return}
 
-\item{access_token}{The access_token required to establish communication with
-the API}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 }
 \value{
 Dataframe of a single record from the given form

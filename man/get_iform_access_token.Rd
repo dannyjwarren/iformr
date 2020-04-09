@@ -8,7 +8,7 @@ get_iform_access_token(server_name, client_key_name, client_secret_name)
 }
 \arguments{
 \item{server_name}{The server name as encoded in the url:
-`https//server_name.iformbuilder.com`}
+for example: `https//server_name.iformbuilder.com`}
 
 \item{client_key_name}{The name given to the client_key in your .Renviron
 file}
@@ -33,6 +33,8 @@ For \code{client_key_name} use the name you assigned to the
   respective values \strong{must} be in your .Renviron file. This function
   will not work otherwise. Please see the README file at
   \url{https://github.com/arestrom/iformr} for additional information.
+  Three tries will be attempted to retrive the token. If all attempts
+  fail, a warning will be displayed indicating HTTP status.
 }
 \examples{
 \dontrun{

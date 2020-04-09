@@ -5,13 +5,11 @@
 #' name. Limited to 100 records per API call.
 #'
 #' @rdname get_pages_list
-#' @param server_name The server name as encoded in the url:
-#'   `https//server_name.iformbuilder.com`
+#' @param server_name String of the iFormBuilder server name
 #' @param profile_id The id number of your profile
 #' @param limit The maximum number of form ids to return
 #' @param offset Skips the offset number of ids before beginning to return
-#' @param access_token The access_token required to establish communication with
-#'   the API
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return A dataframe of all forms (pages) in the given profile
 #' @examples
 #' \dontrun{
@@ -54,16 +52,15 @@ get_pages_list <- function(server_name,
   tibble::tibble(id = pgs_id, name = pgs_name)
 }
 
-
 #' Get list of all pages (i.e., form, or subform) in a profile
 #'
 #' Retrieves a list of ALL pages in a profile, in chunks of 100 (limit).
 #' Returns a tibble with form id and form name.
 #' @rdname get_all_pages_list
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
-#' @param server_name String of the iFormBuilder server name.
-#' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
+#' @param server_name String of the iFormBuilder server name
+#' @param profile_id Integer of the iFormBuilder profile ID
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return Tibble of two columns containing the page ID and page name:
 #'   id <int>, name <chr>
 #' @export
@@ -90,7 +87,6 @@ get_all_pages_list <- function(server_name, profile_id, access_token) {
   return(page_list)
 }
 
-
 #' Get id of a single page (i.e., form, or subform) given a form name
 #'
 #' Sends a request to the iFormBuilder API to get the id number of a single
@@ -98,14 +94,12 @@ get_all_pages_list <- function(server_name, profile_id, access_token) {
 #' id for the given form.
 #'
 #' @rdname get_page_id
-#' @param server_name The server name as encoded in the url:
-#'   `https//server_name.iformbuilder.com`
+#' @param server_name String of the iFormBuilder server name
 #' @param profile_id The id number of your profile
 #' @param page_name The name of the form or subform
 #' @param limit The maximum number of form ids to return
 #' @param offset Skips the offset number of ids before beginning to return
-#' @param access_token The access_token required to establish communication with
-#'   the API
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return An integer id for the given form
 #' @examples
 #' \dontrun{
@@ -157,14 +151,12 @@ get_page_id <- function(server_name,
 #' given form or subform.
 #'
 #' @rdname get_page_record_list
-#' @param server_name The server name as encoded in the url:
-#'   `https//server_name.iformbuilder.com`
+#' @param server_name String of the iFormBuilder server name
 #' @param profile_id The id number of your profile
 #' @param page_id The id number of the form
 #' @param limit The maximum number of form ids to return
 #' @param offset Skips the offset number of ids before beginning to return
-#' @param access_token The access_token required to establish communication with
-#'   the API
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return A vector of record ids from the given form
 #' @examples
 #' \dontrun{
@@ -220,13 +212,11 @@ get_page_record_list <- function(server_name,
 #' subform given a record id.
 #'
 #' @rdname get_page_record
-#' @param server_name The server name as encoded in the url:
-#'   `https//server_name.iformbuilder.com`
+#' @param server_name String of the iFormBuilder server name
 #' @param profile_id The id number of your profile
 #' @param page_id The id for the form
 #' @param record_id The id for the specific record to return
-#' @param access_token The access_token required to establish communication with
-#'   the API
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return Dataframe of a single record from the given form
 #' @examples
 #' \dontrun{
@@ -302,7 +292,10 @@ get_page_record <- function(server_name,
 #'   function the retrieved data will contain the record id as the first column.
 #'   By archiving these ids, each request for new records can incorporate the
 #'   last downloaded id in the \code{fields} parameter to only pull newly
-#'   submitted records. See example below.
+#'   submitted records. See example below. For more information on how to
+#'   construct a string that specifies fields and conditions to apply to a
+#'   request for records, see the Introduction section of the
+#'   \href{https://iformbuilder.docs.apiary.io/#}{iFormBuilder Apiary}
 #'
 #' @section Warning: This function should \strong{only} be used to request
 #'   records from one form or subform at a time. \strong{Do not} assume it will
@@ -313,15 +306,13 @@ get_page_record <- function(server_name,
 #'   requested a field that does not exist.
 #'
 #' @rdname get_selected_page_records
-#' @param server_name The server name as encoded in the url:
-#'   `https//server_name.iformbuilder.com`
+#' @param server_name String of the iFormBuilder server name
 #' @param profile_id The id number of your profile
 #' @param page_id The id of the form or subform
 #' @param fields A set of data fields (columns) to return
 #' @param limit The maximum number of records to return
 #' @param offset Skips the offset number of records before beginning to return
-#' @param access_token The access_token required to establish communication with
-#'   the API
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @return A dataframe of records for the specified fields (columns)
 #' @examples
 #' # Specify the fields (columns) to be returned
@@ -399,7 +390,9 @@ get_selected_page_records <- function(server_name,
 #' @details This function should be used with caution. It should only be used in
 #'   those rare cases when you know that there are more than 1000 records that
 #'   need to be retrieved in a single call. Be observant for warnings. It may
-#'   on occassion throw errors.
+#'   on occassion throw errors. For more information on how to construct a string
+#'   that specifies fields and conditions to apply to a request for records, see
+#'   the Introduction section of the \href{https://iformbuilder.docs.apiary.io/#}{iFormBuilder Apiary}
 #'
 #' @section Warning: This function should \strong{only} be used to request
 #'   records from one form or subform at a time. \strong{Do not} assume it will
@@ -410,15 +403,13 @@ get_selected_page_records <- function(server_name,
 #'   requested a field that does not exist.
 #'
 #' @rdname get_all_records
-#' @param server_name The server name as encoded in the url:
-#'   `https//server_name.iformbuilder.com`
+#' @param server_name String of the iFormBuilder server name
 #' @param profile_id The id number of your profile
 #' @param page_id The id of the form or subform
 #' @param fields A set of data fields (columns) to return
 #' @param limit The maximum number of records to return
 #' @param offset Skips the offset number of records before beginning to return
-#' @param access_token The access_token required to establish communication
-#'   with the API
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param field_string A character string defining the data fields to return,
 #'   including the id value where data retrieval should start. See the example
 #'   above for how to define the \code{parent_form_fields} string when using
@@ -495,22 +486,154 @@ get_all_records = function(server_name,
   all_records
 }
 
+#' @title Delete record
+#'
+#' @description Delete a single record
+#'
+#' @rdname delete_record
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
+#' @param server_name String of the iFormBuilder server name
+#' @param profile_id Integer of the iFormBuilder profile ID
+#' @param page_id Integer ID of the page from which to delete the record.
+#' @param record_id Integer ID of the record to delete.
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
+#' @return ID of the record deleted.
+#' @examples
+#' \dontrun{
+#' # Identify the last record added to the form so it can be deleted
+#' record_to_delete = max(parent_form_records$id)
+#'
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Delete the last record that was added
+#'  deleted_record = delete_record(
+#'    server_name = "your_server_name",
+#'    profile_id = "your_profile_id",
+#'    page_id = form_id,
+#'    record_id = record_to_delete,
+#'    access_token = access_token)
+#' }
+#' @export
+delete_record <- function(server_name, profile_id,
+                          page_id, record_id,
+                          access_token) {
+  delete_record_url <- paste0(api_v60_url(server_name = server_name),
+                              profile_id, "/pages/", page_id,
+                              "/records/", record_id)
+  bearer <- paste0("Bearer ", access_token)
+  # No body, DELETE HTTP method
+  r <- httr::DELETE(url = delete_record_url,
+                    httr::add_headers('Authorization' = bearer),
+                    encode = "json")
+  httr::stop_for_status(r)
+  response <- httr::content(r, type = "application/json")$id
+  return(response)
+}
 
-#' Create page
+#' Delete multiple records
 #'
-#' Creates a new page in the given profile with the name and label specified.
-#' The name provided will be converted to iFormBuilder standards; punctuation
-#' and whitespace replaced with _ and all text to lowercase.
+#' Delete a list of records
 #'
-#' @rdname create_page
+#' @rdname delete_multiple_records
 #' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
-#' @param server_name String of the iFormBuilder server name.
-#' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
-#' @param name String of new page name; coerced to iFormBuilder table
-#'   name conventions.
-#' @param label String of the label for the new page.
-#' @return Integer of the new page ID.
+#' @param server_name String of the iFormBuilder server name
+#' @param profile_id Integer of the iFormBuilder profile ID
+#' @param page_id Integer ID of the page from which to delete the record.
+#' @param record_ids Integer vector of the record IDs to delete.
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
+#' @return Integer vector of the deleted record IDs
+#' @examples
+#' \dontrun{
+#' # Set id to ascending order and pull only records greater than the last_id
+#' since_id <- 5L
+#' field_string <- glue::glue('id:<(>"{since_id}"), {field_list}')
+#'
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Get the id of a single form in the profile given the form name
+#' form_id <- get_page_id(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   page_name = "your_form_p",
+#'   access_token = access_token)
+#'
+#' # Get all existing records for a set of columns from a form or subform
+#' parent_form_records <- get_all_records(
+#'   server_name = "your_server_name",
+#'   profile_id = 123456,
+#'   page_id = form_id,
+#'   fields = "fields",
+#'   limit = 1000,
+#'   offset = 0,
+#'   access_token = access_token,
+#'   field_string,
+#'   since_id)
+#'
+#' # Get IDs of the last two records added so they can be deleted.
+#' records_to_delete = tail(parent_form_records$id, 2)
+#'
+#' # Delete the last two records added to the form
+#'  deleted_records = delete_multiple_records(
+#'    server_name = "your_server_name",
+#'    profile_id = "your_profile_id",
+#'    page_id = form_id,
+#'    record_ids = records_to_delete,
+#'    access_token = access_token)
+#' }
+#' @export
+delete_multiple_records <- function(server_name, profile_id,
+                                    page_id, record_ids,
+                                    access_token) {
+  # Blank vector
+  deleted <- c()
+  offset = 0
+  while (TRUE) {
+    # URL for call
+    delete_records_uri <- paste0(api_v60_url(server_name = server_name),
+                                 profile_id, "/pages/", page_id,
+                                 "/records?fields=&limit=100&offset=",
+                                 offset)
+    # Record IDs converted to JSON
+    record_ids <- data.frame("id" = record_ids)
+    ids_json <- jsonlite::toJSON(record_ids)
+    # Bearer and call
+    bearer <- paste0("Bearer ", access_token)
+    # DELETE HTTP method
+    r <- httr::DELETE(url = delete_records_uri,
+                      httr::add_headers('Authorization' = bearer),
+                      body = ids_json,
+                      encode = "json")
+    httr::stop_for_status(r)
+    response <- httr::content(r, type = "application/json")
+    ids <- unlist(response)
+    deleted <- c(deleted, ids)
+    # If less than 100 deleted records, break
+    if (length(ids) < 100) {break()}
+    offset <- offset + 100
+  }
+  return(deleted)
+}
+
+#' @title Truncate form
+#'
+#' @description Removes all records from a page, leaving the page structure.
+#' USE WITH CAUTION!
+#'
+#' @rdname truncate_form
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
+#' @param server_name String of the iFormBuilder server name
+#' @param profile_id Integer of the iFormBuilder profile ID
+#' @param page_id Integer ID of the form to truncate.
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
+#' @return Integer vector of the deleted record IDs
 #' @examples
 #' \dontrun{
 #' # Get access_token
@@ -519,121 +642,36 @@ get_all_records = function(server_name,
 #'   client_key_name = "your_client_key_name",
 #'   client_secret_name = "your_client_secret_name")
 #'
-#' # Create new page
-#' new_page_id <- create_page(
+#' # Get the id of a single form in the profile given the form name
+#' form_id <- get_page_id(
 #'   server_name = "your_server_name",
 #'   profile_id = "your_profile_id",
-#'   access_token = access_token,
-#'   name = "new_form_name",
-#'   label = "New Form Label")
-#'   }
-#' @export
-create_page = function(server_name, profile_id, access_token, name, label) {
-  # Remove whitespace, punctuation, etc from name
-  name <- tolower(gsub('([[:punct:]])|\\s+','_',name))
-  message(paste0("Creating page: ", name))
-  create_page_url <- paste0(api_v60_url(server_name = server_name),
-                            profile_id, "/pages")
-  bearer <- paste0("Bearer ", access_token)
-  page_attributes = paste0('{"name": "',name,'", "label": "',label,'"}')
-  r <- httr::POST(url = create_page_url,
-                  httr::add_headers('Authorization' = bearer),
-                  body = page_attributes,
-                  encode = "json")
-  httr::stop_for_status(r)
-  page_id <- httr::content(r, type = "application/json")
-  return(page_id$id)
-}
-
-#' Copy page
+#'   page_name = "your_form_p",
+#'   access_token = access_token)
 #'
-#' Copies a page to a new page in the profile.
-#' @rdname copy_page
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
-#' @param server_name String of the iFormBuilder server name.
-#' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
-#' @param page_id Integer of the page ID to copy.
-#' @return Integer of the new page ID.
-#' @examples
-#' \dontrun{
-#' # Get access_token
-#' access_token <- get_iform_access_token(
-#'   server_name = "your_server_name",
-#'   client_key_name = "your_client_key_name",
-#'   client_secret_name = "your_client_secret_name")
-#'
-#' # Copy page
-#' new_page_id <- copy_page(
+#' # Delete all records in the form
+#' truncated_ids <- truncate_form(
 #'   server_name = "your_server_name",
 #'   profile_id = "your_profile_id",
-#'   access_token = access_token,
-#'   page_id = "existing_page_id"
-#'   }
+#'   page_id = form_id,
+#'   access_token = access_token)
+#' }
 #' @export
-copy_page = function(server_name, profile_id, access_token, page_id) {
-  copy_page_url <- paste0(api_v60_url(server_name = server_name),
-                          profile_id, "/pages/", page_id)
-  bearer <- paste0("Bearer ", access_token)
-  r <- httr::VERB(verb="COPY", url = copy_page_url,
-                  httr::add_headers('Authorization' = bearer),
-                  encode = "json")
-  httr::stop_for_status(r)
-  new_page_id <- httr::content(r, type = "application/json")
-  return(new_page_id$id)
+truncate_form <- function(server_name, profile_id,
+                          page_id, access_token) {
+  # Get all record IDs from the form
+  record_ids <- get_all_records(server_name, profile_id, page_id,
+                                fields = "fields", limit = 1000,
+                                offset = 0, access_token,
+                                field_string = "id",
+                                since_id = 0)
+  record_ids <- record_ids$id
+  # Delete them all
+  deleted_records <- delete_multiple_records(
+    server_name, profile_id, page_id,
+    record_ids, access_token)
+  return(deleted_records)
 }
-
-#' Rename page
-#'
-#' Renames a page given a page_id and new name and label. The name provided
-#' will be converted to iFormBuilder standards; punctuation and whitespace
-#' replaced with _ and all text to lowercase.
-#'
-#' @rdname rename_page
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
-#' @param server_name String of the iFormBuilder server name.
-#' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
-#' @param page_id Integer of the page ID to rename.
-#' @param name String of renamed page name; coerced to iFormBuilder
-#'   table name conventions.
-#' @param label String of the renamed page label.
-#' @return Integer of the page ID.
-#' @examples
-#' \dontrun{
-#' # Get access_token
-#' access_token <- get_iform_access_token(
-#'   server_name = "your_server_name",
-#'   client_key_name = "your_client_key_name",
-#'   client_secret_name = "your_client_secret_name")
-#'
-#' # Rename page
-#' rename_page_id <- rename_page(
-#'   server_name = "your_server_name",
-#'   profile_id = "your_profile_id",
-#'   access_token = access_token,
-#'   page_id = "existing_page_id",
-#'   name = "new_page_name",
-#'   label = "new_page_label"
-#'   }
-#' @export
-rename_page = function(server_name, profile_id, access_token,
-                       page_id, name, label) {
-  # Remove whitespace, punctuation, etc from name
-  name <- tolower(gsub('([[:punct:]])|\\s+','_',name))
-  rename_page_url <- paste0(api_v60_url(server_name = server_name),
-                            profile_id, "/pages/", page_id)
-  bearer <- paste0("Bearer ", access_token)
-  page_attributes = paste0('{"name": "',name,'", "label": "',label,'"}')
-  r <- httr::PUT(url = rename_page_url,
-                 httr::add_headers('Authorization' = bearer),
-                 body = page_attributes,
-                 encode = "json")
-  httr::stop_for_status(r)
-  returned_page_id <- httr::content(r, type = "application/json")
-  return(returned_page_id$id)
-}
-
 
 #' Compose a url to get data via the data feed mechanism
 #'
@@ -643,8 +681,8 @@ rename_page = function(server_name, profile_id, access_token,
 #' file with all records submitted since the specified \code{since_id}.
 #'
 #' @rdname data_feed_url
-#' @param server_name The server name as encoded in the url:
-#'   `https//server_name.iformbuilder.com`
+#' @author Ty Garber, \email{Tyler.Garber@@dfw.wa.gov}
+#' @param server_name String of the iFormBuilder server name
 #' @param parent_form_id The id of the parent form
 #' @param profile_id The id number of your profile
 #' @param parent_form_name The name of the parent form
@@ -668,6 +706,7 @@ rename_page = function(server_name, profile_id, access_token,
 #' # Retrieve the form data into an R list
 #' form_data <- jsonlite::fromJSON(url)
 #' }
+#'
 #' @export
 data_feed_url = function(server_name,
                          parent_form_id,
@@ -701,78 +740,4 @@ rm_nulls <- function(x) {
   x[sapply(x, is.null)] <- NA
   return(x)
 }
-
-
-#' Create form from dataframe
-#'
-#' Creates a form based on a dataframe. Dataframe classes are cast as
-#' element types in the form.
-#'
-#' @rdname data2form
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
-#' @param server_name String of the iFormBuilder server name.
-#' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
-#' @param name String of new page name; coerced to iFormBuilder
-#'   table name conventions.
-#' @param label String of the label for the new page.
-#' @param data A dataframe whose structure will be used to
-#'   create the new form.
-#' @return The page ID of the created form.
-#' @examples
-#' # Create a dataframe with some basic form fields
-#' dat = tibble::tibble(survey_id = NA_integer_,
-#'                      survey_datetime = as.POSIXct(NA, tz = "UTC"),
-#'                      surveyor = NA_character_,
-#'                      start_point = NA_real_,
-#'                      fish_species = NA_integer_,
-#'                      fish_count = NA_integer_,
-#'                      end_point = NA_real_,
-#'                      comment_text = NA_character_,
-#'                      survey_completed = TRUE)
-#'
-#' \dontrun{
-#' # Get access_token
-#' access_token <- get_iform_access_token(
-#'   server_name = "your_server_name",
-#'   client_key_name = "your_client_key_name",
-#'   client_secret_name = "your_client_secret_name")
-#'
-#' # Create new form from dataframe
-#' new_form <- data2form(
-#'   server_name = "your_server_name",
-#'   profile_id = "your_profile_id",
-#'   access_token = access_token,
-#'   name = "new_form_to_create",
-#'   label = "New form based on an R dataframe",
-#'   data = dat)
-#' }
-#' @export
-data2form = function(server_name, profile_id, access_token,
-                     name, label, data) {
-  # Remove whitespace, punctuation, etc from name
-  name <- tolower(gsub('([[:punct:]])|\\s+','_', name))
-  # Create empty form
-  page_id <- create_page(server_name, profile_id, access_token, name, label)
-  # Get field classes of input data
-  field_classes <- sapply(data, class)
-  # List mapping data classes to IFB element types
-  ifb_types <- list("character" = 1, "numeric" = 2, "integer" = 2,
-                    "double" = 2, "POSIXct" = 5, "logical" = 6)
-  # For each field in input data
-  for (field in names(field_classes)) {
-    # Class of field
-    class <- field_classes[[field]][1]
-    # ifb element type for field
-    data_type <- ifb_types[[class]]
-    # Label as proper case
-    label <- gsub('_',' ', field)
-    label <- stringr::str_to_title(label)
-    # Add element to page
-    create_element(server_name, profile_id, access_token, page_id,
-                   name=field, label, description="", data_type)
-  }
-  return(page_id)
-}
-
 

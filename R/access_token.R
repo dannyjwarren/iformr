@@ -13,10 +13,12 @@
 #'   respective values \strong{must} be in your .Renviron file. This function
 #'   will not work otherwise. Please see the README file at
 #'   \url{https://github.com/arestrom/iformr} for additional information.
+#'   Three tries will be attempted to retrive the token. If all attempts
+#'   fail, a warning will be displayed indicating HTTP status.
 #'
 #' @rdname get_iform_access_token
 #' @param server_name The server name as encoded in the url:
-#'   `https//server_name.iformbuilder.com`
+#'   for example: `https//server_name.iformbuilder.com`
 #' @param client_key_name The name given to the client_key in your .Renviron
 #'   file
 #' @param client_secret_name The name given to the client_secret in your
@@ -48,7 +50,7 @@ get_iform_access_token <- function(server_name, client_key_name, client_secret_n
   if (has_key(client_key)) {
     claim <- jose::jwt_claim(
       iss = client_key, aud = token_uri,
-      exp = unclass(Sys.time() + 300),
+      exp = unclass(Sys.time() + 600),
       iat = unclass(Sys.time()))
   } else {
     stop("Client Key failed to load")
@@ -62,10 +64,10 @@ get_iform_access_token <- function(server_name, client_key_name, client_secret_n
   }
   body <- list(grant_type = "urn:ietf:params:oauth:grant-type:jwt-bearer",
                assertion = signed_encoded)
-  r <- httr::POST(url = token_uri, body = body,
+  r <- httr::RETRY("POST", url = token_uri, body = body,
                   httr::add_headers('Content-Type' = 'application/x-www-form-urlencoded'),
-                  encode = "form")
-  httr::warn_for_status(r)
+                  encode = "form", pause_cap = 10)
+  httr::warn_for_status(r, task = "request for access_token")
   acc_token <- httr::content(r, type = "application/json")$access_token
   return(acc_token)
 }
@@ -104,5 +106,10 @@ jwt_header <- function() {
     alg = 'HS256',
     typ = 'JWT'
   )
+}
+
+# Define the API url
+api_v60_url <- function(server_name) {
+  paste0(base_url(server_name), "/exzact/api/v60/profiles/")
 }
 

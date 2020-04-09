@@ -1,12 +1,12 @@
 #' Add element to page.
 #'
-#' Adds a new element to a page.
+#' Adds a new element to a page (form or subform).
 #'
 #' @rdname create_element
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param page_id Page ID where the new element will be created.
 #' @param name String of the element DCN. The provided name will be converted to be
 #'   IFB database compliant (no special characters, all lowercase, spaces replaced
@@ -37,24 +37,28 @@
 #'   name = "new_dcn_name",
 #'   label = "new_element_label",
 #'   description = "This is a new element.",
-#'   data_type = 1
+#'   data_type = 1)
 #'   }
 #' @importFrom methods missingArg
 #' @export
-create_element = function(server_name, profile_id, access_token, page_id, name, label,
-                          description = "", data_type, data_size = 100, optionlist_id) {
-  message(paste0("Creating element: ", name))
+create_element = function(server_name, profile_id,  access_token,
+                          page_id, name, label, description = "",
+                          data_type, data_size = 100,
+                          optionlist_id) {
+  # Format element name to be IFB compliant
+  name <- format_name(name)
+  message(paste0("Creating new element: ", name))
   create_element_url <- paste0(api_v60_url(server_name = server_name),
                                profile_id, "/pages/", page_id, "/elements")
   bearer <- paste0("Bearer ", access_token)
   if (!missingArg(optionlist_id)) {
-    page_attributes <- list(name=name, label=label, description=description,
-                            data_type=data_type, data_size=data_size,
-                            optionlist_id=optionlist_id)
+    page_attributes <- list(name = name, label = label, description = description,
+                            data_type = data_type, data_size = data_size,
+                            optionlist_id = optionlist_id)
   }
   else {
-    page_attributes <- list(name=name, label=label, description=description,
-                            data_type=data_type, data_size=data_size)
+    page_attributes <- list(name = name, label = label, description = description,
+                            data_type = data_type, data_size = data_size)
   }
   page_attributes <- jsonlite::toJSON(page_attributes, auto_unbox = T)
   r <- httr::POST(url = create_element_url,
@@ -62,18 +66,19 @@ create_element = function(server_name, profile_id, access_token, page_id, name, 
                   body = page_attributes,
                   encode = "json")
   try(httr::stop_for_status(r))
-  elementid <- httr::content(r, type = "application/json")
+  element_id <- httr::content(r, type = "application/json")
+  return(element_id)
 }
 
 #' Retrieve a List of Elements
 #'
-#' Retrieves a list of all the elements contained in a page.
+#' Retrieves a list of all the elements contained in a page (form or subform)
 #'
 #' @rdname retrieve_element_list
-#' @author Bill Devoe, \email{William.DeVoe@@maine.gov}
+#' @author Bill DeVoe, \email{William.DeVoe@@maine.gov}
 #' @param server_name String of the iFormBuilder server name.
 #' @param profile_id Integer of the iFormBuilder profile ID.
-#' @param access_token Access token produced by \code{iformr::get_iform_access_token}
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
 #' @param page_id Page ID where the new element will be created.
 #' @param fields *Optional* - Defaults to 'all', which returns all fields for each
 #'   element. Optionally, a character vector of fields to return can be provided.
@@ -93,11 +98,12 @@ create_element = function(server_name, profile_id, access_token, page_id, name, 
 #'   profile_id = "your_profile_id",
 #'   access_token = access_token,
 #'   page_id = "existing_page_id",
-#'   fields = 'all'
+#'   fields = 'all')
 #'   }
 #' @export
-retrieve_element_list <- function(server_name, profile_id, access_token,
-                                  page_id, fields = 'all') {
+retrieve_element_list <- function(server_name, profile_id,
+                                  access_token, page_id,
+                                  fields = 'all') {
   message(paste0("Retrieving elements from: ", page_id))
   # List of fields API call can return
   all_fields <- c('global_id', 'version', 'label', 'description', 'data_type',
@@ -128,7 +134,60 @@ retrieve_element_list <- function(server_name, profile_id, access_token,
   r <- httr::GET(url,
                  httr::add_headers('Authorization' = bearer),
                  encode = "json")
-  if (r$status_code != 200){stop('Could not retrieve elements from page.')}
+  if (r$status_code != 200){ stop('Could not retrieve elements from page.') }
   json <- httr::content(r, type = "text")
   elements <- jsonlite::fromJSON(json)
+  return(elements)
 }
+
+#' Delete an element
+#'
+#' Deletes an element from a page (form or subform)
+#'
+#' @rdname delete_element
+#' @param server_name String of the iFormBuilder server name.
+#' @param profile_id Integer of the iFormBuilder profile ID.
+#' @param page_id Page ID from where the element will be deleted
+#' @param element_id Integer ID of the new element that will be deleted
+#' @param access_token Access token produced by \code{\link{get_iform_access_token}}
+#' @return ID of the deleted element.
+#' @examples
+#' \dontrun{
+#' # Pull out id from new_element created previously
+#' new_element_id = new_element$id
+#'
+#' # Get access_token
+#' access_token <- get_iform_access_token(
+#'   server_name = "your_server_name",
+#'   client_key_name = "your_client_key_name",
+#'   client_secret_name = "your_client_secret_name")
+#'
+#' # Delete element
+#' deleted_element <- delete_element(
+#'   server_name = "your_server_name",
+#'   profile_id = "your_profile_id",
+#'   page_id = "existing_page_id",
+#'   element_id = new_element_id,
+#'   access_token = access_token)
+#'   }
+#'
+#' @export
+delete_element = function(server_name, profile_id,
+                          page_id, element_id,
+                          access_token) {
+  delete_element_uri <- paste0(api_v60_url(server_name = server_name),
+                               profile_id, "/pages/", page_id,
+                               "/elements/", element_id)
+  bearer <- paste0("Bearer ", access_token)
+  r <- httr::DELETE(url = delete_element_uri,
+                    httr::add_headers('Authorization' = bearer),
+                    encode = "json")
+  httr::warn_for_status(r, "delete element")
+  element_id <- httr::content(r, type = "application/json")
+  return(element_id)
+}
+
+
+
+
+

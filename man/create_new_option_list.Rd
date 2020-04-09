@@ -7,15 +7,13 @@
 create_new_option_list(server_name, profile_id, option_list_name, access_token)
 }
 \arguments{
-\item{server_name}{The server name as encoded in the url:
-`https//server_name.iformbuilder.com`}
+\item{server_name}{String of the iFormBuilder server name}
 
-\item{profile_id}{The id number of your profile}
+\item{profile_id}{Integer of the iFormBuilder profile ID}
 
 \item{option_list_name}{A character name for the new option list}
 
-\item{access_token}{The access_token required to establish communication with
-the API}
+\item{access_token}{Access token produced by \code{\link{get_iform_access_token}}}
 }
 \value{
 The id of the new option list
