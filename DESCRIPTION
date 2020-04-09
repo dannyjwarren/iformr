@@ -1,7 +1,7 @@
 Package: iformr
 Type: Package
 Title: A set of tools to leverage the iFormBuilder API
-Version: 0.1.2
+Version: 0.1.2.9001
 Authors@R: as.person(c(
     "Are Strom <Are.Strom@dfw.wa.gov> [aut, cre]",
     "Tyler Garber <Tyler.Garber@dfw.wa.gov> [ctb]",
