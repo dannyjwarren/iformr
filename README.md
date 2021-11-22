@@ -47,7 +47,7 @@ You will need to install R-3.4.1 or higher.
 ``` r
 # Install the development version from GitHub:
 # install.packages("remotes")
-remotes::install_github("arestrom/iformr")
+remotes::install_github("dannyjwarren/iformr")
 ```
 
 ## Storing API connection credentials
